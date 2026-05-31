@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Wynn Housing Homeowner Manual with English and Traditional Chinese language toggle.">
+<title>Homeowner Manual · Wynn Housing</title>
+<style>
+
+  :root{
+    --bg:      oklch(97% 0.012 80);
+    --surface: oklch(99% 0.005 80);
+    --fg:      oklch(20% 0.02 60);
+    --muted:   oklch(48% 0.015 60);
+    --border:  oklch(89% 0.012 80);
+    --accent:  oklch(58% 0.16 35);
+    --font-display: 'Iowan Old Style', 'Charter', Georgia, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --ink:var(--fg);
+    --ink-rgb:45,36,30;
+    --paper:var(--bg);
+    --paper-rgb:247,244,237;
+    --paper-tint:oklch(93% 0.014 80);
+    --ink-tint:oklch(25% 0.02 60);
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --serif-en:var(--font-display);
+    --serif-zh:'Songti TC','Noto Serif TC','PingFang TC','Iowan Old Style','Charter',Georgia,serif;
+    --sans-zh:'PingFang TC','Noto Sans TC','Heiti TC',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:var(--sans-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  canvas.bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;transition:opacity 1.2s ease}
+  canvas#bg-light{opacity:0}
+  canvas#bg-dark{opacity:1}
+  body.light-bg canvas#bg-light{opacity:1}
+  body.light-bg canvas#bg-dark{opacity:0}
+  #deck{position:fixed;inset:0;width:10000vw;height:100vh;display:flex;flex-wrap:nowrap;transition:transform .9s cubic-bezier(.77,0,.175,1);z-index:10;will-change:transform}
+  .slide{width:100vw;height:100vh;flex:0 0 100vw;position:relative;padding:6vh 6vw 10vh;display:flex;flex-direction:column;overflow:hidden;letter-spacing:0}
+  .slide.light{color:var(--ink)}
+  .slide.dark{color:var(--paper)}
+  .slide::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;transition:background .7s ease}
+  .slide.light::before{background:rgba(var(--paper-rgb),.78);backdrop-filter:blur(3px)}
+  .slide.dark::before{background:rgba(var(--ink-rgb),.78);backdrop-filter:blur(3px)}
+  .slide.hero.light::before{background:rgba(var(--paper-rgb),.16);backdrop-filter:none}
+  .slide.hero.dark::before{background:rgba(var(--ink-rgb),.12);backdrop-filter:none}
+  .slide.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .slide.hero.light::after{background:linear-gradient(180deg,rgba(var(--paper-rgb),.28),rgba(var(--paper-rgb),0) 14%,rgba(var(--paper-rgb),0) 86%,rgba(var(--paper-rgb),.28))}
+  .slide.hero.dark::after{background:linear-gradient(180deg,rgba(var(--ink-rgb),.32),rgba(var(--ink-rgb),0) 14%,rgba(var(--ink-rgb),0) 86%,rgba(var(--ink-rgb),.32))}
+  .chrome{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.2em;text-transform:uppercase;opacity:.62}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.18em;text-transform:uppercase;opacity:.5}
+  .foot .title{font-family:var(--serif-zh);font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.75;font-size:13px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;opacity:.6;margin-bottom:2.6vh}
+  .h-hero{font-family:var(--serif-zh);font-weight:900;font-size:10vw;line-height:.96;letter-spacing:-.02em}
+  .h-xl{font-family:var(--serif-zh);font-weight:700;font-size:6.2vw;line-height:1.08;letter-spacing:-.01em}
+  .h-sub{font-family:var(--serif-zh);font-weight:500;font-size:3.1vw;line-height:1.25;letter-spacing:0;opacity:.7}
+  .h-hero-en,.h-xl-en{font-family:var(--serif-en);letter-spacing:-.025em}
+  .lead{font-family:var(--serif-zh);font-weight:400;font-size:1.75vw;line-height:1.5;opacity:.86}
+  .meta-row{display:flex;gap:1.2em;align-items:baseline;flex-wrap:wrap;font-family:var(--mono);font-size:max(12px,.92vw);letter-spacing:.16em;text-transform:uppercase;opacity:.6}
+  .frame{flex:1;display:flex;flex-direction:column;min-height:0}
+  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4vw 6vw;flex:1;align-content:center;padding:2vh 0}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:4vw;flex:1;align-content:center}
+  .grid-2-7-5{display:grid;grid-template-columns:7fr 5fr;gap:3vw 4vh;align-items:start}
+  .grid-2-6-6{display:grid;grid-template-columns:1fr 1fr;gap:3vw 4vh;align-items:start}
+  .stat-card{display:flex;flex-direction:column;gap:.8vh;align-items:flex-start;padding-top:1.6vh;border-top:1px solid currentColor;border-color:rgba(127,127,127,.3)}
+  .stat-card .stat-label{font-family:var(--mono);font-size:max(10px,.78vw);letter-spacing:.24em;text-transform:uppercase;opacity:.55}
+  .stat-card .stat-nb{font-family:var(--serif-en);font-weight:800;font-size:5.8vw;line-height:.9;letter-spacing:-.03em;font-feature-settings:"tnum";margin-top:.4vh}
+  .stat-card .stat-note{font-family:var(--sans-zh);font-weight:400;font-size:max(13px,1.05vw);line-height:1.5;opacity:.72;margin-top:.6vh}
+  .grid-3 .stat-card .stat-nb{font-size:6.8vw}
+  .pipeline-section{margin-top:4.4vh;padding-top:2.8vh;border-top:1px dashed rgba(127,127,127,.32)}
+  .pipeline-section:first-of-type{border-top:0;padding-top:0;margin-top:3vh}
+  .pipeline-label{font-family:var(--mono);font-size:max(11px,.85vw);letter-spacing:.24em;text-transform:uppercase;opacity:.62;margin-bottom:2.2vh}
+  .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2vw}
+  .pipeline[data-cols="4"]{grid-template-columns:repeat(4,1fr)}
+  .step{display:flex;flex-direction:column;gap:.8vh;padding-top:1.4vh;border-top:1px solid currentColor;border-color:rgba(127,127,127,.35)}
+  .step-nb{font-family:var(--serif-en);font-style:italic;font-weight:500;font-size:1.15vw;opacity:.45}
+  .step-title{font-family:var(--sans-zh);font-weight:700;font-size:1.55vw;letter-spacing:.01em;line-height:1.2}
+  .step-desc{font-family:var(--sans-zh);font-weight:400;font-size:max(12px,.95vw);line-height:1.45;opacity:.72}
+  .callout{padding:3vh 2.4vw;border-left:3px solid currentColor;position:relative;font-family:var(--serif-zh);font-size:max(15px,1.2vw);line-height:1.55;opacity:.92}
+  .slide.light .callout{background:rgba(var(--ink-rgb),.05)}
+  .slide.dark .callout{background:rgba(var(--paper-rgb),.06)}
+  .manual-list{display:flex;flex-direction:column;gap:1.5vh;font-family:var(--font-body);font-size:max(15px,1.12vw);line-height:1.55;opacity:.82}
+  .manual-list strong{font-weight:600;color:currentColor}
+  .manual-list li{margin-left:1.05em;padding-left:.25em}
+  .manual-card{padding:2.2vh 1.8vw;border-top:1px solid currentColor;border-color:rgba(127,127,127,.32)}
+  .manual-card h3{font-family:var(--font-display);font-size:1.75vw;line-height:1.18;font-weight:500;margin-bottom:1.1vh}
+  .manual-card p{font-family:var(--font-body);font-size:max(13px,1vw);line-height:1.55;opacity:.76}
+  .fine-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5vh 2.8vw}
+  .county-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2vh 3vw;margin-top:4vh}
+  .county{border-top:1px solid currentColor;border-color:rgba(127,127,127,.35);padding-top:1.4vh}
+  .county b{display:block;font-family:var(--font-display);font-size:1.5vw;font-weight:500;margin-bottom:.8vh}
+  .county span{font-family:var(--mono);font-size:max(10px,.78vw);letter-spacing:.08em;opacity:.65;word-break:break-all;text-transform:none}
+  .notice{border:1px solid currentColor;border-color:rgba(127,127,127,.32);padding:2.4vh 2vw;background:rgba(var(--paper-rgb),.05)}
+  .slide.light .notice{background:rgba(var(--ink-rgb),.035)}
+  #nav{position:fixed;left:50%;bottom:2.6vh;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.18);backdrop-filter:blur(10px)}
+  #nav .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s ease;border:0;padding:0}
+  #nav .dot.active{background:rgba(255,255,255,.95);width:22px;border-radius:999px}
+  body.light-bg #nav{background:rgba(255,255,255,.25)}
+  body.light-bg #nav .dot{background:rgba(var(--ink-rgb),.25)}
+  body.light-bg #nav .dot.active{background:rgba(var(--ink-rgb),.9)}
+  #hint{position:fixed;bottom:3vh;right:3vw;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.4;mix-blend-mode:difference;color:#aaa}
+  @media (max-width:900px){
+    .h-hero{font-size:14vw}
+    .h-xl{font-size:9vw}
+    .pipeline{grid-template-columns:repeat(2,1fr)}
+    .grid-2-7-5,.grid-2-6-6{grid-template-columns:1fr}
+  }
+  @media print{
+    @page{size:16in 9in;margin:0}
+    html,body{width:auto;height:auto;overflow:visible;background:var(--paper)}
+    canvas.bg,#nav,#hint,#overview{display:none!important}
+    #deck{position:static!important;display:block!important;width:auto!important;height:auto!important;transform:none!important;transition:none!important}
+    .slide{position:relative!important;width:16in!important;height:9in!important;page-break-after:always;break-after:page;overflow:hidden}
+    .slide::before{backdrop-filter:none!important}
+    .slide:last-child{page-break-after:auto;break-after:auto}
+  }
+
+  .language-switcher{position:fixed;top:2.4vh;right:3vw;z-index:40;display:flex;gap:6px;padding:6px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(0,0,0,.22);backdrop-filter:blur(14px);box-shadow:0 12px 30px rgba(0,0,0,.16)}
+  .language-switcher button{border:0;border-radius:999px;padding:8px 13px;background:transparent;color:rgba(255,255,255,.72);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s ease,color .2s ease,transform .2s ease}
+  .language-switcher button:hover{transform:translateY(-1px);color:#fff}
+  .language-switcher button.active{background:rgba(255,255,255,.9);color:var(--ink)}
+  body.light-bg .language-switcher{background:rgba(255,255,255,.3);border-color:rgba(var(--ink-rgb),.12)}
+  body.light-bg .language-switcher button{color:rgba(var(--ink-rgb),.68)}
+  body.light-bg .language-switcher button:hover{color:var(--ink)}
+  body.light-bg .language-switcher button.active{background:rgba(var(--ink-rgb),.9);color:var(--paper)}
+  @media (max-width:700px){
+    .language-switcher{top:1.6vh;right:3vw}
+    .language-switcher button{padding:7px 10px;font-size:10px}
+    #hint{display:none}
+  }
+  @media print{.language-switcher{display:none!important}}
+</style>
+</head>
+<body>
+<canvas id="bg-dark" class="bg"></canvas>
+<canvas id="bg-light" class="bg"></canvas>
+<div class="language-switcher" role="group" aria-label="Language selector">
+  <button type="button" data-lang="zh" class="active" aria-pressed="true">中文</button>
+  <button type="button" data-lang="en" aria-pressed="false">English</button>
+</div>
+<div id="hint">← → 投影片 · ESC 總覽</div>
+<div id="deck"></div>
+<div id="nav"></div>
+<template id="slides-zh">
+<section class="slide hero dark" data-theme="dark" data-screen-label="01 封面">
+  <div class="chrome"><div>Wynn Housing | eXp Realty</div><div>屋主手冊</div></div>
+  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
+    <div class="kicker">歡迎資料包</div>
+    <h1 class="h-hero" style="font-size:8.3vw;max-width:78vw">歡迎回家，<br>親愛的屋主。</h1>
+    <h2 class="h-sub" style="font-size:2.9vw;max-width:64vw">安心展開屋主生活的必備指南</h2>
+    <p class="lead" style="max-width:58vw;font-family:var(--font-body);font-size:1.35vw;line-height:1.65">恭喜您擁有美麗的新家。這份指南是我們送給您的實用資源，陪伴您度過入住後的前幾個月，以及未來的屋主生活。每一步，我們都會在您身邊。</p>
+  </div>
+  <div class="foot"><div class="title">Wynn Housing | eXp Realty</div><div>01 / 11</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="02 目錄">
+  <div class="chrome"><div>導覽 · 指南地圖</div><div>02 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">從完成交屋到安心持有</div>
+    <h2 class="h-xl" style="font-size:5.2vw;max-width:72vw">您需要知道的一切，逐步整理在這裡。</h2>
+    <div class="grid-6" style="margin-top:6vh">
+      <div class="stat-card"><div class="stat-label">第一步</div><div class="stat-nb">01</div><div class="stat-note">確保居家安全，順利安頓入住。</div></div>
+      <div class="stat-card"><div class="stat-label">官方文件</div><div class="stat-nb">02</div><div class="stat-note">了解重要文件，避免詐騙陷阱。</div></div>
+      <div class="stat-card"><div class="stat-label">財務管理</div><div class="stat-nb">03</div><div class="stat-note">房產稅、帳單與關鍵支出。</div></div>
+      <div class="stat-card"><div class="stat-label">房屋維護</div><div class="stat-nb">04</div><div class="stat-note">主動保護您房產投資的指南。</div></div>
+      <div class="stat-card"><div class="stat-label">支援網絡</div><div class="stat-nb">05</div><div class="stat-note">可信賴的廠商與保固基本知識。</div></div>
+      <div class="stat-card"><div class="stat-label">隨手保存</div><div class="stat-nb">06</div><div class="stat-note">建議在入住第一年妥善保存本手冊。</div></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">目錄 · 從交屋到安心持有</div><div>指南地圖</div></div>
+</section>
+<section class="slide dark" data-theme="dark" data-screen-label="03 立即待辦">
+  <div class="chrome"><div>第一章 · 入住第一步</div><div>03 / 11</div></div>
+  <div class="frame grid-2-7-5" style="padding-top:6vh">
+    <div>
+      <div class="kicker">第一章</div>
+      <h2 class="h-xl" style="font-size:4.7vw">您的立即待辦清單</h2>
+      <p class="lead" style="font-family:var(--font-body);font-size:1.25vw;margin-top:3vh;max-width:48vw">最優先處理的是居家安全、水電網路、HOA 登記，以及確保郵件能正確送達。</p>
+    </div>
+    <div class="fine-grid" style="grid-template-columns:1fr">
+      <div class="manual-card"><h3>更換門鎖</h3><p>請把這件事列為第一優先。也可考慮安裝智慧門鎖提升便利性，並更新所有門鎖密碼，讓自己更安心。</p></div>
+      <div class="manual-card"><h3>開通水電與服務</h3><p>設定網路、自來水、電力、瓦斯與保全系統。可參考我們 email 中賣方提供的 utility 資訊表。</p></div>
+      <div class="manual-card"><h3>向 HOA 登記</h3><p>聯絡社區管理協會，登記為新屋主，建立線上帳號，並設定每月管理費自動付款。</p></div>
+      <div class="manual-card"><h3>更新郵寄地址</h3><p>向 USPS 變更地址，確保稅單、保險文件與其他重要郵件都能寄達。</p></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">安全 · 開通 · 登記 · 轉寄</div><div>入住第一步</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="04 官方文件">
+  <div class="chrome"><div>第二章 · 官方文件</div><div>04 / 11</div></div>
+  <div class="frame" style="padding-top:4vh">
+    <div class="kicker">重要文件將陸續寄達</div>
+    <h2 class="h-xl" style="font-size:4.7vw;margin-bottom:4vh">以下是您可以預期收到的文件。</h2>
+    <div class="grid-2-6-6" style="gap:5vw">
+      <div>
+        <div class="pipeline-label">來自縣市政府 · 約 6-8 週內</div>
+        <ul class="manual-list">
+          <li><strong>產權登記契據：</strong>正式的屋主權益證明。紙本會郵寄給您；電子版我們已經先寄給您。</li>
+          <li><strong>補充房產稅單：</strong>重要且有付款期限。更多說明請見財務章節。</li>
+          <li><strong>PCOR 表格：</strong>產權變更申報表。如適用，請勾選「Primary Resident」。</li>
+          <li><strong>屋主稅務減免表：</strong>當您申報此房屋為自住房時使用。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pipeline-label">來自產權公司</div>
+        <ul class="manual-list">
+          <li><strong>產權保險保單：</strong>保障您屋主權益的保險文件。</li>
+          <li><strong>信託契據：</strong>記錄您與貸款機構之間的房貸關係。</li>
+          <li><strong>Escrow 退款：</strong>如 escrow 帳戶仍有餘額，您可能會收到退款支票。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">文件 · 縣市政府與產權公司</div><div>文件事項</div></div>
+</section>
+<section class="slide hero light" data-theme="light" data-screen-label="05 詐騙提醒">
+  <div class="chrome"><div>第二章 · 詐騙提醒</div><div>05 / 11</div></div>
+  <div class="frame" style="display:grid;gap:3.5vh;align-content:center;min-height:80vh">
+    <div class="kicker">不要為 Grant Deed 副本付費</div>
+    <h1 class="h-hero" style="font-size:6.4vw;line-height:1.05;max-width:78vw">看起來像官方文件，不一定真的是官方文件。</h1>
+    <div class="grid-2-6-6" style="gap:4vw;align-items:start">
+      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>常見手法：</strong>詐騙者利用公開交易紀錄寄信，要求您支付約 $100 以取得「Recorded Deed」或「Grant Deed」。小字通常會註明他們並非政府機關。</p></div>
+      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>實際情況：</strong>您的 grant deed 可向 title 或 escrow 公司免費取得電子副本，County Recorder 也能直接提供副本。</p></div>
+    </div>
+    <p class="lead" style="font-family:var(--font-body);font-size:1.18vw;max-width:72vw">您的產權是由已登記的公共紀錄確立，不是靠手上是否持有紙本契據。如果任何文件要求付款，請先拍照傳給我們確認，再採取行動。</p>
+  </div>
+  <div class="foot"><div class="title">防詐提醒 · 付款前先確認</div><div>產權已受保障</div></div>
+</section>
+<section class="slide dark" data-theme="dark" data-screen-label="06 加州房產稅">
+  <div class="chrome"><div>第三章 · 財務管理</div><div>06 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">了解您的加州房產稅</div>
+    <h2 class="h-xl" style="font-size:4.9vw;margin-bottom:5vh">稅單寄到前，先掌握重要時程。</h2>
+    <div class="grid-3">
+      <div class="stat-card"><div class="stat-label">稅務年度</div><div class="stat-nb" style="font-size:4.8vw">7/1</div><div class="stat-note">加州房產稅年度為 7 月 1 日至隔年 6 月 30 日。</div></div>
+      <div class="stat-card"><div class="stat-label">第一期</div><div class="stat-nb" style="font-size:4.8vw">11/1</div><div class="stat-note">涵蓋 7 月 1 日至 12 月 31 日。12 月 10 日後逾期，罰金為 10%。</div></div>
+      <div class="stat-card"><div class="stat-label">第二期</div><div class="stat-nb" style="font-size:4.8vw">2/1</div><div class="stat-note">涵蓋 1 月 1 日至 6 月 30 日。4 月 10 日後逾期，罰金為 10%。</div></div>
+    </div>
+    <div class="callout" style="margin-top:6vh;max-width:78vw">年度 secured property tax bill 通常會在 9 月底或 10 月初寄出。購屋後，您還會收到一張根據新估值計算的補充稅單，這是一般年度稅單之外的額外稅單。</div>
+  </div>
+  <div class="foot"><div class="title">加州房產稅時程</div><div>財務</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="07 繳納房產稅">
+  <div class="chrome"><div>第三章 · 繳款方式</div><div>07 / 11</div></div>
+  <div class="frame grid-2-7-5" style="padding-top:6vh">
+    <div>
+      <div class="kicker">如何繳納房產稅</div>
+      <h2 class="h-xl" style="font-size:4.8vw">請使用縣政府官方繳款管道。</h2>
+      <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;margin-top:3vh">主要方式為透過縣稅務機關官方網站線上付款，或郵寄支票。信用卡可能累積點數，但縣政府通常會收取處理費或服務費。</p>
+    </div>
+    <div class="county-grid" style="grid-template-columns:1fr;margin-top:0">
+      <div class="county"><b>洛杉磯縣</b><span>ttc.lacounty.gov/pay-your-property-taxes/</span></div>
+      <div class="county"><b>橙縣</b><span>ttc.ocgov.com/proptax/</span></div>
+      <div class="county"><b>河濱縣</b><span>countytreasurer.org</span></div>
+      <div class="county"><b>聖伯納迪諾縣</b><span>mytaxcollector.com</span></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">縣政府官方網站</div><div>繳款</div></div>
+</section>
+<section class="slide hero dark" data-theme="dark" data-screen-label="08 維護清單">
+  <div class="chrome"><div>第四章 · 房屋維護</div><div>08 / 11</div></div>
+  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
+    <div class="kicker">主動式居家照護清單</div>
+    <h1 class="h-hero" style="font-size:6.6vw;max-width:78vw">在房子提醒您之前，先保護好它。</h1>
+    <div class="grid-3" style="margin-top:2vh">
+      <div class="manual-card"><h3>漏水檢查與預防</h3><p>定期檢查水槽下方、馬桶、屋頂區域、灌溉與灑水系統、HVAC、家電設備與煙霧警報器。</p></div>
+      <div class="manual-card"><h3>外部與庭院</h3><p>維護景觀植栽，確保排水順暢，並定期安排防蟲防害。</p></div>
+      <div class="manual-card"><h3>排污與管線</h3><p>養成良好排水管保養習慣，遇到排水變慢或反覆堵塞時及早處理，避免變成回堵問題。</p></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">維護 · 預防勝於修繕</div><div>清單</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="09 預防水損">
+  <div class="chrome"><div>第四章 · 水損防護</div><div>09 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">屋主預防水損指南</div>
+    <h2 class="h-xl" style="font-size:4.8vw;margin-bottom:4vh">小漏水，常常悄悄變成大花費。</h2>
+    <div class="grid-3">
+      <div class="manual-card"><h3>水槽下方</h3><p><strong>問題：</strong>隱藏漏水可能造成發霉。請定期檢查是否潮濕。<br><br><strong>解法：</strong>使用漏水警報器，並鋪設防水水槽櫃墊。</p></div>
+      <div class="manual-card"><h3>馬桶</h3><p><strong>問題：</strong>馬桶持續漏水可能浪費數百加侖用水，常見原因是止水皮或進水閥老化。<br><br><strong>解法：</strong>及早更換低成本零件。</p></div>
+      <div class="manual-card"><h3>檯面與淋浴區</h3><p><strong>問題：</strong>老化的填縫或矽利康會讓水滲入牆面與檯面。<br><br><strong>解法：</strong>定期檢查廚房與浴室，必要時重新補上防水密封膠。</p></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">水損 · 及早發現</div><div>預防</div></div>
+</section>
+<section class="slide dark" data-theme="dark" data-screen-label="10 系統與家電">
+  <div class="chrome"><div>第四章 · 系統與家電</div><div>10 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">重要系統與家電維護</div>
+    <h2 class="h-xl" style="font-size:4.9vw;margin-bottom:4vh">四個習慣，預防常見緊急狀況。</h2>
+    <div class="pipeline-section">
+      <div class="pipeline" data-cols="4">
+        <div class="step"><div class="step-nb">01</div><div class="step-title">HVAC 系統</div><div class="step-desc">每 1-3 個月更換空氣濾網，以提升空氣品質與系統效率。</div></div>
+        <div class="step"><div class="step-nb">02</div><div class="step-title">洗衣機與烘乾機</div><div class="step-desc">每次使用後清理棉絮濾網，定期清潔排氣管，洗衣後保持洗衣機門開啟通風。</div></div>
+        <div class="step"><div class="step-nb">03</div><div class="step-title">煙霧警報器</div><div class="step-desc">每月測試，準備備用電池，也可考慮 10 年免換電池的密封式機型。</div></div>
+        <div class="step"><div class="step-nb">04</div><div class="step-title">戶外排水</div><div class="step-desc">清除雨水排水口的落葉與雜物，尤其低窪區域應在大雨前完成檢查。</div></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:8vh;max-width:60vw">設定幾個行事曆提醒，就可能為您省下數千美元的緊急維修費。</div>
+  </div>
+  <div class="foot"><div class="title">HVAC · 洗衣 · 安全 · 排水</div><div>維護</div></div>
+</section>
+<section class="slide hero light" data-theme="light" data-screen-label="11 聯絡與支持">
+  <div class="chrome"><div>Wynn Housing · 持續支持</div><div>11 / 11</div></div>
+  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
+    <div class="kicker">我們的合作會繼續延伸</div>
+    <h1 class="h-hero" style="font-size:6.2vw;line-height:1.08;max-width:82vw">拿到鑰匙，不代表我們的承諾結束。</h1>
+    <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;line-height:1.65;max-width:66vw">在您的屋主旅程中，若有任何問題或需求，我們都會是您長期可依靠的資源。請隨時與我們聯絡。</p>
+    <div class="grid-2-6-6" style="gap:4vw;max-width:78vw">
+      <div class="manual-card"><h3>分享您的經驗</h3><p>如果您喜歡與我們合作，歡迎在 Zillow 留下 5 星評價，幫助更多家庭找到理想的家。</p></div>
+      <div class="manual-card"><h3>幫助親友</h3><p>如果您認識的人正在考慮買房或賣房，我們很榮幸能提供同樣用心的服務。</p></div>
+    </div>
+    <div class="meta-row" style="font-size:1vw"><span>Wynn Housing</span><span>626-658-8265</span><span>WWW.WynnHousing.COM</span></div>
+  </div>
+  <div class="foot"><div class="title">謝謝您 · Wynn Housing</div><div>聯絡方式</div></div>
+</section>
+</template>
+<template id="slides-en">
+<section class="slide hero dark" data-theme="dark" data-screen-label="01 Cover">
+  <div class="chrome"><div>Wynn Housing | eXp Realty</div><div>Homeowner Manual</div></div>
+  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
+    <div class="kicker">Welcome Packet</div>
+    <h1 class="h-hero h-hero-en" style="font-size:8.3vw;max-width:78vw">Welcome Home,<br>Home Owners.</h1>
+    <h2 class="h-sub h-xl-en" style="font-size:2.9vw;max-width:64vw">Your Essential Guide to Confident Homeownership</h2>
+    <p class="lead" style="max-width:58vw;font-family:var(--font-body);font-size:1.35vw;line-height:1.65">Congratulations on your beautiful new home. This guide is our gift to you, a practical resource for the first few months and beyond. We are here for you, every step of the way.</p>
+  </div>
+  <div class="foot"><div class="title">Wynn Housing | eXp Realty</div><div>01 / 11</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="02 Contents">
+  <div class="chrome"><div>Orientation · Guide Map</div><div>02 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">From Closing to Confident Ownership</div>
+    <h2 class="h-xl h-xl-en" style="font-size:5.2vw;max-width:72vw">A step-by-step guide to everything you need to know.</h2>
+    <div class="grid-6" style="margin-top:6vh">
+      <div class="stat-card"><div class="stat-label">First Steps</div><div class="stat-nb">01</div><div class="stat-note">Securing your home and getting settled.</div></div>
+      <div class="stat-card"><div class="stat-label">Official Documents</div><div class="stat-nb">02</div><div class="stat-note">Understanding paperwork and avoiding scams.</div></div>
+      <div class="stat-card"><div class="stat-label">Managing Finances</div><div class="stat-nb">03</div><div class="stat-note">Property taxes, bills, and key expenses.</div></div>
+      <div class="stat-card"><div class="stat-label">Home Maintenance</div><div class="stat-nb">04</div><div class="stat-note">A proactive guide to protecting your investment.</div></div>
+      <div class="stat-card"><div class="stat-label">Support Network</div><div class="stat-nb">05</div><div class="stat-note">Trusted vendors and warranty basics.</div></div>
+      <div class="stat-card"><div class="stat-label">Keep Handy</div><div class="stat-nb">06</div><div class="stat-note">Save this manual for your first year.</div></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">Contents · From Closing to Confident Ownership</div><div>Guide Map</div></div>
+</section>
+<section class="slide dark" data-theme="dark" data-screen-label="03 Immediate To-Do">
+  <div class="chrome"><div>Chapter 1 · First Steps</div><div>03 / 11</div></div>
+  <div class="frame grid-2-7-5" style="padding-top:6vh">
+    <div>
+      <div class="kicker">Chapter 1</div>
+      <h2 class="h-xl h-xl-en" style="font-size:4.7vw">Your Immediate To-Do List</h2>
+      <p class="lead" style="font-family:var(--font-body);font-size:1.25vw;margin-top:3vh;max-width:48vw">The first priorities are security, utilities, association registration, and reliable mail delivery.</p>
+    </div>
+    <div class="fine-grid" style="grid-template-columns:1fr">
+      <div class="manual-card"><h3>Change Your Locks</h3><p>Make this your first priority. Consider a smart lock for convenience, and update every passcode for peace of mind.</p></div>
+      <div class="manual-card"><h3>Set Up Utilities</h3><p>Connect internet, water, electricity, gas, and security systems. Use the seller’s utility information sheet from our email.</p></div>
+      <div class="manual-card"><h3>Register with Your HOA</h3><p>Contact the association, register as the new owner, create your online account, and set automatic payments for monthly dues.</p></div>
+      <div class="manual-card"><h3>Update Your Mailing Address</h3><p>Change your address with USPS so tax notices, insurance documents, and other important mail reach you.</p></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">Secure · Connect · Register · Redirect</div><div>First Steps</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="04 Official Documents">
+  <div class="chrome"><div>Chapter 2 · Official Documents</div><div>04 / 11</div></div>
+  <div class="frame" style="padding-top:4vh">
+    <div class="kicker">Important Paperwork Is Coming</div>
+    <h2 class="h-xl h-xl-en" style="font-size:4.7vw;margin-bottom:4vh">Here’s what to expect.</h2>
+    <div class="grid-2-6-6" style="gap:5vw">
+      <div>
+        <div class="pipeline-label">From the City · Within 6-8 weeks</div>
+        <ul class="manual-list">
+          <li><strong>Recording Deed:</strong> official proof of ownership. A paper copy will be mailed; we have already sent a digital one.</li>
+          <li><strong>Supplemental Property Tax Bill:</strong> important and time-sensitive. More detail appears in the finance chapter.</li>
+          <li><strong>PCOR Form:</strong> change of ownership form. Check “Primary Resident” if applicable.</li>
+          <li><strong>Homeowner’s Tax Exemption Form:</strong> used when claiming the property as your personal residence.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="pipeline-label">From the Title Company</div>
+        <ul class="manual-list">
+          <li><strong>Title Policy:</strong> insurance protecting your ownership rights.</li>
+          <li><strong>Deed of Trust:</strong> records that you have a mortgage with a lender.</li>
+          <li><strong>Escrow Refund:</strong> you may also receive a refund check from escrow for any remaining balance, if applicable.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">Documents · City and Title Company</div><div>Paperwork</div></div>
+</section>
+<section class="slide hero light" data-theme="light" data-screen-label="05 Scam Alert">
+  <div class="chrome"><div>Chapter 2 · Scam Alert</div><div>05 / 11</div></div>
+  <div class="frame" style="display:grid;gap:3.5vh;align-content:center;min-height:80vh">
+    <div class="kicker">Do Not Pay for a Copy of Your Grant Deed</div>
+    <h1 class="h-hero h-hero-en" style="font-size:6.4vw;line-height:1.05;max-width:78vw">Official-looking does not always mean official.</h1>
+    <div class="grid-2-6-6" style="gap:4vw;align-items:start">
+      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>How it works:</strong> scammers use public transaction records to mail letters requesting around $100 for a “Recorded Deed” or “Grant Deed.” The fine print often says they are not a government agency.</p></div>
+      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>The truth:</strong> your grant deed is available at no cost from your title or escrow company as a digital copy, and the County Recorder can provide copies directly.</p></div>
+    </div>
+    <p class="lead" style="font-family:var(--font-body);font-size:1.18vw;max-width:72vw">Your ownership is established by the recorded public record, not by physically holding the deed. If any document requests money, send us a photo before taking action.</p>
+  </div>
+  <div class="foot"><div class="title">Scam Prevention · Verify Before Paying</div><div>Ownership Is Secure</div></div>
+</section>
+<section class="slide dark" data-theme="dark" data-screen-label="06 California Property Taxes">
+  <div class="chrome"><div>Chapter 3 · Managing Finances</div><div>06 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">Understanding Your California Property Taxes</div>
+    <h2 class="h-xl h-xl-en" style="font-size:4.9vw;margin-bottom:5vh">Know the calendar before the bill arrives.</h2>
+    <div class="grid-3">
+      <div class="stat-card"><div class="stat-label">Tax Year</div><div class="stat-nb" style="font-size:4.8vw">Jul 1</div><div class="stat-note">California’s property tax year runs July 1 to June 30.</div></div>
+      <div class="stat-card"><div class="stat-label">Installment 1</div><div class="stat-nb" style="font-size:4.8vw">Nov 1</div><div class="stat-note">Covers July 1 to Dec 31. Late after Dec 10, with a 10% penalty.</div></div>
+      <div class="stat-card"><div class="stat-label">Installment 2</div><div class="stat-nb" style="font-size:4.8vw">Feb 1</div><div class="stat-note">Covers Jan 1 to Jun 30. Late after Apr 10, with a 10% penalty.</div></div>
+    </div>
+    <div class="callout" style="margin-top:6vh;max-width:78vw">Annual secured property tax bills are typically mailed in late September or early October. After purchase, expect a separate supplemental tax bill based on the new assessed value; it is in addition to your regular annual bill.</div>
+  </div>
+  <div class="foot"><div class="title">California Tax Calendar</div><div>Finance</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="07 Paying Property Taxes">
+  <div class="chrome"><div>Chapter 3 · Payment Methods</div><div>07 / 11</div></div>
+  <div class="frame grid-2-7-5" style="padding-top:6vh">
+    <div>
+      <div class="kicker">How to Pay Your Property Taxes</div>
+      <h2 class="h-xl h-xl-en" style="font-size:4.8vw">Use the county’s official payment channel.</h2>
+      <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;margin-top:3vh">Primary methods are online payment through the county tax collector’s official website or mailing a check. Credit cards may earn points, but counties typically charge processing or service fees.</p>
+    </div>
+    <div class="county-grid" style="grid-template-columns:1fr;margin-top:0">
+      <div class="county"><b>Los Angeles County</b><span>ttc.lacounty.gov/pay-your-property-taxes/</span></div>
+      <div class="county"><b>Orange County</b><span>ttc.ocgov.com/proptax/</span></div>
+      <div class="county"><b>Riverside County</b><span>countytreasurer.org</span></div>
+      <div class="county"><b>San Bernardino County</b><span>mytaxcollector.com</span></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">Official County Websites</div><div>Payment</div></div>
+</section>
+<section class="slide hero dark" data-theme="dark" data-screen-label="08 Maintenance Checklist">
+  <div class="chrome"><div>Chapter 4 · Home Maintenance</div><div>08 / 11</div></div>
+  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
+    <div class="kicker">A Proactive Home Care Checklist</div>
+    <h1 class="h-hero h-hero-en" style="font-size:6.6vw;max-width:78vw">Protect the home before it asks for attention.</h1>
+    <div class="grid-3" style="margin-top:2vh">
+      <div class="manual-card"><h3>Leak Inspection & Prevention</h3><p>Check under sinks, toilets, roof areas, irrigation, sprinklers, HVAC, appliances, and smoke detectors.</p></div>
+      <div class="manual-card"><h3>Exterior & Grounds</h3><p>Maintain landscaping, support proper drainage, and keep pest prevention on a regular rhythm.</p></div>
+      <div class="manual-card"><h3>Sewer & Plumbing</h3><p>Practice drain care and address slow drains or recurring clogs before they become backups.</p></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">Maintenance · Prevention Over Repair</div><div>Checklist</div></div>
+</section>
+<section class="slide light" data-theme="light" data-screen-label="09 Water Damage Prevention">
+  <div class="chrome"><div>Chapter 4 · Water Damage</div><div>09 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">The Homeowner’s Guide to Preventing Water Damage</div>
+    <h2 class="h-xl h-xl-en" style="font-size:4.8vw;margin-bottom:4vh">Small leaks become expensive quietly.</h2>
+    <div class="grid-3">
+      <div class="manual-card"><h3>Under the Sink</h3><p><strong>Problem:</strong> hidden leaks can create mold. Check for dampness regularly.<br><br><strong>Solution:</strong> use a water leak alarm and a waterproof sink cabinet mat.</p></div>
+      <div class="manual-card"><h3>Toilets</h3><p><strong>Problem:</strong> a running toilet can waste hundreds of gallons of water, often from a worn flapper or fill valve.<br><br><strong>Solution:</strong> replace the inexpensive parts early.</p></div>
+      <div class="manual-card"><h3>Countertops & Showers</h3><p><strong>Problem:</strong> worn caulking or silicone lets water seep into walls and counters.<br><br><strong>Solution:</strong> inspect and reapply sealant in kitchens and bathrooms.</p></div>
+    </div>
+  </div>
+  <div class="foot"><div class="title">Water Damage · Early Detection</div><div>Prevention</div></div>
+</section>
+<section class="slide dark" data-theme="dark" data-screen-label="10 Systems and Appliances">
+  <div class="chrome"><div>Chapter 4 · Systems & Appliances</div><div>10 / 11</div></div>
+  <div class="frame" style="padding-top:5vh">
+    <div class="kicker">Essential System & Appliance Maintenance</div>
+    <h2 class="h-xl h-xl-en" style="font-size:4.9vw;margin-bottom:4vh">Four habits that prevent common emergencies.</h2>
+    <div class="pipeline-section">
+      <div class="pipeline" data-cols="4">
+        <div class="step"><div class="step-nb">01</div><div class="step-title">HVAC System</div><div class="step-desc">Replace air filters every 1-3 months to improve air quality and system efficiency.</div></div>
+        <div class="step"><div class="step-nb">02</div><div class="step-title">Washer & Dryer</div><div class="step-desc">Clean the lint trap after every use, clean the exhaust duct, and leave the washer door open after laundry.</div></div>
+        <div class="step"><div class="step-nb">03</div><div class="step-title">Smoke Detectors</div><div class="step-desc">Test monthly, keep spare batteries, and consider 10-year sealed battery models.</div></div>
+        <div class="step"><div class="step-nb">04</div><div class="step-title">Outdoor Drainage</div><div class="step-desc">Clear leaves and debris from storm drains, especially in lower-elevation areas before heavy rain.</div></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:8vh;max-width:60vw">A few calendar reminders can save thousands in emergency repairs.</div>
+  </div>
+  <div class="foot"><div class="title">HVAC · Laundry · Safety · Drainage</div><div>Maintenance</div></div>
+</section>
+<section class="slide hero light" data-theme="light" data-screen-label="11 Closing Contact">
+  <div class="chrome"><div>Wynn Housing · Ongoing Support</div><div>11 / 11</div></div>
+  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
+    <div class="kicker">Our Partnership Continues</div>
+    <h1 class="h-hero h-hero-en" style="font-size:6.2vw;line-height:1.08;max-width:82vw">Our commitment does not end with the keys.</h1>
+    <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;line-height:1.65;max-width:66vw">We are your lifelong resource for questions or needs that arise during your homeownership journey. Please never hesitate to reach out.</p>
+    <div class="grid-2-6-6" style="gap:4vw;max-width:78vw">
+      <div class="manual-card"><h3>Share Your Experience</h3><p>If you enjoyed working with us, a 5-star Zillow review helps other families find their dream home.</p></div>
+      <div class="manual-card"><h3>Help Friends & Family</h3><p>If someone you know is looking to buy or sell, we would be privileged to offer the same dedicated service.</p></div>
+    </div>
+    <div class="meta-row" style="font-size:1vw"><span>Wynn Housing</span><span>626-658-8265</span><span>WWW.WynnHousing.COM</span></div>
+  </div>
+  <div class="foot"><div class="title">Thank You · Wynn Housing</div><div>Contact</div></div>
+</section>
+</template>
+<script>
+const VS=`attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}`;
+const FS_DARK=`precision highp float;uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;vec3 palette(float t,vec3 a,vec3 b,vec3 c,vec3 d){return a+b*cos(6.28318*(c*t+d));}void main(){vec2 uv=gl_FragCoord.xy/u_resolution.xy;vec2 p=uv*2.0-1.0;p.x*=u_resolution.x/u_resolution.y;vec2 m=u_mouse*2.0-1.0;m.x*=u_resolution.x/u_resolution.y;float md=length(p-m);float mr=sin(md*15.0-u_time*4.0)*exp(-md*3.0);p+=mr*0.08;vec2 p0=p;for(float i=1.0;i<4.0;i++){p.x+=0.1/i*sin(i*3.0*p.y+u_time*0.4)+0.05;p.y+=0.1/i*cos(i*2.0*p.x+u_time*0.3)-0.05;}float r=length(p);float ang=atan(p.y,p.x);vec3 a=vec3(0.12,0.12,0.13);vec3 b=vec3(0.03,0.04,0.05);vec3 c=vec3(1.0,1.0,1.0);vec3 d=vec3(0.1,0.2,0.4);vec3 col=palette(r*1.5+p0.x*0.5+u_time*0.1,a,b,c,d);float disp=sin(r*25.0-u_time*1.5+ang*2.0)*0.5+0.5;col+=vec3(disp*0.015,disp*0.01,disp*0.02);float hi=pow(sin(p.x*4.0+p.y*3.0+u_time)*0.5+0.5,8.0);col+=hi*0.08;vec3 base=vec3(0.05,0.05,0.06);col=mix(base,col,0.85);gl_FragColor=vec4(col,1.0);}`;
+const FS_LIGHT=`precision highp float;uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}float noise(vec2 p){vec2 i=floor(p),f=fract(p);float a=hash(i),b=hash(i+vec2(1,0));float c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));vec2 u=f*f*(3.0-2.0*f);return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;}float fbm(vec2 p){float v=0.0,a=0.5;mat2 m=mat2(0.80,0.60,-0.60,0.80);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p*2.02;a*=0.5;}return v;}void main(){vec2 uv=gl_FragCoord.xy/u_resolution.xy;vec2 p=uv;p.x*=u_resolution.x/u_resolution.y;vec2 m=u_mouse;m.x*=u_resolution.x/u_resolution.y;vec2 md=p-m;float dl=length(md);p+=normalize(md+vec2(0.0001))*exp(-dl*5.0)*0.03;vec2 q=vec2(fbm(p*1.8+u_time*0.07),fbm(p*1.8+vec2(5.2,1.3)+u_time*0.06));vec2 r=vec2(fbm(p*2.0+q*1.3+vec2(1.7,9.2)+u_time*0.05),fbm(p*2.0+q*1.3+vec2(8.3,2.8)+u_time*0.04));float f=fbm(p*2.2+r*1.5);vec3 silverDark=vec3(0.86,0.85,0.84);vec3 paper=vec3(0.955,0.945,0.925);vec3 col=mix(silverDark,paper,f);float ph=r.x*2.2+u_time*0.35;col+=vec3(0.78,0.62,0.92)*sin(ph)*0.055;col+=vec3(0.55,0.72,0.95)*sin(ph*0.8+2.0)*0.05;float hl=smoothstep(0.48,0.92,f);col+=hl*0.06;gl_FragColor=vec4(col,1.0);}`;
+const mouse={x:.5,y:.5};addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight});
+function bootGL(canvasId,fsSrc){const canvas=document.getElementById(canvasId);const gl=canvas.getContext('webgl',{alpha:false,antialias:true});if(!gl)return()=>false;const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh};const prog=gl.createProgram();gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,fsSrc));gl.linkProgram(prog);gl.useProgram(prog);const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const pos=gl.getAttribLocation(prog,'position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);const lRes=gl.getUniformLocation(prog,'u_resolution');const lT=gl.getUniformLocation(prog,'u_time');const lM=gl.getUniformLocation(prog,'u_mouse');const resize=()=>{const d=Math.min(window.devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;gl.viewport(0,0,canvas.width,canvas.height)};addEventListener('resize',resize);resize();return tSec=>{gl.uniform2f(lRes,canvas.width,canvas.height);gl.uniform1f(lT,tSec);gl.uniform2f(lM,mouse.x,1-mouse.y);gl.drawArrays(gl.TRIANGLES,0,6);return true}}
+const drawDark=bootGL('bg-dark',FS_DARK),drawLight=bootGL('bg-light',FS_LIGHT),t0=Date.now();(function loop(){const t=(Date.now()-t0)/1000;drawDark(t);drawLight(t);requestAnimationFrame(loop)})();
+const deck=document.getElementById('deck'),nav=document.getElementById('nav'),hint=document.getElementById('hint'),langButtons=document.querySelectorAll('.language-switcher button');
+const STORAGE_KEY='wynn-homeowner-manual-state';
+let state={lang:'zh',slideByLang:{zh:0,en:0}};
+try{state={...state,...JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}}catch{}
+let slides=[],idx=0,total=0,lock=false,overviewOn=false,ov=null;
+function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+function setLanguage(lang){
+  if(!['zh','en'].includes(lang)) lang='zh';
+  state.lang=lang;
+  document.documentElement.lang=lang==='zh'?'zh-Hant':'en';
+  document.title=lang==='zh'?'屋主手冊 · Wynn Housing':'Homeowner Manual · Wynn Housing';
+  hint.textContent=lang==='zh'?'← → 投影片 · ESC 總覽':'← → Slides · ESC Index';
+  const tpl=document.getElementById('slides-'+lang);
+  deck.innerHTML=tpl.innerHTML;
+  slides=Array.from(deck.querySelectorAll('.slide'));
+  total=slides.length;
+  deck.style.width=total*100+'vw';
+  nav.innerHTML='';
+  slides.forEach((s,i)=>{const b=document.createElement('button');b.className='dot';b.dataset.i=i;b.setAttribute('aria-label',lang==='zh'?'第 '+(i+1)+' 頁':'Page '+(i+1));b.onclick=()=>go(i);nav.appendChild(b)});
+  langButtons.forEach(btn=>{const active=btn.dataset.lang===lang;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active))});
+  if(overviewOn) toggleOverview();
+  go(Math.max(0,Math.min(total-1,Number(state.slideByLang[lang])||0)),true);
+  saveState();
+}
+function go(n,immediate=false){
+  if(lock&&!immediate)return;
+  idx=Math.max(0,Math.min(total-1,n));
+  deck.style.transform='translateX('+(-idx*100)+'vw)';
+  slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+  nav.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  const el=slides[idx];
+  const th=el?.dataset.theme||(el?.classList.contains('light')?'light':'dark');
+  document.body.classList.toggle('light-bg',th==='light');
+  state.slideByLang[state.lang]=idx;
+  saveState();
+  lock=true;
+  setTimeout(()=>lock=false,immediate?0:700);
+}
+function ensureOverview(){
+  if(ov)return ov;
+  ov=document.createElement('div');
+  ov.id='overview';
+  ov.style.cssText='position:fixed;inset:0;z-index:100;background:rgba(var(--ink-rgb),.92);backdrop-filter:blur(12px);display:none;overflow-y:auto;padding:4vh 4vw';
+  document.body.appendChild(ov);
+  return ov;
+}
+function buildOverview(){
+  const panel=ensureOverview();panel.innerHTML='';
+  const grid=document.createElement('div');
+  grid.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:2vh 1.6vw;max-width:90vw;margin:0 auto';
+  slides.forEach((s,i)=>{const card=document.createElement('div');card.style.cssText='cursor:pointer;border-radius:6px;overflow:hidden;border:2px solid '+(i===idx?'rgba(var(--paper-rgb),.8)':'rgba(var(--paper-rgb),.15)')+';transition:border-color .2s';const wrap=document.createElement('div');wrap.style.cssText='width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;pointer-events:none;background:'+(s.classList.contains('light')?'var(--paper)':'var(--ink)');const clone=s.cloneNode(true);clone.style.cssText='width:100vw;height:100vh;transform:scale('+(1/4.5)+');transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none';wrap.appendChild(clone);const label=document.createElement('div');label.style.cssText='padding:6px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);opacity:.7';label.textContent=(i+1)+' / '+total;card.appendChild(wrap);card.appendChild(label);card.onclick=()=>{toggleOverview();go(i)};grid.appendChild(card)});
+  panel.appendChild(grid);
+}
+function toggleOverview(){overviewOn=!overviewOn;const panel=ensureOverview();if(overviewOn){buildOverview();panel.style.display='block'}else panel.style.display='none'}
+langButtons.forEach(btn=>btn.addEventListener('click',()=>setLanguage(btn.dataset.lang)));
+addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();toggleOverview();return}if(overviewOn)return;if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown')go(idx+1);if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp')go(idx-1);if(e.key==='Home')go(0);if(e.key==='End')go(total-1)});
+let wheelTO=null,wheelAcc=0;addEventListener('wheel',e=>{wheelAcc+=e.deltaY+e.deltaX;if(Math.abs(wheelAcc)>50){go(idx+(wheelAcc>0?1:-1));wheelAcc=0}clearTimeout(wheelTO);wheelTO=setTimeout(()=>wheelAcc=0,150)},{passive:true});
+let tx=0,ty=0;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(idx+(dx<0?1:-1))},{passive:true});
+setLanguage(state.lang||'zh');
+</script>
+</body>
+</html>
