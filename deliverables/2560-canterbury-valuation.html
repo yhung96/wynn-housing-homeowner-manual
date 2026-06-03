@@ -54,6 +54,8 @@
   .metric{border:1px solid var(--line);border-radius:var(--radius);padding:12px;background:#fffaf0}
   .label{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
   .value{font-family:var(--serif);font-size:25px;line-height:1.1;margin-top:5px}
+  .criteria{margin-top:22px;border-left:3px solid var(--brick);background:rgba(255,252,246,.72);padding:13px 15px;max-width:720px;color:var(--muted)}
+  .criteria b{display:block;color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
   main{max-width:1240px;margin:0 auto;padding:0 24px 54px}
   .section{margin-top:24px}
   .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 12px 36px rgba(46,37,25,.07);padding:22px}
@@ -142,6 +144,10 @@
       <span class="pill">5 bed · 4 bath</span>
       <span class="pill">Prepared June 3, 2026</span>
     </div>
+    <div class="criteria">
+      <b>Comp criteria</b>
+      SFR closed sales in the past 12 months, bounded by California Blvd, San Gabriel Blvd, Sierra Madre Blvd, and Huntington Dr.
+    </div>
   </div>
   <aside class="scorecard" aria-label="Main valuation">
     <h2>Main estimate</h2>
@@ -195,7 +201,7 @@
     <div class="section-head">
       <div>
         <h2>Comparable Calculations</h2>
-        <p class="section-note">Each comp's sale price is split between land and structure according to LA County assessed land and improvement values.</p>
+        <p class="section-note">Comp set: SFR closed sales in the past 12 months within the California Blvd / San Gabriel Blvd / Sierra Madre Blvd / Huntington Dr boundary. Each comp's sale price is split between land and structure according to LA County assessed land and improvement values.</p>
       </div>
     </div>
     <div class="table-wrap">
@@ -220,7 +226,7 @@
     <div class="section-head">
       <div>
         <h2>Method</h2>
-        <p class="section-note">This is the specific workflow used for land-heavy homes where the lot may drive most of the value.</p>
+        <p class="section-note">This workflow uses the stated SFR closed-sale comp boundary first, then applies the land-heavy allocation model where the lot may drive most of the value.</p>
       </div>
     </div>
     <div class="method-grid">
