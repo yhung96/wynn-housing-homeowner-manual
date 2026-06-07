@@ -77,7 +77,7 @@
     <div class="hero-meta">
       <span class="pill">Lot: 7,749 sqft</span><span class="pill">Building: 1,475 sqft</span><span class="pill">3 bed · 2 bath</span><span class="pill">Prepared June 7, 2026</span>
     </div>
-    <div class="criteria"><b>Comp criteria</b>Nearest 10 SFR in San Gabriel sold within the past 3 months. Updated comp set removes 407 Daroca Ave and adds 233 Cresta Ave.</div>
+    <div class="criteria"><b>Comp criteria</b>Nearest 10 SFR in San Gabriel sold within the past 3 months.</div>
   </div>
   <aside class="scorecard" aria-label="Main valuation">
     <h2>Main estimate</h2>
@@ -104,9 +104,9 @@
     </div>
     <div class="scenario-layout">
       <div class="scenario-main">
-        <div class="label" id="scenarioLabel">10 comps incl. 233 Cresta</div>
+        <div class="label" id="scenarioLabel">10 comps</div>
         <div class="big" id="scenarioEstimate">$1,373,321</div>
-        <div class="subtle" id="scenarioSub">Main estimate using the updated 10-comp set</div>
+        <div class="subtle" id="scenarioSub">Main estimate using the 10-comp set</div>
         <div class="stack" aria-label="Value component split"><span id="landStack" style="width:62.7%"></span><span id="structureStack" style="width:37.3%"></span></div>
         <div class="legend"><span><i class="dot land"></i>Land <b id="scenarioLand">$860,936</b></span><span><i class="dot structure"></i>Structure <b id="scenarioStructure">$512,385</b></span></div>
       </div>
@@ -135,7 +135,7 @@
   </section>
 
   <section class="section notes">
-    <div class="note"><b>Comp update:</b> 407 Daroca Ave was removed and replaced with 233 Cresta Ave, which sold on March 16, 2026 for $1,115,000.</div>
+    <div class="note"><b>Comp criteria:</b> The model uses the 10 San Gabriel SFR comps shown in the tables, all closed within the past 3 months.</div>
     <div class="note"><b>Assessor split note:</b> 425 Alabama allocates only 29.9% to land and 70.1% to improvements, producing a high structure $/sqft sensitivity.</div>
   </section>
 </main>
@@ -165,7 +165,7 @@ const comps = [
 });
 
 const scenarioDefs = {
-  all:{label:"10 comps incl. 233 Cresta", sub:"Main estimate using the updated 10-comp set", items:comps},
+  all:{label:"10 comps", sub:"Main estimate using the 10-comp set", items:comps},
   exclude425:{label:"Exclude 425 Alabama", sub:"Removes the highest structure-allocation outlier", items:comps.filter(c=>c.name!=="425 Alabama St")},
   exclude425427:{label:"Exclude 425 Alabama + 427 Country Club", sub:"Removes the high structure-allocation comp and large-lot comp", items:comps.filter(c=>!["425 Alabama St","427 Country Club Dr"].includes(c.name))},
   excludeBase:{label:"Base-year split sensitivity", sub:"Removes 435 Rosemont, 420 Milton, 425 Alabama, and 427 Country Club", items:comps.filter(c=>!["435 Rosemont Blvd","420 Milton Dr","425 Alabama St","427 Country Club Dr"].includes(c.name))}
