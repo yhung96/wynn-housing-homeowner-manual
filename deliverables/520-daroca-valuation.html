@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Land and structure valuation for 520 Daroca Ave, San Gabriel using LA County Assessor comparable property allocation.">
+<title>520 Daroca Ave · Land/Structure Valuation</title>
+<style>
+  :root{
+    --bg:#f6f2ea;--paper:#fffcf6;--ink:#25211c;--muted:#6f685f;--line:#d8cfc0;--line-dark:#bfb3a2;
+    --green:#294f43;--blue:#425f7a;--brick:#a44934;--gold:#b9852c;--soft-green:#dfe9df;
+    --shadow:0 20px 60px rgba(46,37,25,.12);--radius:8px;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:"Avenir Next","Helvetica Neue",Arial,sans-serif;--mono:"SFMono-Regular","Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+  a{color:inherit;text-decoration-color:rgba(164,73,52,.45);text-underline-offset:3px} button{font:inherit}
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(246,242,234,.9);backdrop-filter:blur(14px);border-bottom:1px solid rgba(37,33,28,.1)}
+  .topbar-inner{max-width:1240px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .mark{width:28px;height:28px;border:1px solid var(--ink);display:grid;place-items:center;font-family:var(--serif);background:var(--paper)}
+  .nav{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .nav a,.print-btn{border:1px solid transparent;border-radius:999px;padding:7px 10px;background:transparent;color:var(--muted);font-size:13px;text-decoration:none;cursor:pointer}
+  .nav a:hover,.print-btn:hover{border-color:var(--line-dark);color:var(--ink);background:rgba(255,252,246,.58)}
+  .hero{max-width:1240px;margin:0 auto;padding:42px 24px 28px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(360px,.8fr);gap:30px;align-items:stretch}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brick);margin:0 0 16px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(42px,7vw,92px);letter-spacing:-.035em;line-height:.92;margin:0 0 18px}
+  .hero-copy{font-size:18px;color:var(--muted);max-width:680px;margin:0}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:8px 11px;background:rgba(255,252,246,.72);font-size:13px;color:var(--muted)}
+  .criteria{margin-top:22px;border-left:3px solid var(--brick);background:rgba(255,252,246,.72);padding:13px 15px;max-width:720px;color:var(--muted)}
+  .criteria b{display:block;color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+  .scorecard{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;display:grid;gap:16px}
+  .scorecard h2,.panel h2,.section h2{font-family:var(--serif);font-weight:500;letter-spacing:-.02em;margin:0}
+  .scorecard h2{font-size:24px}.estimate{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;border-top:1px solid var(--line);padding-top:16px}
+  .estimate strong{font-family:var(--serif);font-size:42px;line-height:1;letter-spacing:-.03em}.delta{color:var(--green);font-weight:700;background:var(--soft-green);border-radius:999px;padding:7px 9px;font-size:13px}
+  .metric-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:var(--radius);padding:12px;background:#fffaf0}
+  .label{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}.value{font-family:var(--serif);font-size:25px;line-height:1.1;margin-top:5px}
+  main{max-width:1240px;margin:0 auto;padding:0 24px 54px}.section{margin-top:24px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 12px 36px rgba(46,37,25,.07);padding:22px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:16px}.section h2{font-size:31px}.section-note{color:var(--muted);max-width:720px;margin:6px 0 0}
+  .scenario-controls{display:flex;gap:8px;flex-wrap:wrap}.scenario-controls button{border:1px solid var(--line-dark);border-radius:999px;padding:9px 12px;background:transparent;color:var(--muted);cursor:pointer}
+  .scenario-controls button.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .scenario-layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:20px;align-items:stretch}.scenario-main{border:1px solid var(--line);border-radius:var(--radius);padding:18px;background:#fffaf1}
+  .scenario-main .big{font-family:var(--serif);font-size:48px;line-height:1;letter-spacing:-.03em;margin:8px 0}.stack{height:58px;border:1px solid var(--line-dark);display:flex;margin-top:16px;background:#fff;border-radius:4px;overflow:hidden}
+  .stack span:first-child{background:var(--green)}.stack span:last-child{background:var(--gold)}.legend{display:flex;gap:16px;margin-top:10px;color:var(--muted);font-size:13px;flex-wrap:wrap}
+  .dot{display:inline-block;width:9px;height:9px;margin-right:6px;border-radius:50%}.dot.land{background:var(--green)}.dot.structure{background:var(--gold)}
+  .bars{display:grid;gap:9px}.bar-row{display:grid;grid-template-columns:160px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:13px}
+  .bar-track{height:14px;background:#efe6d8;border-radius:999px;overflow:hidden;border:1px solid var(--line)}.bar-fill{height:100%;background:var(--blue);border-radius:999px}.bar-fill.outlier{background:var(--brick)}
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:var(--radius);background:#fffaf1}table{width:100%;border-collapse:collapse;min-width:940px}
+  th,td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:#fffaf1}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;background:#f2eadf}td{font-size:14px}tr:last-child td{border-bottom:0}
+  .address{font-weight:700;color:var(--ink)}.subtle{color:var(--muted);font-size:13px}.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .method-card{border-top:2px solid var(--ink);padding-top:12px}.method-card b{font-family:var(--serif);font-size:21px;font-weight:500}.method-card p{color:var(--muted);margin:7px 0 0;font-size:14px}
+  .notes{display:grid;grid-template-columns:1fr 1fr;gap:14px}.note{border-left:3px solid var(--brick);background:#fffaf1;padding:13px 14px;color:var(--muted)}.footer{max-width:1240px;margin:0 auto;padding:22px 24px 42px;color:var(--muted);font-size:13px}
+  @media (max-width:920px){.topbar{position:static}.hero,.scenario-layout,.notes{grid-template-columns:1fr}.method-grid{grid-template-columns:repeat(2,1fr)}.topbar-inner{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}}
+  @media (max-width:560px){.hero{padding-top:28px}.metric-grid,.method-grid{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}.bar-row{grid-template-columns:1fr}h1{font-size:44px}}
+  @media print{.topbar,.scenario-controls,.print-btn{display:none}body{background:white}.hero,main,.footer{max-width:none;padding-left:20px;padding-right:20px}.panel,.scorecard{box-shadow:none}a{text-decoration:none}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="mark">W</span><span>Wynn Housing Valuation Desk</span></div>
+    <nav class="nav" aria-label="Page navigation">
+      <a href="#scenarios">Scenarios</a><a href="#comps">Comps</a><a href="#method">Method</a><a href="#sources">Sources</a>
+      <button class="print-btn" type="button" onclick="window.print()">Print</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <p class="eyebrow">Land-heavy residential valuation · San Gabriel 91775</p>
+    <h1>520 Daroca Ave</h1>
+    <p class="hero-copy">A transparent land/structure allocation model using nearby closed SFR sales and LA County Assessor land/improvement splits.</p>
+    <div class="hero-meta">
+      <span class="pill">Lot: 7,749 sqft</span><span class="pill">Building: 1,475 sqft</span><span class="pill">3 bed · 2 bath</span><span class="pill">Prepared June 7, 2026</span>
+    </div>
+    <div class="criteria"><b>Comp criteria</b>Nearest 10 SFR in San Gabriel sold within the past 3 months. Updated comp set removes 407 Daroca Ave and adds 233 Cresta Ave.</div>
+  </div>
+  <aside class="scorecard" aria-label="Main valuation">
+    <h2>Main estimate</h2>
+    <div class="estimate"><strong id="heroEstimate">$1.37M</strong><span class="delta" id="heroDelta">10-comp model</span></div>
+    <div class="metric-grid">
+      <div class="metric"><div class="label">Land component</div><div class="value" id="heroLand">$861K</div></div>
+      <div class="metric"><div class="label">Structure component</div><div class="value" id="heroStructure">$512K</div></div>
+      <div class="metric"><div class="label">Avg land</div><div class="value" id="heroLandPsf">$111.10</div></div>
+      <div class="metric"><div class="label">Avg structure</div><div class="value" id="heroStructurePsf">$347.38</div></div>
+    </div>
+  </aside>
+</section>
+
+<main>
+  <section class="section panel" id="scenarios">
+    <div class="section-head">
+      <div><h2>Scenario Lens</h2><p class="section-note">Toggle the comp set to see how assessor split outliers and the large-lot comp affect the estimate.</p></div>
+      <div class="scenario-controls" role="group" aria-label="Scenario selector">
+        <button type="button" class="active" data-scenario="all">10 comps</button>
+        <button type="button" data-scenario="exclude425">Exclude 425 Alabama</button>
+        <button type="button" data-scenario="exclude425427">Exclude 425 + 427</button>
+        <button type="button" data-scenario="excludeBase">Base-year sensitivity</button>
+      </div>
+    </div>
+    <div class="scenario-layout">
+      <div class="scenario-main">
+        <div class="label" id="scenarioLabel">10 comps incl. 233 Cresta</div>
+        <div class="big" id="scenarioEstimate">$1,373,321</div>
+        <div class="subtle" id="scenarioSub">Main estimate using the updated 10-comp set</div>
+        <div class="stack" aria-label="Value component split"><span id="landStack" style="width:62.7%"></span><span id="structureStack" style="width:37.3%"></span></div>
+        <div class="legend"><span><i class="dot land"></i>Land <b id="scenarioLand">$860,936</b></span><span><i class="dot structure"></i>Structure <b id="scenarioStructure">$512,385</b></span></div>
+      </div>
+      <div><div class="bars" id="bars"></div></div>
+    </div>
+  </section>
+
+  <section class="section panel" id="comps">
+    <div class="section-head"><div><h2>Comparable Calculations</h2><p class="section-note">Each comp's sale price is split between land and structure according to LA County assessed land and improvement values.</p></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Property</th><th>Sale date</th><th>Sale price</th><th>Land share</th><th>Land $/sqft</th><th>Structure share</th><th>Structure $/sqft</th><th>AIN</th></tr></thead><tbody id="calcRows"></tbody></table></div>
+  </section>
+
+  <section class="section panel" id="method">
+    <div class="section-head"><div><h2>Method</h2><p class="section-note">This workflow applies a land-heavy allocation model to nearby recent SFR sales.</p></div></div>
+    <div class="method-grid">
+      <div class="method-card"><b>1. Define comps</b><p>Use the nearest San Gabriel SFR closed sales within the past 3 months.</p></div>
+      <div class="method-card"><b>2. Split sale price</b><p>Use official assessed land and improvement value ratios for each comp.</p></div>
+      <div class="method-card"><b>3. Average unit values</b><p>Average implied land $/sqft and structure $/sqft across the selected comp set.</p></div>
+      <div class="method-card"><b>4. Apply to subject</b><p>Multiply averages by 7,749 sqft of land and 1,475 sqft of building area.</p></div>
+    </div>
+  </section>
+
+  <section class="section panel" id="sources">
+    <div class="section-head"><div><h2>Source Data</h2><p class="section-note">Assessor values use LA County Assessor Portal 2026 roll preparation land/improvement fields where available.</p></div></div>
+    <div class="table-wrap"><table><thead><tr><th>Property</th><th>Lot sqft</th><th>Building sqft</th><th>Assessed land</th><th>Assessed improvements</th><th>Assessed total</th><th>Sale source</th></tr></thead><tbody id="sourceRows"></tbody></table></div>
+  </section>
+
+  <section class="section notes">
+    <div class="note"><b>Comp update:</b> 407 Daroca Ave was removed and replaced with 233 Cresta Ave, which sold on March 16, 2026 for $1,115,000.</div>
+    <div class="note"><b>Assessor split note:</b> 425 Alabama allocates only 29.9% to land and 70.1% to improvements, producing a high structure $/sqft sensitivity.</div>
+  </section>
+</main>
+
+<footer class="footer">This page is a comp-based estimate, not an appraisal. Assessor allocation ratios may reflect base-year history and may not capture condition, remodeling, floor plan, lot usability, zoning, ADU potential, traffic exposure, view, or exact sale timing.</footer>
+
+<script>
+const target = { lotSqft: 7749, buildingSqft: 1475 };
+const comps = [
+  {name:"700 Alabama St", ain:"5333035010", sale:1850000, date:"2026-03-25", lot:9024, building:2825, land:1290690, imp:928292, source:"https://www.redfin.com/CA/San-Gabriel/700-Alabama-St-91775/home/7016183", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5333035010"},
+  {name:"435 Rosemont Blvd", ain:"5363002008", sale:1900000, date:"2026-03-13", lot:11179, building:2456, land:66235, imp:103181, source:"https://www.redfin.com/CA/San-Gabriel/435-Rosemont-Blvd-91775/home/7033352", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5363002008", outlier:true},
+  {name:"420 Milton Dr", ain:"5363004006", sale:1600000, date:"2026-05-06", lot:6955, building:1434, land:52674, imp:30221, source:"https://www.redfin.com/CA/San-Gabriel/420-Milton-Dr-91775/home/7033401", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5363004006"},
+  {name:"336 Rosemont Blvd", ain:"5363008009", sale:1430000, date:"2026-03-31", lot:7377, building:1484, land:290551, imp:158440, source:"https://www.redfin.com/CA/San-Gabriel/336-Rosemont-Blvd-91775/home/7033472", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5363008009"},
+  {name:"568 Milton Dr", ain:"5365026004", sale:1320000, date:"2026-04-08", lot:6434, building:1666, land:289464, imp:223332, source:"https://www.redfin.com/CA/San-Gabriel/568-Milton-Dr-91775/home/7034653", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5365026004"},
+  {name:"405 San Marino Oaks", ain:"5365030032", sale:2110000, date:"2026-05-01", lot:9264, building:2787, land:433408, imp:364061, source:"https://www.redfin.com/CA/San-Gabriel/405-San-Marino-Oaks-91775/home/7034737", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5365030032"},
+  {name:"508 Daroca Ave", ain:"5366004008", sale:1300000, date:"2026-03-17", lot:7415, building:1608, land:783770, imp:221058, source:"https://www.redfin.com/CA/San-Gabriel/508-Daroca-Ave-91775/home/7034806", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5366004008"},
+  {name:"425 Alabama St", ain:"5366018017", sale:2130000, date:"2026-06-02", lot:10986, building:1880, land:38970, imp:91461, source:"https://www.redfin.com/CA/San-Gabriel/425-Alabama-St-91775/home/7035032", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5366018017", outlier:true},
+  {name:"427 Country Club Dr", ain:"5366016018", sale:2250000, date:"2026-03-12", lot:25016, building:1992, land:124754, imp:23965, source:"https://www.redfin.com/CA/San-Gabriel/427-Country-Club-Dr-91775/home/7035001", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5366016018", outlier:true},
+  {name:"233 Cresta Ave", ain:"5367010011", sale:1115000, date:"2026-03-16", lot:6282, building:1538, land:259147, imp:60291, source:"https://www.redfin.com/CA/San-Gabriel/233-Cresta-Ave-91775/home/7035307", assessor:"https://portal.assessor.lacounty.gov/parceldetail/5367010011"}
+].map(comp => {
+  const total = comp.land + comp.imp;
+  const landShare = comp.land / total;
+  const structureShare = comp.imp / total;
+  const impliedLand = landShare * comp.sale;
+  const impliedStructure = structureShare * comp.sale;
+  return {...comp,total,landShare,structureShare,impliedLand,impliedStructure,landPsf:impliedLand/comp.lot,structurePsf:impliedStructure/comp.building};
+});
+
+const scenarioDefs = {
+  all:{label:"10 comps incl. 233 Cresta", sub:"Main estimate using the updated 10-comp set", items:comps},
+  exclude425:{label:"Exclude 425 Alabama", sub:"Removes the highest structure-allocation outlier", items:comps.filter(c=>c.name!=="425 Alabama St")},
+  exclude425427:{label:"Exclude 425 Alabama + 427 Country Club", sub:"Removes the high structure-allocation comp and large-lot comp", items:comps.filter(c=>!["425 Alabama St","427 Country Club Dr"].includes(c.name))},
+  excludeBase:{label:"Base-year split sensitivity", sub:"Removes 435 Rosemont, 420 Milton, 425 Alabama, and 427 Country Club", items:comps.filter(c=>!["435 Rosemont Blvd","420 Milton Dr","425 Alabama St","427 Country Club Dr"].includes(c.name))}
+};
+const money = v => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(v);
+const compact = v => v >= 1000000 ? "$" + (v/1000000).toFixed(2) + "M" : "$" + Math.round(v/1000) + "K";
+const psf = v => "$" + v.toFixed(2);
+const pct = v => (v*100).toFixed(1) + "%";
+
+function calculate(items){
+  const avgLandPsf = items.reduce((sum,item)=>sum+item.landPsf,0)/items.length;
+  const rawStructurePsf = items.reduce((sum,item)=>sum+item.structurePsf,0)/items.length;
+  const structurePsf = Math.max(rawStructurePsf,250);
+  const landValue = avgLandPsf * target.lotSqft;
+  const structureValue = structurePsf * target.buildingSqft;
+  return {avgLandPsf,rawStructurePsf,structurePsf,landValue,structureValue,estimate:landValue+structureValue};
+}
+function renderScenario(key){
+  const def = scenarioDefs[key];
+  const result = calculate(def.items);
+  document.querySelectorAll("[data-scenario]").forEach(button=>button.classList.toggle("active",button.dataset.scenario===key));
+  document.getElementById("scenarioLabel").textContent = def.label;
+  document.getElementById("scenarioSub").textContent = def.sub;
+  document.getElementById("scenarioEstimate").textContent = money(result.estimate);
+  document.getElementById("scenarioLand").textContent = money(result.landValue);
+  document.getElementById("scenarioStructure").textContent = money(result.structureValue);
+  const landWidth = result.landValue / result.estimate * 100;
+  document.getElementById("landStack").style.width = landWidth + "%";
+  document.getElementById("structureStack").style.width = (100-landWidth) + "%";
+  document.getElementById("heroEstimate").textContent = compact(result.estimate);
+  document.getElementById("heroDelta").textContent = def.label;
+  document.getElementById("heroLand").textContent = compact(result.landValue);
+  document.getElementById("heroStructure").textContent = compact(result.structureValue);
+  document.getElementById("heroLandPsf").textContent = psf(result.avgLandPsf);
+  document.getElementById("heroStructurePsf").textContent = psf(result.structurePsf);
+  renderBars(def.items);
+}
+function renderBars(items){
+  const maxLand = Math.max(...comps.map(comp=>comp.landPsf));
+  document.getElementById("bars").innerHTML = comps.map(comp => {
+    const active = items.includes(comp);
+    return `<div class="bar-row" style="opacity:${active ? 1 : .32}">
+      <div>${comp.name}</div>
+      <div class="bar-track"><div class="bar-fill ${comp.outlier ? "outlier" : ""}" style="width:${comp.landPsf/maxLand*100}%"></div></div>
+      <div>${psf(comp.landPsf)}/sf</div>
+    </div>`;
+  }).join("");
+}
+document.getElementById("calcRows").innerHTML = comps.map(comp => `
+  <tr><td><div class="address">${comp.name}</div><div class="subtle">San Gabriel, CA 91775</div></td><td>${comp.date}</td><td>${money(comp.sale)}</td><td>${pct(comp.landShare)}</td><td>${psf(comp.landPsf)}</td><td>${pct(comp.structureShare)}</td><td>${psf(comp.structurePsf)}</td><td>${comp.ain}</td></tr>
+`).join("");
+document.getElementById("sourceRows").innerHTML = comps.map(comp => `
+  <tr><td><div class="address"><a href="${comp.assessor}">${comp.name}</a></div></td><td>${comp.lot.toLocaleString()}</td><td>${comp.building.toLocaleString()}</td><td>${money(comp.land)}</td><td>${money(comp.imp)}</td><td>${money(comp.total)}</td><td><a href="${comp.source}">Redfin</a></td></tr>
+`).join("");
+document.querySelectorAll("[data-scenario]").forEach(button=>button.addEventListener("click",()=>renderScenario(button.dataset.scenario)));
+renderScenario("all");
+</script>
+</body>
+</html>
