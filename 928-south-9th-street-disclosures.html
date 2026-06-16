@@ -3,132 +3,128 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="928 South 9th Street disclosure briefing for buyer and agent review.">
-  <title>928 S 9th St Disclosure Briefing | Wynn Housing</title>
+  <meta name="description" content="928 South 9th Street buyer due diligence report covering NHD taxes, termite work, inspection issues, and garage water disclosure.">
+  <title>928 S 9th St 買方揭露調查報告 | Wynn Housing</title>
   <style>
     :root {
-      --ink: #14110d;
-      --coal: #211d18;
-      --paper: #f8f3e8;
-      --cream: #fffaf0;
-      --line: rgba(20, 17, 13, .16);
-      --muted: #756b60;
-      --gold: #b99a45;
-      --teal: #2f6e67;
-      --red: #a33a32;
-      --blue: #315f82;
-      --clay: #c56f44;
-      --shadow: 0 26px 80px rgba(20, 17, 13, .18);
-      --serif: Georgia, "Times New Roman", "Songti TC", serif;
+      --ink: #102027;
+      --paper: #f7f8f4;
+      --surface: #ffffff;
+      --surface-2: #eef4f2;
+      --line: rgba(16, 32, 39, .14);
+      --muted: #5f6f72;
+      --teal: #176b6a;
+      --blue: #385f86;
+      --gold: #b9832f;
+      --rust: #a24130;
+      --green: #4d7144;
+      --shadow: 0 24px 70px rgba(16, 32, 39, .14);
+      --serif: "Iowan Old Style", "Charter", Georgia, "Songti TC", "Noto Serif TC", serif;
       --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: var(--paper);
+      background:
+        linear-gradient(90deg, rgba(23,107,106,.045) 1px, transparent 1px),
+        linear-gradient(rgba(23,107,106,.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 44px 44px;
       color: var(--ink);
       font-family: var(--sans);
-      line-height: 1.55;
-      overflow-x: hidden;
+      line-height: 1.62;
+      letter-spacing: 0;
     }
+
     a { color: inherit; }
-    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
-    .hero {
-      min-height: 88vh;
-      display: grid;
-      align-items: end;
-      padding: 44px 0 34px;
-      color: var(--cream);
-      background:
-        linear-gradient(110deg, rgba(20,17,13,.96) 0%, rgba(20,17,13,.89) 47%, rgba(20,17,13,.52) 100%),
-        radial-gradient(circle at 78% 18%, rgba(185,154,69,.34), transparent 32%),
-        linear-gradient(135deg, #33281e 0%, #173d42 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero:before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      opacity: .26;
-      background-image:
-        linear-gradient(rgba(255,250,240,.16) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,250,240,.16) 1px, transparent 1px);
-      background-size: 56px 56px;
-      transform: rotate(-4deg) scale(1.03);
-    }
-    .hero .wrap { position: relative; z-index: 1; }
-    .brandbar {
-      position: absolute;
-      top: 30px;
-      left: 0;
-      right: 0;
-      z-index: 2;
-      color: rgba(255,250,240,.72);
+    .wrap { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    .topline {
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.72);
+      font-family: var(--mono);
       font-size: 12px;
-      font-weight: 750;
-      letter-spacing: .18em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .brandbar .wrap { display: flex; justify-content: space-between; gap: 18px; }
-    .kicker {
-      margin: 0 0 18px;
-      color: var(--gold);
-      font-size: 13px;
-      font-weight: 850;
-      letter-spacing: .2em;
-      text-transform: uppercase;
+    .topline .wrap { display: flex; justify-content: space-between; gap: 18px; }
+    .hero {
+      min-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      background:
+        linear-gradient(120deg, rgba(16,32,39,.97) 0%, rgba(16,32,39,.9) 48%, rgba(23,107,106,.78) 100%),
+        radial-gradient(circle at 75% 22%, rgba(185,131,47,.42), transparent 28%);
+      color: #fff;
     }
-    h1, h2, h3 { margin: 0; line-height: 1.05; letter-spacing: 0; }
-    h1 {
-      max-width: 980px;
-      font-family: var(--serif);
-      font-size: clamp(48px, 9vw, 126px);
-      font-weight: 800;
-    }
-    .hero-copy {
+    .hero-main {
+      flex: 1;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 42px;
       align-items: end;
-      margin-top: 26px;
+      padding: 76px 0 44px;
+    }
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #e0b45d;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, h4 { margin: 0; line-height: 1.08; letter-spacing: 0; }
+    h1 {
+      max-width: 1040px;
+      font-family: var(--serif);
+      font-size: clamp(46px, 8.3vw, 112px);
+      font-weight: 780;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 36px;
+      align-items: end;
+      margin-top: 28px;
     }
     .lede {
-      max-width: 740px;
-      color: rgba(255,250,240,.78);
-      font-size: clamp(17px, 1.8vw, 22px);
+      max-width: 770px;
+      margin: 0;
+      color: rgba(255,255,255,.78);
+      font-size: clamp(17px, 1.7vw, 22px);
     }
-    .dossier {
-      border: 1px solid rgba(255,250,240,.22);
+    .brief-card {
+      border: 1px solid rgba(255,255,255,.18);
       border-radius: 8px;
       padding: 22px;
-      background: rgba(255,250,240,.08);
-      box-shadow: 0 22px 80px rgba(0,0,0,.25);
-      backdrop-filter: blur(16px);
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 22px 72px rgba(0,0,0,.22);
+      backdrop-filter: blur(14px);
     }
-    .dossier b {
+    .brief-card b {
       display: block;
       font-family: var(--serif);
-      font-size: 40px;
+      font-size: 46px;
       line-height: 1;
-      margin-bottom: 8px;
     }
-    .dossier span {
+    .brief-card span {
       display: block;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,250,240,.18);
-      color: rgba(255,250,240,.72);
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.2);
+      color: rgba(255,255,255,.72);
       font-size: 14px;
     }
+
     nav {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(248,243,232,.92);
       border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(18px);
+      background: rgba(247,248,244,.94);
+      backdrop-filter: blur(16px);
     }
     nav .wrap {
       display: flex;
@@ -139,431 +135,557 @@
     nav a {
       flex: 0 0 auto;
       padding: 9px 12px;
-      border-radius: 5px;
+      border-radius: 6px;
       color: var(--muted);
       font-size: 13px;
-      font-weight: 780;
+      font-weight: 760;
       text-decoration: none;
-      letter-spacing: .03em;
+      white-space: nowrap;
     }
-    nav a:hover { background: #e9dfcf; color: var(--ink); }
-    main { padding: 46px 0 80px; }
-    section { margin-top: 76px; }
+    nav a:hover { color: var(--ink); background: var(--surface-2); }
+
+    main { padding: 50px 0 82px; }
+    section { margin-top: 82px; scroll-margin-top: 68px; }
     section:first-child { margin-top: 0; }
-    .section-title {
+    .section-head {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
-      gap: 36px;
+      gap: 34px;
       align-items: end;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
     h2 {
       font-family: var(--serif);
       font-size: clamp(34px, 5vw, 64px);
+      font-weight: 760;
     }
-    .note { margin: 0; color: var(--muted); font-size: 16px; }
-    .slide-card {
+    .note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .source {
+      margin-top: 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .02em;
+    }
+    .panel {
       border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--cream);
+      border-radius: 8px;
+      background: var(--surface);
       box-shadow: var(--shadow);
       overflow: hidden;
     }
-    .metrics {
+    .pad { padding: 24px; }
+    .mini-grid {
       display: grid;
-      grid-template-columns: 1.1fr repeat(3, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 1px;
       background: var(--line);
     }
     .metric {
-      min-height: 190px;
-      padding: 24px;
-      background: var(--cream);
+      min-height: 168px;
+      padding: 22px;
+      background: var(--surface);
     }
-    .metric.dark {
-      background: var(--coal);
-      color: var(--cream);
-    }
-    .metric .label {
+    .metric.dark { background: var(--ink); color: #fff; }
+    .label {
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 850;
-      letter-spacing: .16em;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
       text-transform: uppercase;
     }
-    .metric.dark .label { color: rgba(255,250,240,.58); }
+    .metric.dark .label { color: rgba(255,255,255,.58); }
     .metric strong {
       display: block;
-      margin-top: 26px;
+      margin-top: 24px;
       font-family: var(--serif);
-      font-size: clamp(36px, 6vw, 74px);
-      line-height: .9;
+      font-size: clamp(30px, 4.2vw, 58px);
+      line-height: .94;
+      overflow-wrap: anywhere;
     }
-    .metric p { margin: 18px 0 0; color: var(--muted); font-size: 14px; }
-    .metric.dark p { color: rgba(255,250,240,.68); }
-    .risk-grid {
+    .metric p { margin: 16px 0 0; color: var(--muted); font-size: 14px; }
+    .metric.dark p { color: rgba(255,255,255,.7); }
+
+    .risk-strip {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
     }
     .risk {
-      min-height: 310px;
-      padding: 26px;
-      border-radius: 10px;
-      color: var(--cream);
+      min-height: 220px;
+      padding: 22px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--teal);
       position: relative;
       overflow: hidden;
+      contain: paint;
     }
+    .risk:nth-child(2) { background: var(--rust); }
+    .risk:nth-child(3) { background: var(--blue); }
+    .risk:nth-child(4) { background: var(--green); }
     .risk:after {
       content: "";
       position: absolute;
-      right: -38px;
-      bottom: -38px;
-      width: 126px;
-      height: 126px;
-      border: 1px solid rgba(255,250,240,.22);
-      border-radius: 50%;
-    }
-    .risk.red { background: linear-gradient(135deg, #813128, #2b1917); }
-    .risk.teal { background: linear-gradient(135deg, #23645e, #162927); }
-    .risk.blue { background: linear-gradient(135deg, #315f82, #161e28); }
-    .risk.clay { background: linear-gradient(135deg, #b75c34, #2b1912); }
-    .tag {
-      display: inline-flex;
-      margin-bottom: 18px;
-      padding: 6px 9px;
-      border: 1px solid rgba(255,250,240,.28);
-      border-radius: 4px;
-      color: rgba(255,250,240,.76);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .14em;
-      text-transform: uppercase;
+      right: -42px;
+      bottom: -42px;
+      width: 145px;
+      height: 145px;
+      border: 1px solid rgba(255,255,255,.24);
+      transform: rotate(20deg);
     }
     .risk h3 {
+      position: relative;
+      z-index: 1;
       font-family: var(--serif);
-      font-size: clamp(26px, 3vw, 38px);
-      max-width: 500px;
+      font-size: 26px;
     }
-    .risk ul { margin: 18px 0 0; padding-left: 1.15em; color: rgba(255,250,240,.82); }
-    .risk li { margin: 8px 0; }
-    .doc-stack { display: grid; gap: 18px; }
-    .doc {
+    .risk p {
+      position: relative;
+      z-index: 1;
+      margin: 14px 0 0;
+      color: rgba(255,255,255,.82);
+      font-size: 15px;
+    }
+
+    .two-col {
       display: grid;
-      grid-template-columns: 240px minmax(0, 1fr);
-      min-height: 286px;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: 20px;
+      align-items: start;
     }
-    .doc-num {
-      padding: 26px;
-      color: var(--cream);
-      background: var(--coal);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    .callout {
+      border-left: 4px solid var(--rust);
+      background: #fff7f3;
+      padding: 20px;
+      border-radius: 0 8px 8px 0;
     }
-    .doc-num b { font-family: var(--serif); font-size: 72px; line-height: .8; }
-    .doc-num span { color: rgba(255,250,240,.62); font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-    .doc-content {
+    .callout h3 { color: var(--rust); font-size: 22px; }
+    .callout p { margin: 10px 0 0; color: #573c35; }
+    .checklist {
       display: grid;
-      grid-template-columns: 1.1fr 1fr 1fr;
-      gap: 1px;
-      background: var(--line);
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
-    .doc-panel { padding: 24px; background: var(--cream); }
-    .doc-panel h3 {
-      font-family: var(--serif);
-      font-size: 28px;
-      margin-bottom: 12px;
+    .checklist li {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
     }
-    .doc-panel h4 {
-      margin: 0 0 10px;
+    .checklist b { color: var(--teal); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      font-size: 15px;
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .15em;
+      background: var(--surface-2);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .doc-panel p, .doc-panel li { color: #443c34; font-size: 15px; }
-    ul { margin: 0; padding-left: 1.1em; }
-    li { margin: 7px 0; }
-    .action-board {
+    tr:last-child td { border-bottom: 0; }
+    .amount { font-family: var(--mono); white-space: nowrap; font-weight: 760; }
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .tag.red { color: var(--rust); background: #fae8e2; }
+    .tag.gold { color: #7a5418; background: #fff1d6; }
+    .formula {
+      padding: 18px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 14px;
+      overflow-x: auto;
+    }
+    .chapter-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
     }
-    .action {
-      min-height: 250px;
-      padding: 24px;
-      border-top: 7px solid var(--gold);
-      background: var(--cream);
-    }
-    .action:nth-child(2) { border-top-color: var(--teal); }
-    .action:nth-child(3) { border-top-color: var(--red); }
-    .action:nth-child(4) { border-top-color: var(--blue); }
-    .action:nth-child(5) { border-top-color: var(--clay); }
-    .action:nth-child(6) { border-top-color: var(--ink); }
-    .action h3 { font-family: var(--serif); font-size: 27px; margin-bottom: 12px; }
-    .action p { margin: 0; color: #4b433b; }
-    .agent-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1px;
-      background: var(--line);
+    .chapter {
+      padding: 22px;
       border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
+      border-radius: 8px;
+      background: var(--surface);
     }
-    .agent-strip article {
-      padding: 28px;
-      background: var(--cream);
-      min-height: 230px;
+    .chapter h3 {
+      color: var(--teal);
+      font-family: var(--serif);
+      font-size: 25px;
     }
-    .agent-strip h3 { font-family: var(--serif); font-size: 30px; margin-bottom: 14px; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--cream);
-      box-shadow: var(--shadow);
-      border-radius: 10px;
-      overflow: hidden;
+    .chapter p { margin: 12px 0 0; color: var(--muted); }
+    .quote {
+      margin: 0;
+      padding: 22px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.7vw, 34px);
+      line-height: 1.28;
     }
-    th, td {
-      padding: 16px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-      font-size: 14px;
-    }
-    th {
-      background: var(--coal);
-      color: var(--cream);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    tr:last-child td { border-bottom: 0; }
-    .fineprint {
-      margin-top: 60px;
-      padding-top: 20px;
+    .footer-note {
+      margin-top: 70px;
+      padding-top: 18px;
       border-top: 1px solid var(--line);
       color: var(--muted);
       font-size: 13px;
     }
-    @media (max-width: 960px) {
-      .hero { min-height: auto; padding: 110px 0 40px; }
-      .hero-copy, .section-title, .doc, .doc-content, .agent-strip { grid-template-columns: 1fr; }
-      .metrics, .risk-grid, .action-board { grid-template-columns: 1fr; }
-      .doc-num { min-height: 160px; }
-      .brandbar .wrap { display: block; }
-      .brandbar span:last-child { display: block; margin-top: 8px; }
+
+    @media (max-width: 900px) {
+      .topline .wrap, .hero-grid, .section-head, .two-col { grid-template-columns: 1fr; display: grid; }
+      .mini-grid, .risk-strip, .chapter-grid { grid-template-columns: 1fr 1fr; }
+      .brief-card { max-width: 460px; }
+    }
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 24px, 1180px); }
+      .topline .wrap { display: block; }
+      .hero-main { padding: 58px 0 34px; }
+      .mini-grid, .risk-strip, .chapter-grid { grid-template-columns: 1fr; }
+      .risk:after { display: none; }
+      .panel { overflow-x: auto; }
+      .panel table { min-width: 680px; }
+      th, td { padding: 12px; font-size: 14px; }
+      h1 { font-size: 44px; }
+    }
+    @media print {
+      nav { display: none; }
+      body { background: #fff; }
+      .hero { min-height: auto; color: var(--ink); background: #fff; border-bottom: 2px solid var(--ink); }
+      .topline, .lede, .brief-card span { color: var(--ink); }
+      .brief-card { box-shadow: none; border-color: var(--line); }
+      .panel, .chapter { box-shadow: none; }
+      section { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
   <header class="hero">
-    <div class="brandbar"><div class="wrap"><span>Wynn Housing | Buyer Briefing</span><span>Disclosure review · 2026-06-15</span></div></div>
-    <div class="wrap">
-      <p class="kicker">928 South 9th Street · Alhambra</p>
-      <h1>Disclosure briefing, not paperwork.</h1>
-      <div class="hero-copy">
-        <p class="lede">把 181 頁 disclosure package 轉成買方與經紀人都能快速採取行動的簡報式摘要：先看風險，再看文件，最後回到 contingency 期間要完成的查證。</p>
-        <div class="dossier">
-          <b>4 docs</b>
-          <span>NHD Report · Termite Report · Home Inspection · Seller Disclosures</span>
-          <span>APN 5350-010-011 · Year built 1927</span>
+    <div class="topline">
+      <div class="wrap">
+        <span>Wynn Housing · Buyer Due Diligence</span>
+        <span>928 S 9th St, Alhambra · Prepared from disclosure PDFs</span>
+      </div>
+    </div>
+    <div class="hero-main">
+      <div class="wrap">
+        <p class="eyebrow">靜態買方報告 · NHD / Termite / Inspection / Seller Disclosure</p>
+        <h1>928 South 9th Street 買方揭露調查報告</h1>
+        <div class="hero-grid">
+          <p class="lede">這份頁面把最需要買方與買方經紀注意的內容整理成可行動的檢查清單：地產稅、白蟻維修、房屋檢查中的安全與老屋系統風險，以及賣方揭露的車庫進水問題。</p>
+          <div class="brief-card">
+            <b>4</b>
+            <span>核心章節：NHD 稅務、Termite 報價、Inspection 高優先項、Garage water disclosure。</span>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
-  <nav>
+  <nav aria-label="Report sections">
     <div class="wrap">
-      <a href="#snapshot">Snapshot</a>
-      <a href="#risks">Risk Radar</a>
-      <a href="#docs">Documents</a>
-      <a href="#buyer">Buyer Actions</a>
-      <a href="#agent">Agent Actions</a>
-      <a href="#sources">Sources</a>
+      <a href="#summary">總覽</a>
+      <a href="#tax">1. NHD 稅務</a>
+      <a href="#termite">2. Termite</a>
+      <a href="#inspection">3. Inspection</a>
+      <a href="#garage">4. Garage Water</a>
+      <a href="#next">下一步</a>
+      <a href="#sources">來源頁碼</a>
     </div>
   </nav>
 
   <main class="wrap">
-    <section id="snapshot">
-      <div class="section-title">
-        <h2>Transaction snapshot</h2>
-        <p class="note">這一頁先回答：有哪些文件、房子大概是什麼風險輪廓、哪些事項會影響下一步談判與查證。</p>
+    <section id="summary">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Executive view</p>
+          <h2>結論先行</h2>
+        </div>
+        <p class="note">這不是要嚇買方，而是把最值得在 contingency 內釐清、報價、談判的問題排序。</p>
       </div>
-      <div class="slide-card metrics">
-        <div class="metric dark">
-          <div class="label">Property</div>
-          <strong>928</strong>
-          <p>S 9th Street, Alhambra, CA 91801</p>
-        </div>
-        <div class="metric">
-          <div class="label">PDF package</div>
-          <strong>181</strong>
-          <p>pages reviewed and split into four core document groups.</p>
-        </div>
-        <div class="metric">
-          <div class="label">Structure age</div>
-          <strong>1927</strong>
-          <p>Lead, asbestos, galvanized/cast iron plumbing, and seismic retrofit deserve attention.</p>
-        </div>
-        <div class="metric">
-          <div class="label">Public record</div>
-          <strong>1,657</strong>
-          <p>sqft structure; lot size shown as 11,205 sqft. Independently verify if price depends on it.</p>
-        </div>
+      <div class="mini-grid panel">
+        <div class="metric dark"><div class="label">Termite quoted work</div><strong>$2,550</strong><p>Section I drywood termite、termite damage、fungus/dry rot。</p></div>
+        <div class="metric"><div class="label">2025-2026 tax amount</div><strong>$14,657</strong><p>NHD tax page 上現有年度稅費總額，不等於買方購入後新稅額。</p></div>
+        <div class="metric"><div class="label">Ad valorem rate</div><strong>1.1829%</strong><p>買方估算新年度稅的核心倍率：0.01182877。</p></div>
+        <div class="metric"><div class="label">Current taxable value</div><strong>$1.188M</strong><p>Supplemental tax 以成交價和 current NTV 差額估算。</p></div>
+      </div>
+      <div class="risk-strip">
+        <article class="risk"><h3>電氣安全</h3><p>老舊主電箱、問題品牌、無法確認 grounding、attic exposed live wires，屬於最高優先級。</p></article>
+        <article class="risk"><h3>水與木構</h3><p>白蟻、乾腐、bathroom leaks、garage rain intrusion、roof near end-of-life，彼此可能互相放大。</p></article>
+        <article class="risk"><h3>老屋基礎</h3><p>Raised foundation、無 anchor bolts、efflorescence、soil contact posts、crawlspace pest activity。</p></article>
+        <article class="risk"><h3>地下管線</h3><p>Cast iron / galvanized drain piping 與 underground sewer 未檢查，建議 sewer camera scope。</p></article>
       </div>
     </section>
 
-    <section id="risks">
-      <div class="section-title">
-        <h2>Risk radar</h2>
-        <p class="note">這些不是「一定不能買」的訊號，而是最值得在 contingency 期內用專業報價、保險確認、written request 去釐清的地方。</p>
+    <section id="tax">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">1. NHD Report · Tax information</p>
+          <h2>地產稅與補充稅</h2>
+          <p class="source">來源：NHD Report Tax Information，PDF 約第 20-25 頁；報告日期 2026-06-01。</p>
+        </div>
+        <p class="note">NHD 的稅務頁是揭露與估算，不是 county tax bill 本身。買方仍應用實際成交價、lender/escrow 數字與最新 title report 確認。</p>
       </div>
-      <div class="risk-grid">
-        <article class="risk red">
-          <span class="tag">Priority 01</span>
-          <h3>Electrical and life-safety items need a real electrician.</h3>
-          <ul>
-            <li>Main/sub panels: inspector flags older electrical service and possible problem panel brands.</li>
-            <li>Attic: exposed live wires, missing junction box covers, and splices outside junction boxes.</li>
-            <li>Smoke detector did not operate; CO detector missing at hall.</li>
+
+      <div class="two-col">
+        <div class="panel">
+          <table>
+            <thead><tr><th>項目</th><th>揭露結果 / 金額</th><th>買方意義</th></tr></thead>
+            <tbody>
+              <tr><td>PACE Assessment</td><td><span class="tag">Is Not</span></td><td>報告未顯示有 PACE 能源改善貸款綁在房產稅上。</td></tr>
+              <tr><td>1915 Bond Act Assessment</td><td><span class="tag">Is Not</span></td><td>未顯示有 1915 Act bond lien assessment。</td></tr>
+              <tr><td>Mello-Roos CFD</td><td><span class="tag">Is Not</span></td><td>未顯示 Mello-Roos special tax lien。</td></tr>
+              <tr><td>General: Prop 13</td><td class="amount">$11,883.00</td><td>現有 assessed value 下的一般稅額。</td></tr>
+              <tr><td>General: Ad Valorem</td><td class="amount">$2,173.13</td><td>依房產價值計算的稅項。</td></tr>
+              <tr><td>Direct / Special Assessments</td><td class="amount">$600.98</td><td>固定或專項徵收，通常仍會出現在稅單。</td></tr>
+              <tr><td>2025-2026 Total Amount</td><td class="amount">$14,657.11</td><td>目前揭露中的年度稅費總額；買方購入後可能因重估而不同。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <aside class="callout">
+          <h3>買方最容易誤解的點</h3>
+          <p><b>$14,657.11</b> 是現有稅單估算，不是你的未來稅單。加州買賣後會按成交價附近重新估稅，並可能另寄 supplemental tax bill。</p>
+        </aside>
+      </div>
+
+      <div class="panel" style="margin-top:18px">
+        <table>
+          <thead><tr><th>Direct / Special Assessment</th><th>徵收機關</th><th>Amount</th></tr></thead>
+          <tbody>
+            <tr><td>LA County Trauma/Emergency Services</td><td>Trauma/Emergency Services</td><td class="amount">$104.39</td></tr>
+            <tr><td>Safe Clean Water Program Funding Measure W</td><td>Dept. of Public Works</td><td class="amount">$142.33</td></tr>
+            <tr><td>LA County Flood Control</td><td>Los Angeles Department of Public Works</td><td class="amount">$49.46</td></tr>
+            <tr><td>Regional Park & Open Space District</td><td>Department of Parks and Recreation</td><td class="amount">$31.64</td></tr>
+            <tr><td>San Gabriel Valley Mosquito Abatement</td><td>SCI Consulting Group</td><td class="amount">$20.00</td></tr>
+            <tr><td>County Sanitation Dist #16</td><td>LA County Financial Management Department</td><td class="amount">$160.00</td></tr>
+            <tr><td>Alhambra Landscape & Lighting Dist #2</td><td>City of Alhambra</td><td class="amount">$93.16</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chapter-grid" style="margin-top:18px">
+        <article class="chapter"><h3>年度稅估算</h3><p>公式：成交價 × 0.01182877 + $600.98。這是 NHD worksheet 提供的估算邏輯。</p></article>
+        <article class="chapter"><h3>補充稅估算</h3><p>公式：成交價 − $1,188,300 = supplemental assessed value，再乘以 0.01182877。</p></article>
+        <article class="chapter"><h3>付款提醒</h3><p>Supplemental tax bills 通常不會由 lender impound 自動代繳，買方要自己留意郵件與到期日。</p></article>
+      </div>
+      <div class="formula" style="margin-top:18px">Buyer estimated annual property tax = Purchase Price × 0.01182877 + $600.98</div>
+    </section>
+
+    <section id="termite">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">2. Termite Report · Section I</p>
+          <h2>白蟻維修報價與處理方式</h2>
+          <p class="source">來源：Termite Report，檢查日期 2026-06-03，PDF 約第 3-6 頁。</p>
+        </div>
+        <p class="note">這份是 Wood Destroying Pest & Organisms Report，不是一般房屋檢查，也不評估整體 structural integrity。</p>
+      </div>
+
+      <div class="panel">
+        <table>
+          <thead><tr><th>Item</th><th>問題</th><th>建議處理</th><th>報價</th></tr></thead>
+          <tbody>
+            <tr><td>2A</td><td>Drywood termite at eaves fascia board, fascia trim, door jamb, attic wood frame。</td><td>局部化學處理，清除或覆蓋 accessible fecal pellets。</td><td class="amount" rowspan="2">$800</td></tr>
+            <tr><td>2C</td><td>Drywood termite at door frame & door jamb。</td><td>局部化學處理，清除或覆蓋 accessible fecal pellets。</td></tr>
+            <tr><td>2B</td><td>Termite damage at eaves fascia board, fascia trim, door jamb。</td><td>更換、支撐或修補 damaged wood，含 painting。</td><td class="amount" rowspan="2">$750</td></tr>
+            <tr><td>3A</td><td>Fungus/dry rot at eaves rafter tail。</td><td>更換、修補或補強木構件，含 painting。</td></tr>
+            <tr><td>2D</td><td>Termite damage at door frame & door jamb。</td><td>更換、支撐或修補 damaged wood，含 painting。</td><td class="amount" rowspan="2">$1,000</td></tr>
+            <tr><td>3B</td><td>Fungus/dry rot at door frame & door jamb。</td><td>更換、修補或補強木構件，含 painting。</td></tr>
+            <tr><td colspan="3"><b>Total quoted items</b></td><td class="amount"><b>$2,550</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="two-col" style="margin-top:18px">
+        <div class="panel pad">
+          <h3>解讀</h3>
+          <ul class="checklist" style="margin-top:14px">
+            <li><b>Section I：</b>代表已有 active infestation / infection，或已有由 infestation / infection 造成的情況。</li>
+            <li><b>處理方式：</b>報告建議 local treatment，不是 fumigation；這不等於隱蔽處沒有其他白蟻。</li>
+            <li><b>限制：</b>未檢查 inaccessible attic、insulated attic、牆內、地板覆蓋下、storage 擋住處、mold、屋頂水密性。</li>
+            <li><b>保固：</b>該公司一般 repair/treatment 是 1 年 warranty；hidden/inaccessible areas 不保。</li>
           </ul>
-        </article>
-        <article class="risk teal">
-          <span class="tag">Priority 02</span>
-          <h3>Roof, eaves, fascia, and wood-destroying organisms overlap.</h3>
-          <ul>
-            <li>Termite report notes drywood termite evidence and damage at eaves/fascia, door jamb, and attic wood frame.</li>
-            <li>Dry rot/fungus appears at eaves rafter tail and door frame/jamb.</li>
-            <li>Roof materials are described as nearing end of useful life with damaged/missing shingles and ponding history.</li>
-          </ul>
-        </article>
-        <article class="risk blue">
-          <span class="tag">Priority 03</span>
-          <h3>Foundation and drainage are old-house negotiation items.</h3>
-          <ul>
-            <li>Foundation walls show efflorescence, indicating past moisture accumulation.</li>
-            <li>No anchor bolts, typical for pre-1935 homes, but seismic retrofit is recommended.</li>
-            <li>Seller discloses garage door does not close fully and rainwater may enter garage.</li>
-          </ul>
-        </article>
-        <article class="risk clay">
-          <span class="tag">Priority 04</span>
-          <h3>Environmental proximity hits should be checked, not guessed.</h3>
-          <ul>
-            <li>NHD statutory hazard zones are largely "not in," but environmental databases show nearby hits.</li>
-            <li>Nearby EnviroStor, SLIC, LUST, Superfund/NPL, and RCRA records appear in the report.</li>
-            <li>Ask lender/insurer early whether any proximity flags affect underwriting.</li>
-          </ul>
-        </article>
+        </div>
+        <aside class="callout">
+          <h3>談判建議</h3>
+          <p>要求 seller close 前完成 Section I clearance，並提供 invoice、completion notice、warranty、reinspection/certification。若改用 credit，$2,550 只是起點，應考慮 hidden damage buffer。</p>
+        </aside>
       </div>
     </section>
 
-    <section id="docs">
-      <div class="section-title">
-        <h2>Documents, distilled</h2>
-        <p class="note">每份文件都拆成三件事：它說了什麼、買方該查什麼、經紀人該留什麼紀錄。</p>
+    <section id="inspection">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">3. Inspection Report · High priority items</p>
+          <h2>房屋檢查重點</h2>
+          <p class="source">來源：Elite Group Inspection Report，檢查日期 2026-06-04，PDF 約第 18-74 頁。</p>
+        </div>
+        <p class="note">以下只聚焦你指定的項目。每一項都應由相對應 licensed contractor 或 specialist 回報價與處理方案。</p>
       </div>
-      <div class="doc-stack">
-        <article class="slide-card doc">
-          <div class="doc-num"><b>01</b><span>PDF p.1-4</span></div>
-          <div class="doc-content">
-            <div class="doc-panel"><h3>Package cover</h3><p>Disclosures.io cover identifies the property, listing contact, HomeLight offer submission instruction, and the four included document groups.</p></div>
-            <div class="doc-panel"><h4>Buyer</h4><ul><li>Confirm the package is complete before signing acknowledgements.</li><li>Expect offer submission through HomeLight Listing Management.</li></ul></div>
-            <div class="doc-panel"><h4>Agent</h4><ul><li>Keep receipt trail for package delivery and buyer questions.</li><li>Do not let the offer die because it was sent through the wrong channel.</li></ul></div>
-          </div>
-        </article>
 
-        <article class="slide-card doc">
-          <div class="doc-num"><b>02</b><span>PDF p.5-56</span></div>
-          <div class="doc-content">
-            <div class="doc-panel"><h3>NHD report</h3><p>NHD First report dated 2026-06-01. Report snapshot shows 0 California natural hazard disclosures in, 0 city/county disclosures in, 4 additional disclosures in, and 5 environmental disclosures in.</p></div>
-            <div class="doc-panel"><h4>Buyer</h4><ul><li>Verify insurance availability despite "not in" statutory hazard areas.</li><li>Review nearby environmental database hits, especially Superfund/NPL groundwater plume and closed LUST.</li></ul></div>
-            <div class="doc-panel"><h4>Agent</h4><ul><li>Frame environmental items as proximity/database disclosures, not a property contamination conclusion.</li><li>Route technical questions to the appropriate specialist.</li></ul></div>
-          </div>
-        </article>
-
-        <article class="slide-card doc">
-          <div class="doc-num"><b>03</b><span>PDF p.57-64</span></div>
-          <div class="doc-content">
-            <div class="doc-panel"><h3>Termite report</h3><p>Unicare Pest Management corrected report dated 2026-06-03. Section I findings include drywood termite, termite damage, and fungus/dry rot damage.</p></div>
-            <div class="doc-panel"><h4>Buyer</h4><ul><li>Request clarity on Section I completion, clearance, and warranty.</li><li>Check whether repairs include eaves/fascia, door jamb, attic wood frame, and rafter tail.</li></ul></div>
-            <div class="doc-panel"><h4>Agent</h4><ul><li>Track completion notice, invoice, supplemental report, and warranty.</li><li>Separate termite credit from broader home inspection credits.</li></ul></div>
-          </div>
-        </article>
-
-        <article class="slide-card doc">
-          <div class="doc-num"><b>04</b><span>PDF p.65-142</span></div>
-          <div class="doc-content">
-            <div class="doc-panel"><h3>Home inspection</h3><p>Elite Group inspection dated 2026-06-04. Summary flags windows/doors, smoke/CO detectors, bathroom leaks, heater rodent evidence, water heater, electrical panels/wiring, garage, stucco/eaves, foundation, plumbing, fencing, sprinklers, and roof.</p></div>
-            <div class="doc-panel"><h4>Buyer</h4><ul><li>Prioritize electrician, roofer, foundation/seismic, plumber, pest, and sewer camera.</li><li>Use contractor estimates before releasing inspection contingency.</li></ul></div>
-            <div class="doc-panel"><h4>Agent</h4><ul><li>Convert inspection items into safety, insurance/lending, budget, and negotiation buckets.</li><li>Document buyer acknowledgement if contingencies are shortened or waived.</li></ul></div>
-          </div>
-        </article>
-
-        <article class="slide-card doc">
-          <div class="doc-num"><b>05</b><span>PDF p.143-181</span></div>
-          <div class="doc-content">
-            <div class="doc-panel"><h3>Seller disclosures</h3><p>TDS/SPQ/AVID and advisories. Seller discloses garage door does not close completely, water may enter garage during rain, and a vine grows through the south garage wall.</p></div>
-            <div class="doc-panel"><h4>Buyer</h4><ul><li>Do not treat AVID "normal wear" language as a substitute for professional inspection.</li><li>Investigate lead/asbestos/seismic risks because the home was built in 1927.</li></ul></div>
-            <div class="doc-panel"><h4>Agent</h4><ul><li>Call out mismatch between seller/agent visual disclosures and inspector findings.</li><li>Preserve utility details for onboarding after closing.</li></ul></div>
-          </div>
-        </article>
+      <div class="panel">
+        <table>
+          <thead><tr><th>項目</th><th>報告發現</th><th>風險解讀</th><th>買方下一步</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="tag red">Safety</span><br>CO Detector</td>
+              <td>Hall 缺 CO detector；East hall、North hall 缺安裝。Smoke detectors 也有 did not operate。</td>
+              <td>安全與合規問題，通常成本不大，但 close 前應修好。</td>
+              <td>要求 seller 安裝/更換 smoke + CO detectors；final walkthrough 實測。</td>
+            </tr>
+            <tr>
+              <td><span class="tag gold">Water</span><br>浴室漏水</td>
+              <td>Primary bathroom sink fixture leaks；Hall bathroom tub fixture loose；Hall bathroom shower wall gaps；Primary bathroom sink drain 使用 plastic flex line；Primary bathroom GFCI not grounded。</td>
+              <td>表面是 fixture leak，但真正風險在牆後、地板下 moisture、木腐、mold。</td>
+              <td>Plumber 檢查 sink drain、angle stops、tub/shower fixtures；tile/handyman seal gaps；必要時 shower pan water test。</td>
+            </tr>
+            <tr>
+              <td><span class="tag gold">Pest</span><br>Heater 鼠害</td>
+              <td>Heater enclosure worn/dirty；heater 周邊有 rodent evidence。AC compressor newer/not original，建議查 permits。</td>
+              <td>鼠害可能影響 duct、insulation、wiring，也可能代表 attic/crawlspace 有入口。</td>
+              <td>Pest company 做 attic/crawlspace/heater area inspection；HVAC contractor 做 cleaning/tune-up。</td>
+            </tr>
+            <tr>
+              <td><span class="tag red">Electrical</span><br>主電箱老舊</td>
+              <td>Main panel worn/older；Zinsco/Sylvania/Federal Pacific/Stab-Lok 類問題品牌；sub panel painted shut 無法檢查；older cloth wiring；無法確認 grounding；100 amp 可能偏低。</td>
+              <td>高優先級，可能影響安全、保險與未來升級成本。</td>
+              <td>Licensed electrician 報價：panel replacement/service upgrade/grounding/subpanel opening/attic wiring corrections。</td>
+            </tr>
+            <tr>
+              <td><span class="tag red">Electrical</span><br>Attic 活線</td>
+              <td>Junction boxes missing covers；splices 未放入 junction box；exposed live wires；bath exhaust terminates in attic；plumbing vent terminates in attic；vermiculite insulation。</td>
+              <td>火災/觸電 + moisture + pest intrusion。Vermiculite 不應隨意擾動，部分老材料可能有 asbestos concern。</td>
+              <td>Electrician 立即修 exposed live wires/splices；vent contractor 導到室外；plumber 修 vent；pest company 修 vent screens。</td>
+            </tr>
+            <tr>
+              <td><span class="tag gold">Structure</span><br>Foundation</td>
+              <td>Raised foundation；inspection limited；foundation wall efflorescence；subfloor stains；posts in contact with soil；無 anchor bolts；建議 earthquake retrofit steel plates/seismic bracing；crawlspace pest activity。</td>
+              <td>老屋基礎、潮氣、白蟻乾腐、鼠害與地震補強是同一組風險。</td>
+              <td>Foundation/seismic contractor 報價；termite contractor 看 soil contact posts；確認 drainage 導水。</td>
+            </tr>
+            <tr>
+              <td><span class="tag red">Roof</span><br>屋頂</td>
+              <td>Asphalt shingles；missing/damaged shingles at ridge/hip and areas；extensive/abnormal granule loss；materials nearing end of useful life；mastic cracked；flashings worn；gutters partial。</td>
+              <td>不是只補幾片瓦，報告已指出接近壽命末期。屋頂問題會連動 attic moisture、eaves/fascia dry rot。</td>
+              <td>Licensed roofer 完整檢查，估 remaining useful life、repair vs replacement、是否有 active leaks/underlayment issue。</td>
+            </tr>
+            <tr>
+              <td><span class="tag gold">Plumbing</span><br>Sewer</td>
+              <td>Underground sewer/drain from structure to street 不在檢查範圍；galvanized steel and cast iron drain piping present；大樹/灌木可能影響 underground plumbing；報告建議 sewer scope。</td>
+              <td>老 cast iron drain/sewer 可能有 root intrusion、offset、corrosion、collapse，維修成本可能很高。</td>
+              <td>Sewer camera scope，要求影片、定位、深度、材質、是否 root intrusion/offset/collapse。</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section id="buyer">
-      <div class="section-title">
-        <h2>Buyer action plan</h2>
-        <p class="note">這不是所有項目的清單，而是最值得先花錢查清楚的六件事。</p>
+    <section id="garage">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">4. Seller Disclosure · Garage water</p>
+          <h2>車庫進水揭露</h2>
+          <p class="source">來源：Seller Disclosures TDS/SPQ，PDF 約第 6-11 頁。</p>
+        </div>
+        <p class="note">這一項不應被當成小瑕疵略過，因為它和屋頂、排水、車庫門、牆體、植物侵入、木腐可能互相連動。</p>
       </div>
-      <div class="action-board">
-        <article class="slide-card action"><h3>1. Electrical quote</h3><p>Ask a licensed electrician to evaluate service capacity, panel brand risk, attic wiring, grounding, GFCI, and safety-device corrections.</p></article>
-        <article class="slide-card action"><h3>2. Roof and wood</h3><p>Coordinate roofer and termite contractor findings. Roof age/end-of-life and wood damage can become one combined budget conversation.</p></article>
-        <article class="slide-card action"><h3>3. Foundation retrofit</h3><p>Get a foundation/seismic contractor to price anchor bolts, retrofit plates, crawlspace concerns, and moisture signs.</p></article>
-        <article class="slide-card action"><h3>4. Plumbing scope</h3><p>Evaluate galvanized/cast iron drain piping, low water pressure, bathroom leaks, water heater safety, and sewer line camera results.</p></article>
-        <article class="slide-card action"><h3>5. Insurance check</h3><p>Run the address through insurance early, including roof, panel, age, and environmental proximity questions.</p></article>
-        <article class="slide-card action"><h3>6. Records check</h3><p>Verify permits, square footage, lot size, boundary assumptions, and any repair documentation before relying on price-per-square-foot logic.</p></article>
+
+      <div class="two-col">
+        <blockquote class="quote">“The garage door does not close completely; water might enter garage during rain.”</blockquote>
+        <div class="panel pad">
+          <h3>Seller 另有揭露</h3>
+          <ul class="checklist" style="margin-top:14px">
+            <li><b>TDS：</b>A vine is growing through the garage wall (south side)。</li>
+            <li><b>SPQ Water-related：</b>Water intrusion 勾 Yes；說明 Water may get into the garage with rain。</li>
+            <li><b>Inspection 呼應：</b>garage roof ponding、garage door weatherstripping missing/damaged、garage door does not close completely、slab cracked more than typical、no drains visible。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:18px">
+        <table>
+          <thead><tr><th>要追問 Seller 的問題</th><th>原因</th><th>可請誰檢查</th></tr></thead>
+          <tbody>
+            <tr><td>雨水是從 garage door 下方、牆、屋頂，還是地面倒灌？</td><td>不同來源對應完全不同的維修費。</td><td>Garage door contractor / roofer / drainage contractor</td></tr>
+            <tr><td>發生頻率、深度、範圍？是否有照片或影片？</td><td>判斷是偶發滲入還是 recurring drainage problem。</td><td>Buyer agent 向 listing side 書面詢問</td></tr>
+            <tr><td>是否曾做過修理、排水、屋頂、weatherstrip 或牆體修補？</td><td>找出過去 repair history 與是否仍未解決。</td><td>Seller / contractor receipts</td></tr>
+            <tr><td>Vine through garage wall 是否已移除？牆體是否修補？</td><td>植物侵入可能代表牆體開口、moisture pathway、pest entry。</td><td>Termite/pest / general contractor</td></tr>
+            <tr><td>Garage 是否有 mold/mildew/wood rot/termite damage？</td><td>水進車庫可能已造成木構或表面損害。</td><td>Termite / mold specialist if concern</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section id="agent">
-      <div class="section-title">
-        <h2>Agent operating notes</h2>
-        <p class="note">這一段是給買方經紀人的：少替專家下判斷，多把風險、文件、時間點和買方指示留清楚。</p>
+    <section id="next">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Buyer / Agent checklist</p>
+          <h2>建議下一步</h2>
+        </div>
+        <p class="note">最理想是在 inspection contingency 內用專業報價把風險轉成談判數字。</p>
       </div>
-      <div class="agent-strip">
-        <article><h3>Receipt trail</h3><p>Keep the 181-page package, delivery timestamp, buyer acknowledgement, question log, listing-side answers, contractor estimates, and any revised disclosures together.</p></article>
-        <article><h3>Repair ask</h3><p>Separate asks into life-safety, termite Section I, roof/electrical/foundation/plumbing, seller-disclosed garage water intrusion, and documentation/credits.</p></article>
-        <article><h3>Contingency posture</h3><p>If buyer shortens or waives contingency, confirm in writing that they reviewed the NHD, termite, inspection, TDS/SPQ/AVID, and report limitations.</p></article>
+      <div class="chapter-grid">
+        <article class="chapter"><h3>1. Electrician</h3><p>主電箱、sub panel、grounding、100 amp capacity、attic exposed live wires、GFCI。</p></article>
+        <article class="chapter"><h3>2. Roofer</h3><p>屋頂剩餘壽命、repair vs replacement、mastic/flashings/gutters、是否 active leak。</p></article>
+        <article class="chapter"><h3>3. Sewer Scope</h3><p>Cast iron/galvanized drain、underground sewer、root intrusion、offset、collapse。</p></article>
+        <article class="chapter"><h3>4. Foundation / Seismic</h3><p>Anchor bolts、retrofit plates、soil contact posts、moisture signs、crawlspace access。</p></article>
+        <article class="chapter"><h3>5. Pest / Termite</h3><p>Section I clearance、attic/crawlspace rodents、garage vine entry、dry rot scope。</p></article>
+        <article class="chapter"><h3>6. Insurance</h3><p>用地址詢價，特別揭露 roof age、old panel/problem brand、pool、老屋與環境 proximity。</p></article>
       </div>
     </section>
 
     <section id="sources">
-      <div class="section-title">
-        <h2>Source map</h2>
-        <p class="note">頁碼是整份 PDF 的實際頁碼，方便回查原始文件。</p>
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Source map</p>
+          <h2>來源頁碼</h2>
+        </div>
+        <p class="note">頁碼為 PDF 內部約略位置，方便回查原始文件。簽約、移除 contingencies 或做修繕決策前，應再核對原 PDF 影像。</p>
       </div>
-      <table>
-        <thead><tr><th>Topic</th><th>PDF pages</th><th>Why it matters</th></tr></thead>
-        <tbody>
-          <tr><td>Document list</td><td>p.3</td><td>NHD 52 pages, Termite 8 pages, Inspection 78 pages, Seller Disclosures 39 pages.</td></tr>
-          <tr><td>NHD snapshot</td><td>p.6-8</td><td>0 statutory natural hazard in; 4 additional and 5 environmental disclosures in.</td></tr>
-          <tr><td>Environmental hits</td><td>p.38-43</td><td>EnviroStor, SLIC, LUST, NPL/Superfund, and RCRA proximity records.</td></tr>
-          <tr><td>Termite findings</td><td>p.59-60</td><td>Drywood termite, termite damage, and fungus/dry rot at key wood members.</td></tr>
-          <tr><td>Inspection summary</td><td>p.70-73</td><td>Main repair/further-evaluation list across safety, roof, foundation, plumbing, and grounds.</td></tr>
-          <tr><td>TDS / SPQ</td><td>p.148-154</td><td>Garage door/water intrusion/vine through garage wall plus seller awareness answers.</td></tr>
-          <tr><td>Lead / earthquake / size</td><td>p.173-180</td><td>Pre-1978 lead disclosure, 1927 earthquake statement, square footage and lot size advisory.</td></tr>
-          <tr><td>Utility information</td><td>p.181</td><td>SCE, SoCalGas, City of Alhambra water, Republic trash Thursday morning, gardener Marco Perez.</td></tr>
-        </tbody>
-      </table>
+      <div class="panel">
+        <table>
+          <thead><tr><th>主題</th><th>來源文件</th><th>位置</th></tr></thead>
+          <tbody>
+            <tr><td>NHD 稅務、PACE、1915 Bond、Mello-Roos、年度稅、補充稅</td><td>1. 928S9thSt_NHD Report.pdf</td><td>Tax Information 約 PDF 第 20-25 頁</td></tr>
+            <tr><td>Termite Section I、報價、處理方式、限制與 warranty</td><td>2. Termite Report.pdf</td><td>約 PDF 第 3-6 頁</td></tr>
+            <tr><td>CO / Smoke detector、浴室漏水與 GFCI</td><td>3. Inspection Report dated 6/4/2026.pdf</td><td>約 PDF 第 18-25 頁</td></tr>
+            <tr><td>Heater 鼠害、Water heater、主電箱與 sub panel</td><td>3. Inspection Report dated 6/4/2026.pdf</td><td>約 PDF 第 36-44 頁</td></tr>
+            <tr><td>Attic 活線、foundation、老舊 drain piping</td><td>3. Inspection Report dated 6/4/2026.pdf</td><td>約 PDF 第 47-63 頁</td></tr>
+            <tr><td>Roof、sewer limitation、pool limitation</td><td>3. Inspection Report dated 6/4/2026.pdf</td><td>約 PDF 第 71-74 頁</td></tr>
+            <tr><td>Garage water intrusion、vine through garage wall</td><td>4. 928S9thSt_Seller Disclosures.pdf</td><td>TDS/SPQ 約 PDF 第 6-11 頁</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
-    <p class="fineprint">Prepared as an internal buyer-agent briefing. This page summarizes extracted PDF text and should be checked against the original document images before signing, removing contingencies, or making legal, financial, insurance, or repair decisions.</p>
+    <p class="footer-note">Prepared for buyer review by Wynn Housing. This static page summarizes disclosure PDFs and inspection text. It is not legal, tax, insurance, pest, roofing, electrical, plumbing, structural, or environmental advice. Buyer should verify with qualified professionals before relying on any item.</p>
   </main>
 </body>
 </html>
