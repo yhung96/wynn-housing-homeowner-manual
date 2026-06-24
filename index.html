@@ -1,557 +1,1078 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Wynn Housing Homeowner Manual with English and Traditional Chinese language toggle.">
-<title>Homeowner Manual · Wynn Housing</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wynn Housing by Wynn Hung, eXp Realty. Bilingual real estate advisory for Southern California buyers, sellers, and valuation clients.">
+  <meta name="theme-color" content="#e4dfd9">
+  <meta property="og:title" content="Wynn Housing · Southern California Real Estate Advisory">
+  <meta property="og:description" content="Bilingual real estate guidance for Southern California buyers, sellers, and valuation clients.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.wynnhousing.com/">
+  <meta property="og:image" content="https://www.wynnhousing.com/assets/wynn-featured-advisory-event.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23707070'/%3E%3C/svg%3E">
+  <title>Wynn Housing · Southern California Real Estate Advisory</title>
+  <style>
+    @font-face {
+      font-family: "Geist";
+      src: url("assets/fonts/Geist-Variable.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Geist Mono";
+      src: url("assets/fonts/GeistMono-Variable.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --ink: #000000;
+      --near-black: #050505;
+      --muted: #737373;
+      --subtle: #999694;
+      --paper: #e4dfd9;
+      --cream: #e4dfd9;
+      --surface: #ffffff;
+      --surface-2: rgba(228, 223, 217, .58);
+      --line: #c7c7c7;
+      --line-dark: rgba(255, 255, 255, .18);
+      --green: #171717;
+      --clay: #ff6a1f;
+      --gold: #000000;
+      --focus: #171717;
+      --error: #ea001d;
+      --shadow: rgba(0, 0, 0, .07) 0 6px 27px;
+      --soft-shadow: rgba(0, 0, 0, .07) 0 6px 27px;
+      --modal-shadow: rgba(0, 0, 0, .07) 0 6px 27px;
+      --display: "Geist", "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --body: "Geist", "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --hero-image: url("assets/wynn-featured-advisory-event.jpg?v=20260617-event");
+      --radius-card: 20px;
+      --radius-button: 8px;
+      --radius-input: 12px;
+      --radius-pill: 9999px;
+      --page-max: 1200px;
+    }
 
-  :root{
-    --bg:      oklch(97% 0.012 80);
-    --surface: oklch(99% 0.005 80);
-    --fg:      oklch(20% 0.02 60);
-    --muted:   oklch(48% 0.015 60);
-    --border:  oklch(89% 0.012 80);
-    --accent:  oklch(58% 0.16 35);
-    --font-display: 'Iowan Old Style', 'Charter', Georgia, serif;
-    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-    --ink:var(--fg);
-    --ink-rgb:45,36,30;
-    --paper:var(--bg);
-    --paper-rgb:247,244,237;
-    --paper-tint:oklch(93% 0.014 80);
-    --ink-tint:oklch(25% 0.02 60);
-    --mono:"IBM Plex Mono",ui-monospace,monospace;
-    --serif-en:var(--font-display);
-    --serif-zh:'Songti TC','Noto Serif TC','PingFang TC','Iowan Old Style','Charter',Georgia,serif;
-    --sans-zh:'PingFang TC','Noto Sans TC','Heiti TC',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:var(--sans-zh);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-  canvas.bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;transition:opacity 1.2s ease}
-  canvas#bg-light{opacity:0}
-  canvas#bg-dark{opacity:1}
-  body.light-bg canvas#bg-light{opacity:1}
-  body.light-bg canvas#bg-dark{opacity:0}
-  #deck{position:fixed;inset:0;width:10000vw;height:100vh;display:flex;flex-wrap:nowrap;transition:transform .9s cubic-bezier(.77,0,.175,1);z-index:10;will-change:transform}
-  .slide{width:100vw;height:100vh;flex:0 0 100vw;position:relative;padding:6vh 6vw 10vh;display:flex;flex-direction:column;overflow:hidden;letter-spacing:0}
-  .slide.light{color:var(--ink)}
-  .slide.dark{color:var(--paper)}
-  .slide::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;transition:background .7s ease}
-  .slide.light::before{background:rgba(var(--paper-rgb),.78);backdrop-filter:blur(3px)}
-  .slide.dark::before{background:rgba(var(--ink-rgb),.78);backdrop-filter:blur(3px)}
-  .slide.hero.light::before{background:rgba(var(--paper-rgb),.16);backdrop-filter:none}
-  .slide.hero.dark::before{background:rgba(var(--ink-rgb),.12);backdrop-filter:none}
-  .slide.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
-  .slide.hero.light::after{background:linear-gradient(180deg,rgba(var(--paper-rgb),.28),rgba(var(--paper-rgb),0) 14%,rgba(var(--paper-rgb),0) 86%,rgba(var(--paper-rgb),.28))}
-  .slide.hero.dark::after{background:linear-gradient(180deg,rgba(var(--ink-rgb),.32),rgba(var(--ink-rgb),0) 14%,rgba(var(--ink-rgb),0) 86%,rgba(var(--ink-rgb),.32))}
-  .chrome{display:flex;justify-content:space-between;align-items:flex-start;font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.2em;text-transform:uppercase;opacity:.62}
-  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:max(11px,.78vw);letter-spacing:.18em;text-transform:uppercase;opacity:.5}
-  .foot .title{font-family:var(--serif-zh);font-weight:400;letter-spacing:.05em;text-transform:none;opacity:.75;font-size:13px}
-  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.3em;text-transform:uppercase;opacity:.6;margin-bottom:2.6vh}
-  .h-hero{font-family:var(--serif-zh);font-weight:900;font-size:10vw;line-height:.96;letter-spacing:-.02em}
-  .h-xl{font-family:var(--serif-zh);font-weight:700;font-size:6.2vw;line-height:1.08;letter-spacing:-.01em}
-  .h-sub{font-family:var(--serif-zh);font-weight:500;font-size:3.1vw;line-height:1.25;letter-spacing:0;opacity:.7}
-  .h-hero-en,.h-xl-en{font-family:var(--serif-en);letter-spacing:-.025em}
-  .lead{font-family:var(--serif-zh);font-weight:400;font-size:1.75vw;line-height:1.5;opacity:.86}
-  .meta-row{display:flex;gap:1.2em;align-items:baseline;flex-wrap:wrap;font-family:var(--mono);font-size:max(12px,.92vw);letter-spacing:.16em;text-transform:uppercase;opacity:.6}
-  .frame{flex:1;display:flex;flex-direction:column;min-height:0}
-  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:4vw 6vw;flex:1;align-content:center;padding:2vh 0}
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:4vw;flex:1;align-content:center}
-  .grid-2-7-5{display:grid;grid-template-columns:7fr 5fr;gap:3vw 4vh;align-items:start}
-  .grid-2-6-6{display:grid;grid-template-columns:1fr 1fr;gap:3vw 4vh;align-items:start}
-  .stat-card{display:flex;flex-direction:column;gap:.8vh;align-items:flex-start;padding-top:1.6vh;border-top:1px solid currentColor;border-color:rgba(127,127,127,.3)}
-  .stat-card .stat-label{font-family:var(--mono);font-size:max(10px,.78vw);letter-spacing:.24em;text-transform:uppercase;opacity:.55}
-  .stat-card .stat-nb{font-family:var(--serif-en);font-weight:800;font-size:5.8vw;line-height:.9;letter-spacing:-.03em;font-feature-settings:"tnum";margin-top:.4vh}
-  .stat-card .stat-note{font-family:var(--sans-zh);font-weight:400;font-size:max(13px,1.05vw);line-height:1.5;opacity:.72;margin-top:.6vh}
-  .grid-3 .stat-card .stat-nb{font-size:6.8vw}
-  .pipeline-section{margin-top:4.4vh;padding-top:2.8vh;border-top:1px dashed rgba(127,127,127,.32)}
-  .pipeline-section:first-of-type{border-top:0;padding-top:0;margin-top:3vh}
-  .pipeline-label{font-family:var(--mono);font-size:max(11px,.85vw);letter-spacing:.24em;text-transform:uppercase;opacity:.62;margin-bottom:2.2vh}
-  .pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:1.2vw}
-  .pipeline[data-cols="4"]{grid-template-columns:repeat(4,1fr)}
-  .step{display:flex;flex-direction:column;gap:.8vh;padding-top:1.4vh;border-top:1px solid currentColor;border-color:rgba(127,127,127,.35)}
-  .step-nb{font-family:var(--serif-en);font-style:italic;font-weight:500;font-size:1.15vw;opacity:.45}
-  .step-title{font-family:var(--sans-zh);font-weight:700;font-size:1.55vw;letter-spacing:.01em;line-height:1.2}
-  .step-desc{font-family:var(--sans-zh);font-weight:400;font-size:max(12px,.95vw);line-height:1.45;opacity:.72}
-  .callout{padding:3vh 2.4vw;border-left:3px solid currentColor;position:relative;font-family:var(--serif-zh);font-size:max(15px,1.2vw);line-height:1.55;opacity:.92}
-  .slide.light .callout{background:rgba(var(--ink-rgb),.05)}
-  .slide.dark .callout{background:rgba(var(--paper-rgb),.06)}
-  .manual-list{display:flex;flex-direction:column;gap:1.5vh;font-family:var(--font-body);font-size:max(15px,1.12vw);line-height:1.55;opacity:.82}
-  .manual-list strong{font-weight:600;color:currentColor}
-  .manual-list li{margin-left:1.05em;padding-left:.25em}
-  .manual-card{padding:2.2vh 1.8vw;border-top:1px solid currentColor;border-color:rgba(127,127,127,.32)}
-  .manual-card h3{font-family:var(--font-display);font-size:1.75vw;line-height:1.18;font-weight:500;margin-bottom:1.1vh}
-  .manual-card p{font-family:var(--font-body);font-size:max(13px,1vw);line-height:1.55;opacity:.76}
-  .fine-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5vh 2.8vw}
-  .county-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2vh 3vw;margin-top:4vh}
-  .county{border-top:1px solid currentColor;border-color:rgba(127,127,127,.35);padding-top:1.4vh}
-  .county b{display:block;font-family:var(--font-display);font-size:1.5vw;font-weight:500;margin-bottom:.8vh}
-  .county span{font-family:var(--mono);font-size:max(10px,.78vw);letter-spacing:.08em;opacity:.65;word-break:break-all;text-transform:none}
-  .notice{border:1px solid currentColor;border-color:rgba(127,127,127,.32);padding:2.4vh 2vw;background:rgba(var(--paper-rgb),.05)}
-  .slide.light .notice{background:rgba(var(--ink-rgb),.035)}
-  #nav{position:fixed;left:50%;bottom:2.6vh;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:8px 14px;border-radius:999px;background:rgba(0,0,0,.18);backdrop-filter:blur(10px)}
-  #nav .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .3s ease;border:0;padding:0}
-  #nav .dot.active{background:rgba(255,255,255,.95);width:22px;border-radius:999px}
-  body.light-bg #nav{background:rgba(255,255,255,.25)}
-  body.light-bg #nav .dot{background:rgba(var(--ink-rgb),.25)}
-  body.light-bg #nav .dot.active{background:rgba(var(--ink-rgb),.9)}
-  #hint{position:fixed;bottom:3vh;right:3vw;z-index:30;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.4;mix-blend-mode:difference;color:#aaa}
-  @media (max-width:900px){
-    .h-hero{font-size:14vw}
-    .h-xl{font-size:9vw}
-    .pipeline{grid-template-columns:repeat(2,1fr)}
-    .grid-2-7-5,.grid-2-6-6{grid-template-columns:1fr}
-  }
-  @media print{
-    @page{size:16in 9in;margin:0}
-    html,body{width:auto;height:auto;overflow:visible;background:var(--paper)}
-    canvas.bg,#nav,#hint,#overview{display:none!important}
-    #deck{position:static!important;display:block!important;width:auto!important;height:auto!important;transform:none!important;transition:none!important}
-    .slide{position:relative!important;width:16in!important;height:9in!important;page-break-after:always;break-after:page;overflow:hidden}
-    .slide::before{backdrop-filter:none!important}
-    .slide:last-child{page-break-after:auto;break-after:auto}
-  }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: none;
+    }
+    body.modal-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible {
+      outline: 0;
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--focus);
+    }
+    .skip-link {
+      position: fixed;
+      left: 16px;
+      top: 12px;
+      z-index: 120;
+      transform: translateY(-160%);
+      border-radius: var(--radius-button);
+      background: var(--ink);
+      color: var(--cream);
+      padding: 10px 14px;
+      font-weight: 600;
+      transition: transform .2s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
 
-  .language-switcher{position:fixed;top:2.4vh;right:3vw;z-index:40;display:flex;gap:6px;padding:6px;border:1px solid rgba(255,255,255,.2);border-radius:999px;background:rgba(0,0,0,.22);backdrop-filter:blur(14px);box-shadow:0 12px 30px rgba(0,0,0,.16)}
-  .language-switcher button{border:0;border-radius:999px;padding:8px 13px;background:transparent;color:rgba(255,255,255,.72);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s ease,color .2s ease,transform .2s ease}
-  .language-switcher button:hover{transform:translateY(-1px);color:#fff}
-  .language-switcher button.active{background:rgba(255,255,255,.9);color:var(--ink)}
-  body.light-bg .language-switcher{background:rgba(255,255,255,.3);border-color:rgba(var(--ink-rgb),.12)}
-  body.light-bg .language-switcher button{color:rgba(var(--ink-rgb),.68)}
-  body.light-bg .language-switcher button:hover{color:var(--ink)}
-  body.light-bg .language-switcher button.active{background:rgba(var(--ink-rgb),.9);color:var(--paper)}
-  @media (max-width:700px){
-    .language-switcher{top:1.6vh;right:3vw}
-    .language-switcher button{padding:7px 10px;font-size:10px}
-    #hint{display:none}
-  }
-  @media print{.language-switcher{display:none!important}}
-</style>
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 64px;
+      padding: 12px clamp(18px, 4vw, 44px);
+      background: rgba(228, 223, 217, .86);
+      border-bottom: 1px solid rgba(199, 199, 199, .72);
+      backdrop-filter: blur(18px);
+      box-shadow: none;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      line-height: 1.1;
+    }
+    .brand img { width: 86px; display: block; }
+    .brand strong {
+      display: block;
+      font-family: var(--display);
+      font-size: clamp(20px, 2vw, 28px);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .brand span, .license-small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: -0.003em;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2vw, 30px);
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    nav a {
+      border-bottom: 1px solid transparent;
+      padding: 4px 0;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    nav a:hover { color: var(--ink); border-color: currentColor; }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .lang-toggle {
+      display: flex;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(228, 223, 217, .74);
+      backdrop-filter: blur(18px);
+    }
+    .lang-toggle button {
+      border: 0;
+      border-radius: 10px;
+      background: transparent;
+      color: var(--ink);
+      padding: 8px 12px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .lang-toggle button.active { background: var(--surface); color: var(--ink); box-shadow: var(--soft-shadow); }
+    .nav-cta, .button {
+      border: 1px solid var(--green);
+      border-radius: var(--radius-button);
+      background: var(--green);
+      color: #ffffff;
+      min-height: 40px;
+      padding: 10px 18px;
+      font-size: 16px;
+      line-height: 1.24;
+      font-weight: 500;
+      box-shadow: var(--soft-shadow);
+      transition: background-color .1s ease, color .1s ease, opacity .1s ease;
+    }
+    .nav-cta {
+      min-height: 38px;
+      padding: 9px 16px;
+      font-size: 14px;
+    }
+    .button:hover, .nav-cta:hover { background: #000000; border-color: #000000; }
+    .button:active, .nav-cta:active, .text-link:active { transform: translateY(1px); }
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border-color: transparent;
+      border-radius: 0;
+      padding-left: 0;
+      padding-right: 0;
+      box-shadow: none;
+    }
+    .button.secondary:hover { background: transparent; border-color: transparent; color: var(--ink); text-decoration: underline; text-underline-offset: 5px; }
+
+    .hero {
+      min-height: calc(100dvh - 64px);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 34px;
+      justify-items: center;
+      text-align: center;
+      padding: clamp(92px, 12vw, 144px) clamp(18px, 4vw, 56px) clamp(48px, 6vw, 74px);
+      background:
+        linear-gradient(180deg, rgba(23, 23, 23, .42), rgba(23, 23, 23, .56)),
+        var(--hero-image) center 38% / cover;
+      color: #ffffff;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: inherit;
+      font-size: 14px;
+      line-height: 1.29;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 920px;
+      margin: 0 auto 20px;
+      font-family: var(--display);
+      text-wrap: balance;
+      font-size: clamp(48px, 7vw, 69px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    h1::after {
+      content: ".";
+      color: var(--clay);
+    }
+    .hero-lead {
+      max-width: 680px;
+      margin: 0 auto 28px;
+      color: rgba(255, 255, 255, .88);
+      font-size: clamp(17px, 2vw, 19px);
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 0; }
+    .hero .button.secondary { color: #ffffff; }
+    .hero .button.secondary:hover { color: #ffffff; }
+    .credibility {
+      padding: clamp(24px, 4vw, 40px) clamp(18px, 4vw, 56px) clamp(72px, 9vw, 100px);
+      background: var(--paper);
+    }
+    .trust-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      max-width: var(--page-max);
+      margin: 0 auto;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+    .trust-row b {
+      display: block;
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .trust-row span { color: var(--muted); font-size: 16px; letter-spacing: -0.02em; }
+    .hero-panel {
+      width: min(100%, 760px);
+      min-height: auto;
+      display: grid;
+      align-content: center;
+      overflow: visible;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .panel-card {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 32px);
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(199, 199, 199, .45);
+      background: rgba(255, 255, 255, .93);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--soft-shadow);
+      text-align: left;
+      color: var(--ink);
+    }
+    .panel-card h2 {
+      margin: 10px 0 12px;
+      font-family: var(--display);
+      font-size: clamp(23px, 3vw, 28px);
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+    .panel-card p { color: var(--muted); margin-bottom: 0; }
+
+    .about {
+      display: grid;
+      grid-template-columns: minmax(280px, .78fr) minmax(0, 1fr);
+      gap: clamp(30px, 5vw, 72px);
+      align-items: center;
+      max-width: var(--page-max);
+      margin: 0 auto clamp(80px, 10vw, 120px);
+      padding: clamp(40px, 6vw, 58px);
+      background: var(--surface);
+      border: 0;
+      border-radius: var(--radius-card);
+      box-shadow: var(--soft-shadow);
+    }
+    .about-logo { width: min(300px, 76vw); margin-bottom: 28px; }
+    .about h2, .section-header h2, .contact-copy h2 {
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 500;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+    .about-story { display: grid; gap: 15px; max-width: 780px; color: var(--muted); font-size: 16px; line-height: 1.5; letter-spacing: -0.02em; }
+    .about-story p { margin: 0; }
+    .about-milestones {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+      max-width: 780px;
+    }
+    .about-milestone {
+      padding: 22px;
+      border: 1px solid rgba(199, 199, 199, .68);
+      border-radius: var(--radius-card);
+      background: var(--surface-2);
+    }
+    .about-milestone b {
+      display: block;
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .about-milestone span { color: var(--muted); font-size: 14px; line-height: 1.43; }
+    .about-image {
+      min-height: 420px;
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius-card);
+      background:
+        linear-gradient(180deg, transparent 45%, rgba(30, 38, 34, .28)),
+        url("assets/wynn-hung-headshot.jpg") center 14% / cover;
+      box-shadow: var(--soft-shadow);
+    }
+
+    .section { padding: clamp(72px, 9vw, 100px) clamp(18px, 4vw, 56px); scroll-margin-top: 84px; }
+    .about { scroll-margin-top: 84px; }
+    .section-header {
+      max-width: var(--page-max);
+      margin: 0 auto clamp(32px, 5vw, 54px);
+    }
+    .section-header p { max-width: 600px; color: var(--muted); font-size: 16px; font-weight: 400; line-height: 1.5; letter-spacing: -0.02em; margin-bottom: 0; }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      max-width: var(--page-max);
+      margin: 0 auto;
+      border: 0;
+    }
+    .service-card:first-child {
+      grid-row: auto;
+      min-height: 320px;
+      background:
+        var(--surface);
+    }
+    .service-card {
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 32px;
+      border: 1px solid rgba(199, 199, 199, .62);
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      box-shadow: var(--soft-shadow);
+      transition: background-color .15s ease, border-color .15s ease;
+    }
+    .service-card:hover { background-color: var(--surface); }
+    .service-card h3 {
+      margin: 18px 0 12px;
+      font-family: var(--display);
+      font-size: clamp(23px, 2.5vw, 28px);
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+    .service-card p { color: var(--muted); font-size: 16px; line-height: 1.5; }
+    .service-number { color: var(--clay); font-family: var(--body); font-size: 14px; font-weight: 600; font-style: normal; font-variant-numeric: tabular-nums; }
+    .text-link {
+      width: fit-content;
+      border: 0;
+      border-bottom: 1px solid currentColor;
+      background: transparent;
+      color: var(--ink);
+      padding: 0 0 4px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: color .18s ease, transform .18s ease;
+    }
+    .text-link:hover { color: var(--ink); }
+
+    .dark {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, #171717, #171717);
+      color: var(--cream);
+    }
+    .dark::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0;
+      background-image: linear-gradient(90deg, rgba(255, 255, 255, .16) 1px, transparent 1px);
+      background-size: 96px 100%;
+    }
+    .proof-layout {
+      display: grid;
+      grid-template-columns: minmax(300px, .86fr) minmax(0, 1fr);
+      gap: clamp(34px, 5vw, 76px);
+      align-items: start;
+    }
+    .proof-aside { display: grid; gap: 22px; }
+    .proof-aside h2 {
+      font-family: var(--display);
+      font-size: clamp(32px, 5vw, 69px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .proof-aside p, .proof-link-card p { color: rgba(255, 255, 255, .72); }
+    .proof-list { display: grid; gap: 14px; }
+    .proof-group-title {
+      margin-top: 18px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-dark);
+      color: rgba(255, 255, 255, .72);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .proof-group-title:first-child { margin-top: 0; }
+    .proof-link-card {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 20px;
+      padding: 18px 0;
+      border-top: 1px solid rgba(255, 255, 255, .12);
+    }
+    .proof-index { color: rgba(255, 255, 255, .56); font-family: var(--mono); font-weight: 500; letter-spacing: 0; }
+    .proof-link-card h3 {
+      margin-bottom: 6px;
+      font-family: var(--display);
+      font-size: clamp(24px, 2vw, 32px);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+    .platform-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .platform-icon {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      color: currentColor;
+    }
+    .proof-link-card p { margin-bottom: 10px; font-size: 15px; }
+    .proof-link-card a {
+      color: #ffffff;
+      font-weight: 500;
+      border-bottom: 1px solid currentColor;
+    }
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .resource-grid .proof-link-card {
+      grid-template-columns: 44px minmax(0, 1fr);
+      min-height: 184px;
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, .16);
+      border-radius: var(--radius-card);
+      background: rgba(255, 255, 255, .045);
+      transition: border-color .15s ease, background-color .15s ease;
+    }
+    .resource-grid .proof-link-card:hover {
+      border-color: rgba(255, 255, 255, .32);
+      background: rgba(255, 255, 255, .08);
+    }
+    .resource-grid .proof-link-card h3 {
+      font-size: clamp(20px, 1.7vw, 23px);
+    }
+    .proof-compact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: -2px;
+    }
+    .proof-aside .proof-link-card {
+      display: block;
+      min-height: 132px;
+      padding: 22px;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: var(--radius-card);
+      background: rgba(255, 255, 255, .045);
+      box-shadow: none;
+      transition: background-color .15s ease, border-color .15s ease;
+    }
+    .proof-aside .proof-link-card:hover {
+      border-color: rgba(255, 255, 255, .34);
+      background: rgba(255, 255, 255, .08);
+    }
+    .proof-aside .proof-index {
+      display: block;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+    .proof-aside .proof-link-card h3 {
+      margin-bottom: 12px;
+      font-size: clamp(21px, 1.8vw, 28px);
+    }
+    .proof-aside .proof-link-card p {
+      display: none;
+    }
+    .proof-aside .proof-link-card a {
+      font-size: 14px;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(280px, .78fr) minmax(0, 1fr);
+      gap: clamp(28px, 6vw, 82px);
+      align-items: start;
+      max-width: var(--page-max);
+      margin: 0 auto;
+    }
+    .contact-copy p { color: var(--muted); font-size: 16px; font-weight: 400; line-height: 1.5; }
+    .contact-lines { display: grid; gap: 10px; margin-top: 28px; color: var(--muted); }
+    .contact-lines a { color: var(--ink); font-weight: 600; }
+    .inline-form {
+      padding: 32px;
+      border: 1px solid rgba(199, 199, 199, .62);
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      box-shadow: var(--soft-shadow);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-input);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 13px 14px;
+      outline: 0;
+      transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: var(--focus);
+      background: var(--surface);
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--focus);
+    }
+    .field textarea { min-height: 122px; resize: vertical; }
+    .form-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
+    .form-status { min-height: 24px; color: var(--muted); font-size: 14px; }
+    .form-status.success { color: var(--green); font-weight: 500; }
+    .form-status.error { color: var(--error); font-weight: 500; }
+    .button[disabled] {
+      cursor: wait;
+      opacity: .62;
+      transform: none;
+    }
+
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 26px clamp(18px, 4vw, 56px);
+      background: #171717;
+      color: rgba(255, 255, 255, .72);
+      font-size: 13px;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 14px; }
+    .footer-brand img { width: 92px; filter: invert(1) brightness(1.8); }
+    .footer-brand strong { color: var(--cream); font-family: var(--display); font-size: 22px; letter-spacing: -0.4px; }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, .52);
+      backdrop-filter: blur(16px);
+    }
+    .modal.active { display: grid; }
+    .modal-card {
+      width: min(920px, 100%);
+      max-height: min(88vh, 980px);
+      overflow: auto;
+      border-radius: var(--radius-card);
+      background: var(--surface);
+      box-shadow: var(--modal-shadow);
+    }
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--line);
+    }
+    .modal-head h2 { margin-bottom: 4px; font-family: var(--display); font-size: 28px; font-weight: 500; letter-spacing: -0.02em; }
+    .modal-head p { margin-bottom: 0; color: var(--muted); }
+    .modal-body { padding: 28px; }
+    .close-button {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    [data-reveal] { opacity: 1; transform: none; transition: opacity .34s ease, transform .34s ease; }
+    [data-reveal].visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1080px) {
+      .hero, .about, .proof-layout, .contact { grid-template-columns: 1fr; }
+      .hero-panel { min-height: 520px; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-card:first-child { grid-column: auto; grid-row: auto; min-height: 320px; }
+    }
+    @media (max-width: 760px) {
+      .site-header { flex-wrap: nowrap; gap: 8px; padding: 8px 16px; }
+      .brand { gap: 8px; min-width: 0; }
+      .brand img { width: 56px; }
+      .brand strong { font-size: 22px; }
+      .brand span, .license-small { font-size: 10px; }
+      .license-small { display: none; }
+      .header-actions { margin-left: auto; flex: 0 0 auto; }
+      .lang-toggle { padding: 3px; }
+      .lang-toggle button { padding: 7px 9px; }
+      nav { display: none; }
+      .nav-cta { display: none; }
+      .hero {
+        padding: 64px 16px 44px;
+        background:
+          linear-gradient(180deg, rgba(23, 23, 23, .42), rgba(23, 23, 23, .56)),
+          var(--hero-image) 24% 42% / cover;
+      }
+      h1 { font-size: clamp(52px, 14vw, 68px); letter-spacing: -1.55px; }
+      .hero-lead { font-size: 20px; }
+      .hero-actions { gap: 16px; }
+      .hero-actions .button { width: auto; }
+      .trust-row, .about-milestones, .service-grid, .form-grid, .resource-grid { grid-template-columns: 1fr; }
+      .credibility { padding: 0 16px 56px; }
+      .section { padding: 68px 16px; }
+      .about { width: calc(100% - 32px); padding: 38px 22px; margin-bottom: 68px; }
+      .section-header { grid-template-columns: 1fr; gap: 18px; }
+      .service-grid { display: block; border-left: 0; }
+      .service-card { min-height: auto; border-left: 0; margin-bottom: 10px; }
+      .service-card:first-child { min-height: auto; }
+      .proof-link-card { grid-template-columns: 1fr; gap: 8px; }
+      .proof-compact-grid { grid-template-columns: 1fr; }
+      .site-footer, .footer-brand { display: grid; }
+      .modal { padding: 10px; }
+      .modal-head, .modal-body { padding: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
-<canvas id="bg-dark" class="bg"></canvas>
-<canvas id="bg-light" class="bg"></canvas>
-<div class="language-switcher" role="group" aria-label="Language selector">
-  <button type="button" data-lang="zh" class="active" aria-pressed="true">中文</button>
-  <button type="button" data-lang="en" aria-pressed="false">English</button>
-</div>
-<div id="hint">← → 投影片 · ESC 總覽</div>
-<div id="deck"></div>
-<div id="nav"></div>
-<template id="slides-zh">
-<section class="slide hero dark" data-theme="dark" data-screen-label="01 封面">
-  <div class="chrome"><div>Wynn Housing | eXp Realty</div><div>屋主手冊</div></div>
-  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
-    <div class="kicker">歡迎資料包</div>
-    <h1 class="h-hero" style="font-size:8.3vw;max-width:78vw">歡迎回家，<br>親愛的屋主。</h1>
-    <h2 class="h-sub" style="font-size:2.9vw;max-width:64vw">安心展開屋主生活的必備指南</h2>
-    <p class="lead" style="max-width:58vw;font-family:var(--font-body);font-size:1.35vw;line-height:1.65">恭喜您擁有美麗的新家。這份指南是我們送給您的實用資源，陪伴您度過入住後的前幾個月，以及未來的屋主生活。每一步，我們都會在您身邊。</p>
-  </div>
-  <div class="foot"><div class="title">Wynn Housing | eXp Realty</div><div>01 / 11</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="02 目錄">
-  <div class="chrome"><div>導覽 · 指南地圖</div><div>02 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">從完成交屋到安心持有</div>
-    <h2 class="h-xl" style="font-size:5.2vw;max-width:72vw">您需要知道的一切，逐步整理在這裡。</h2>
-    <div class="grid-6" style="margin-top:6vh">
-      <div class="stat-card"><div class="stat-label">第一步</div><div class="stat-nb">01</div><div class="stat-note">確保居家安全，順利安頓入住。</div></div>
-      <div class="stat-card"><div class="stat-label">官方文件</div><div class="stat-nb">02</div><div class="stat-note">了解重要文件，避免詐騙陷阱。</div></div>
-      <div class="stat-card"><div class="stat-label">財務管理</div><div class="stat-nb">03</div><div class="stat-note">房產稅、帳單與關鍵支出。</div></div>
-      <div class="stat-card"><div class="stat-label">房屋維護</div><div class="stat-nb">04</div><div class="stat-note">主動保護您房產投資的指南。</div></div>
-      <div class="stat-card"><div class="stat-label">支援網絡</div><div class="stat-nb">05</div><div class="stat-note">可信賴的廠商與保固基本知識。</div></div>
-      <div class="stat-card"><div class="stat-label">隨手保存</div><div class="stat-nb">06</div><div class="stat-note">建議在入住第一年妥善保存本手冊。</div></div>
+  <a class="skip-link" href="#top" data-i18n="skip">跳到主要內容</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Wynn Housing home">
+      <img src="assets/wynn-housing-exp-logo.png?v=20260617-transparent" alt="">
+      <span>
+        <strong>Wynn Housing</strong>
+        <span>Wynn Hung · eXp Realty</span>
+        <small class="license-small" data-i18n="license.short">CA DRE# Yu Yi Hung 02249826</small>
+      </span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#services" data-i18n="nav.services">服務</a>
+      <a href="#proof" data-i18n="nav.proof">流程與資源</a>
+      <a href="#proof" data-i18n="nav.resources">指南</a>
+      <a href="#contact" data-i18n="nav.contact">聯絡</a>
+    </nav>
+    <div class="header-actions">
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-lang="zh">中文</button>
+        <button type="button" data-lang="en" class="active">EN</button>
+        <button type="button" data-lang="es">ES</button>
+      </div>
+      <button class="nav-cta" type="button" data-open-lead="valuation" data-i18n="nav.cta">預約估價</button>
     </div>
-  </div>
-  <div class="foot"><div class="title">目錄 · 從交屋到安心持有</div><div>指南地圖</div></div>
-</section>
-<section class="slide dark" data-theme="dark" data-screen-label="03 立即待辦">
-  <div class="chrome"><div>第一章 · 入住第一步</div><div>03 / 11</div></div>
-  <div class="frame grid-2-7-5" style="padding-top:6vh">
-    <div>
-      <div class="kicker">第一章</div>
-      <h2 class="h-xl" style="font-size:4.7vw">您的立即待辦清單</h2>
-      <p class="lead" style="font-family:var(--font-body);font-size:1.25vw;margin-top:3vh;max-width:48vw">最優先處理的是居家安全、水電網路、HOA 登記，以及確保郵件能正確送達。</p>
-    </div>
-    <div class="fine-grid" style="grid-template-columns:1fr">
-      <div class="manual-card"><h3>更換門鎖</h3><p>請把這件事列為第一優先。也可考慮安裝智慧門鎖提升便利性，並更新所有門鎖密碼，讓自己更安心。</p></div>
-      <div class="manual-card"><h3>開通水電與服務</h3><p>設定網路、自來水、電力、瓦斯與保全系統。可參考我們 email 中賣方提供的 utility 資訊表。</p></div>
-      <div class="manual-card"><h3>向 HOA 登記</h3><p>聯絡社區管理協會，登記為新屋主，建立線上帳號，並設定每月管理費自動付款。</p></div>
-      <div class="manual-card"><h3>更新郵寄地址</h3><p>向 USPS 變更地址，確保稅單、保險文件與其他重要郵件都能寄達。</p></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">安全 · 開通 · 登記 · 轉寄</div><div>入住第一步</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="04 官方文件">
-  <div class="chrome"><div>第二章 · 官方文件</div><div>04 / 11</div></div>
-  <div class="frame" style="padding-top:4vh">
-    <div class="kicker">重要文件將陸續寄達</div>
-    <h2 class="h-xl" style="font-size:4.7vw;margin-bottom:4vh">以下是您可以預期收到的文件。</h2>
-    <div class="grid-2-6-6" style="gap:5vw">
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
       <div>
-        <div class="pipeline-label">來自縣市政府 · 約 6-8 週內</div>
-        <ul class="manual-list">
-          <li><strong>產權登記契據：</strong>正式的屋主權益證明。紙本會郵寄給您；電子版我們已經先寄給您。</li>
-          <li><strong>補充房產稅單：</strong>重要且有付款期限。更多說明請見財務章節。</li>
-          <li><strong>PCOR 表格：</strong>產權變更申報表。如適用，請勾選「Primary Resident」。</li>
-          <li><strong>屋主稅務減免表：</strong>當您申報此房屋為自住房時使用。</li>
-        </ul>
+        <p class="eyebrow" data-i18n="hero.eyebrow">南加州雙語房地產顧問</p>
+        <h1 id="hero-title" data-i18n="hero.title">把每一次買賣，做成清楚、安心、可掌握的決定。</h1>
+        <p class="hero-lead" data-i18n="hero.lead">Wynn Housing 協助南加州華語家庭買房、賣房與評估房產價值。你會得到清楚流程、雙語溝通、數據判斷，以及交易前後都能依靠的顧問關係。</p>
+        <div class="hero-actions">
+          <button class="button" type="button" data-open-lead="buyer" data-i18n="hero.buy">我要買房</button>
+          <button class="button secondary" type="button" data-open-lead="seller" data-i18n="hero.sell">我要賣房</button>
+          <button class="button secondary" type="button" data-open-lead="valuation" data-i18n="hero.value">房屋估價</button>
+        </div>
       </div>
-      <div>
-        <div class="pipeline-label">來自產權公司</div>
-        <ul class="manual-list">
-          <li><strong>產權保險保單：</strong>保障您屋主權益的保險文件。</li>
-          <li><strong>信託契據：</strong>記錄您與貸款機構之間的房貸關係。</li>
-          <li><strong>Escrow 退款：</strong>如 escrow 帳戶仍有餘額，您可能會收到退款支票。</li>
-        </ul>
+      <aside class="hero-panel" aria-label="Featured advisory">
+        <div class="panel-card">
+          <p class="eyebrow" data-i18n="hero.panelLabel">Featured advisory</p>
+          <h2 data-i18n="hero.panelTitle">從 escrow 到入住，我們把細節整理好。</h2>
+          <p data-i18n="hero.panelBody">買賣房不是只簽合約。你需要的是節奏、提醒、文件理解與下一步判斷。</p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="credibility" aria-label="Wynn Housing client support">
+      <div class="trust-row">
+        <div><b>1</b><span data-i18n="hero.stat1">買方、賣方、估價三條清楚入口</span></div>
+        <div><b>2</b><span data-i18n="hero.stat2">中文與英文完整服務流程</span></div>
+        <div><b>3</b><span data-i18n="hero.stat3">交易前後都在身邊的長期顧問</span></div>
       </div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">文件 · 縣市政府與產權公司</div><div>文件事項</div></div>
-</section>
-<section class="slide hero light" data-theme="light" data-screen-label="05 詐騙提醒">
-  <div class="chrome"><div>第二章 · 詐騙提醒</div><div>05 / 11</div></div>
-  <div class="frame" style="display:grid;gap:3.5vh;align-content:center;min-height:80vh">
-    <div class="kicker">不要為 Grant Deed 副本付費</div>
-    <h1 class="h-hero" style="font-size:6.4vw;line-height:1.05;max-width:78vw">看起來像官方文件，不一定真的是官方文件。</h1>
-    <div class="grid-2-6-6" style="gap:4vw;align-items:start">
-      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>常見手法：</strong>詐騙者利用公開交易紀錄寄信，要求您支付約 $100 以取得「Recorded Deed」或「Grant Deed」。小字通常會註明他們並非政府機關。</p></div>
-      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>實際情況：</strong>您的 grant deed 可向 title 或 escrow 公司免費取得電子副本，County Recorder 也能直接提供副本。</p></div>
-    </div>
-    <p class="lead" style="font-family:var(--font-body);font-size:1.18vw;max-width:72vw">您的產權是由已登記的公共紀錄確立，不是靠手上是否持有紙本契據。如果任何文件要求付款，請先拍照傳給我們確認，再採取行動。</p>
-  </div>
-  <div class="foot"><div class="title">防詐提醒 · 付款前先確認</div><div>產權已受保障</div></div>
-</section>
-<section class="slide dark" data-theme="dark" data-screen-label="06 加州房產稅">
-  <div class="chrome"><div>第三章 · 財務管理</div><div>06 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">了解您的加州房產稅</div>
-    <h2 class="h-xl" style="font-size:4.9vw;margin-bottom:5vh">稅單寄到前，先掌握重要時程。</h2>
-    <div class="grid-3">
-      <div class="stat-card"><div class="stat-label">稅務年度</div><div class="stat-nb" style="font-size:4.8vw">7/1</div><div class="stat-note">加州房產稅年度為 7 月 1 日至隔年 6 月 30 日。</div></div>
-      <div class="stat-card"><div class="stat-label">第一期</div><div class="stat-nb" style="font-size:4.8vw">11/1</div><div class="stat-note">涵蓋 7 月 1 日至 12 月 31 日。12 月 10 日後逾期，罰金為 10%。</div></div>
-      <div class="stat-card"><div class="stat-label">第二期</div><div class="stat-nb" style="font-size:4.8vw">2/1</div><div class="stat-note">涵蓋 1 月 1 日至 6 月 30 日。4 月 10 日後逾期，罰金為 10%。</div></div>
-    </div>
-    <div class="callout" style="margin-top:6vh;max-width:78vw">年度 secured property tax bill 通常會在 9 月底或 10 月初寄出。購屋後，您還會收到一張根據新估值計算的補充稅單，這是一般年度稅單之外的額外稅單。</div>
-  </div>
-  <div class="foot"><div class="title">加州房產稅時程</div><div>財務</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="07 繳納房產稅">
-  <div class="chrome"><div>第三章 · 繳款方式</div><div>07 / 11</div></div>
-  <div class="frame grid-2-7-5" style="padding-top:6vh">
-    <div>
-      <div class="kicker">如何繳納房產稅</div>
-      <h2 class="h-xl" style="font-size:4.8vw">請使用縣政府官方繳款管道。</h2>
-      <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;margin-top:3vh">主要方式為透過縣稅務機關官方網站線上付款，或郵寄支票。信用卡可能累積點數，但縣政府通常會收取處理費或服務費。</p>
-    </div>
-    <div class="county-grid" style="grid-template-columns:1fr;margin-top:0">
-      <div class="county"><b>洛杉磯縣</b><span>ttc.lacounty.gov/pay-your-property-taxes/</span></div>
-      <div class="county"><b>橙縣</b><span>ttc.ocgov.com/proptax/</span></div>
-      <div class="county"><b>河濱縣</b><span>countytreasurer.org</span></div>
-      <div class="county"><b>聖伯納迪諾縣</b><span>mytaxcollector.com</span></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">縣政府官方網站</div><div>繳款</div></div>
-</section>
-<section class="slide hero dark" data-theme="dark" data-screen-label="08 維護清單">
-  <div class="chrome"><div>第四章 · 房屋維護</div><div>08 / 11</div></div>
-  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
-    <div class="kicker">主動式居家照護清單</div>
-    <h1 class="h-hero" style="font-size:6.6vw;max-width:78vw">在房子提醒您之前，先保護好它。</h1>
-    <div class="grid-3" style="margin-top:2vh">
-      <div class="manual-card"><h3>漏水檢查與預防</h3><p>定期檢查水槽下方、馬桶、屋頂區域、灌溉與灑水系統、HVAC、家電設備與煙霧警報器。</p></div>
-      <div class="manual-card"><h3>外部與庭院</h3><p>維護景觀植栽，確保排水順暢，並定期安排防蟲防害。</p></div>
-      <div class="manual-card"><h3>排污與管線</h3><p>養成良好排水管保養習慣，遇到排水變慢或反覆堵塞時及早處理，避免變成回堵問題。</p></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">維護 · 預防勝於修繕</div><div>清單</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="09 預防水損">
-  <div class="chrome"><div>第四章 · 水損防護</div><div>09 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">屋主預防水損指南</div>
-    <h2 class="h-xl" style="font-size:4.8vw;margin-bottom:4vh">小漏水，常常悄悄變成大花費。</h2>
-    <div class="grid-3">
-      <div class="manual-card"><h3>水槽下方</h3><p><strong>問題：</strong>隱藏漏水可能造成發霉。請定期檢查是否潮濕。<br><br><strong>解法：</strong>使用漏水警報器，並鋪設防水水槽櫃墊。</p></div>
-      <div class="manual-card"><h3>馬桶</h3><p><strong>問題：</strong>馬桶持續漏水可能浪費數百加侖用水，常見原因是止水皮或進水閥老化。<br><br><strong>解法：</strong>及早更換低成本零件。</p></div>
-      <div class="manual-card"><h3>檯面與淋浴區</h3><p><strong>問題：</strong>老化的填縫或矽利康會讓水滲入牆面與檯面。<br><br><strong>解法：</strong>定期檢查廚房與浴室，必要時重新補上防水密封膠。</p></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">水損 · 及早發現</div><div>預防</div></div>
-</section>
-<section class="slide dark" data-theme="dark" data-screen-label="10 系統與家電">
-  <div class="chrome"><div>第四章 · 系統與家電</div><div>10 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">重要系統與家電維護</div>
-    <h2 class="h-xl" style="font-size:4.9vw;margin-bottom:4vh">四個習慣，預防常見緊急狀況。</h2>
-    <div class="pipeline-section">
-      <div class="pipeline" data-cols="4">
-        <div class="step"><div class="step-nb">01</div><div class="step-title">HVAC 系統</div><div class="step-desc">每 1-3 個月更換空氣濾網，以提升空氣品質與系統效率。</div></div>
-        <div class="step"><div class="step-nb">02</div><div class="step-title">洗衣機與烘乾機</div><div class="step-desc">每次使用後清理棉絮濾網，定期清潔排氣管，洗衣後保持洗衣機門開啟通風。</div></div>
-        <div class="step"><div class="step-nb">03</div><div class="step-title">煙霧警報器</div><div class="step-desc">每月測試，準備備用電池，也可考慮 10 年免換電池的密封式機型。</div></div>
-        <div class="step"><div class="step-nb">04</div><div class="step-title">戶外排水</div><div class="step-desc">清除雨水排水口的落葉與雜物，尤其低窪區域應在大雨前完成檢查。</div></div>
+    </section>
+
+    <section class="about" aria-labelledby="about-title">
+      <div data-reveal>
+        <img class="about-logo" src="assets/wynn-housing-exp-logo.png?v=20260617-transparent" alt="Wynn Housing eXp Realty">
+        <p class="eyebrow" data-i18n="about.eyebrow">Wynn Hung · eXp Realty</p>
+        <h2 id="about-title" data-i18n="about.title">關於我</h2>
+        <div class="about-story">
+          <p data-i18n="about.p1">我是 Wynn，一名深耕南加州的地產經紀。我的旅程，是從 2021 年的台灣開始的。</p>
+          <p data-i18n="about.p2">那時候的我，第一次真正走進房地產這個行業，也慢慢理解到：買賣房子從來不只是價格和合約而已。對很多家庭來說，那是一個人生階段的轉換，是安定、選擇，也是一份對未來的期待。</p>
+          <p data-i18n="about.p3">2024 年，我把這段旅程延續到洛杉磯。來到新的市場、新的城市，也接觸到更多不同背景的客戶。一路走來，我很珍惜每一次被信任的機會。從業至今，我很幸運已經陪伴超過 50 個家庭，走過買房、賣房，或實現安家的重要時刻。</p>
+          <p data-i18n="about.p4">2025 年，我很榮幸成為全美 Top 3% Realtor。這份肯定對我來說，不只是成績，更是一個提醒：每一位客戶的信任，都值得被好好對待。</p>
+          <p data-i18n="about.p5">如果您也正在往下一個生活階段前進，誠摯歡迎讓我陪您一起守住這份夢想，成為您一路上可以信任的房產夥伴。</p>
+        </div>
+        <div class="about-milestones">
+          <div class="about-milestone"><b>2021</b><span data-i18n="about.m1">從台灣開始走進房地產產業</span></div>
+          <div class="about-milestone"><b>50+</b><span data-i18n="about.m2">陪伴超過 50 個家庭完成重要階段</span></div>
+          <div class="about-milestone"><b>Top 3%</b><span data-i18n="about.m3">2025 年全美 Realtor 肯定</span></div>
+        </div>
       </div>
-    </div>
-    <div class="callout" style="margin-top:8vh;max-width:60vw">設定幾個行事曆提醒，就可能為您省下數千美元的緊急維修費。</div>
-  </div>
-  <div class="foot"><div class="title">HVAC · 洗衣 · 安全 · 排水</div><div>維護</div></div>
-</section>
-<section class="slide hero light" data-theme="light" data-screen-label="11 聯絡與支持">
-  <div class="chrome"><div>Wynn Housing · 持續支持</div><div>11 / 11</div></div>
-  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
-    <div class="kicker">我們的合作會繼續延伸</div>
-    <h1 class="h-hero" style="font-size:6.2vw;line-height:1.08;max-width:82vw">拿到鑰匙，不代表我們的承諾結束。</h1>
-    <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;line-height:1.65;max-width:66vw">在您的屋主旅程中，若有任何問題或需求，我們都會是您長期可依靠的資源。請隨時與我們聯絡。</p>
-    <div class="grid-2-6-6" style="gap:4vw;max-width:78vw">
-      <div class="manual-card"><h3>分享您的經驗</h3><p>如果您喜歡與我們合作，歡迎在 Zillow 留下 5 星評價，幫助更多家庭找到理想的家。</p></div>
-      <div class="manual-card"><h3>幫助親友</h3><p>如果您認識的人正在考慮買房或賣房，我們很榮幸能提供同樣用心的服務。</p></div>
-    </div>
-    <div class="meta-row" style="font-size:1vw"><span>Wynn Housing</span><span>626-658-8265</span><span>WWW.WynnHousing.COM</span></div>
-  </div>
-  <div class="foot"><div class="title">謝謝您 · Wynn Housing</div><div>聯絡方式</div></div>
-</section>
-</template>
-<template id="slides-en">
-<section class="slide hero dark" data-theme="dark" data-screen-label="01 Cover">
-  <div class="chrome"><div>Wynn Housing | eXp Realty</div><div>Homeowner Manual</div></div>
-  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
-    <div class="kicker">Welcome Packet</div>
-    <h1 class="h-hero h-hero-en" style="font-size:8.3vw;max-width:78vw">Welcome Home,<br>Home Owners.</h1>
-    <h2 class="h-sub h-xl-en" style="font-size:2.9vw;max-width:64vw">Your Essential Guide to Confident Homeownership</h2>
-    <p class="lead" style="max-width:58vw;font-family:var(--font-body);font-size:1.35vw;line-height:1.65">Congratulations on your beautiful new home. This guide is our gift to you, a practical resource for the first few months and beyond. We are here for you, every step of the way.</p>
-  </div>
-  <div class="foot"><div class="title">Wynn Housing | eXp Realty</div><div>01 / 11</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="02 Contents">
-  <div class="chrome"><div>Orientation · Guide Map</div><div>02 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">From Closing to Confident Ownership</div>
-    <h2 class="h-xl h-xl-en" style="font-size:5.2vw;max-width:72vw">A step-by-step guide to everything you need to know.</h2>
-    <div class="grid-6" style="margin-top:6vh">
-      <div class="stat-card"><div class="stat-label">First Steps</div><div class="stat-nb">01</div><div class="stat-note">Securing your home and getting settled.</div></div>
-      <div class="stat-card"><div class="stat-label">Official Documents</div><div class="stat-nb">02</div><div class="stat-note">Understanding paperwork and avoiding scams.</div></div>
-      <div class="stat-card"><div class="stat-label">Managing Finances</div><div class="stat-nb">03</div><div class="stat-note">Property taxes, bills, and key expenses.</div></div>
-      <div class="stat-card"><div class="stat-label">Home Maintenance</div><div class="stat-nb">04</div><div class="stat-note">A proactive guide to protecting your investment.</div></div>
-      <div class="stat-card"><div class="stat-label">Support Network</div><div class="stat-nb">05</div><div class="stat-note">Trusted vendors and warranty basics.</div></div>
-      <div class="stat-card"><div class="stat-label">Keep Handy</div><div class="stat-nb">06</div><div class="stat-note">Save this manual for your first year.</div></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">Contents · From Closing to Confident Ownership</div><div>Guide Map</div></div>
-</section>
-<section class="slide dark" data-theme="dark" data-screen-label="03 Immediate To-Do">
-  <div class="chrome"><div>Chapter 1 · First Steps</div><div>03 / 11</div></div>
-  <div class="frame grid-2-7-5" style="padding-top:6vh">
-    <div>
-      <div class="kicker">Chapter 1</div>
-      <h2 class="h-xl h-xl-en" style="font-size:4.7vw">Your Immediate To-Do List</h2>
-      <p class="lead" style="font-family:var(--font-body);font-size:1.25vw;margin-top:3vh;max-width:48vw">The first priorities are security, utilities, association registration, and reliable mail delivery.</p>
-    </div>
-    <div class="fine-grid" style="grid-template-columns:1fr">
-      <div class="manual-card"><h3>Change Your Locks</h3><p>Make this your first priority. Consider a smart lock for convenience, and update every passcode for peace of mind.</p></div>
-      <div class="manual-card"><h3>Set Up Utilities</h3><p>Connect internet, water, electricity, gas, and security systems. Use the seller’s utility information sheet from our email.</p></div>
-      <div class="manual-card"><h3>Register with Your HOA</h3><p>Contact the association, register as the new owner, create your online account, and set automatic payments for monthly dues.</p></div>
-      <div class="manual-card"><h3>Update Your Mailing Address</h3><p>Change your address with USPS so tax notices, insurance documents, and other important mail reach you.</p></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">Secure · Connect · Register · Redirect</div><div>First Steps</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="04 Official Documents">
-  <div class="chrome"><div>Chapter 2 · Official Documents</div><div>04 / 11</div></div>
-  <div class="frame" style="padding-top:4vh">
-    <div class="kicker">Important Paperwork Is Coming</div>
-    <h2 class="h-xl h-xl-en" style="font-size:4.7vw;margin-bottom:4vh">Here’s what to expect.</h2>
-    <div class="grid-2-6-6" style="gap:5vw">
-      <div>
-        <div class="pipeline-label">From the City · Within 6-8 weeks</div>
-        <ul class="manual-list">
-          <li><strong>Recording Deed:</strong> official proof of ownership. A paper copy will be mailed; we have already sent a digital one.</li>
-          <li><strong>Supplemental Property Tax Bill:</strong> important and time-sensitive. More detail appears in the finance chapter.</li>
-          <li><strong>PCOR Form:</strong> change of ownership form. Check “Primary Resident” if applicable.</li>
-          <li><strong>Homeowner’s Tax Exemption Form:</strong> used when claiming the property as your personal residence.</li>
-        </ul>
+      <div class="about-image" data-reveal role="img" aria-label="Wynn Hung professional portrait"></div>
+    </section>
+
+    <section id="services" class="section" aria-labelledby="services-title">
+      <div class="section-header" data-reveal>
+        <h2 id="services-title" data-i18n="services.title">三個入口，對應你的下一步。</h2>
+        <p data-i18n="services.lead">每個家庭進場的時間點不同。先選最接近你現在狀態的路徑，我們再把資訊整理進 CRM，方便後續快速跟進。</p>
       </div>
-      <div>
-        <div class="pipeline-label">From the Title Company</div>
-        <ul class="manual-list">
-          <li><strong>Title Policy:</strong> insurance protecting your ownership rights.</li>
-          <li><strong>Deed of Trust:</strong> records that you have a mortgage with a lender.</li>
-          <li><strong>Escrow Refund:</strong> you may also receive a refund check from escrow for any remaining balance, if applicable.</li>
-        </ul>
+      <div class="service-grid">
+        <article class="service-card" data-reveal>
+          <div><span class="service-number">01</span><h3 data-i18n="services.buyTitle">買房諮詢</h3><p data-i18n="services.buyBody">釐清預算、區域、貸款節奏與看房策略，避免一開始就在資訊噪音裡消耗力氣。</p></div>
+          <button class="text-link" type="button" data-open-lead="buyer" data-i18n="services.buyCta">開始買房規劃</button>
+        </article>
+        <article class="service-card" data-reveal>
+          <div><span class="service-number">02</span><h3 data-i18n="services.sellTitle">賣房策略</h3><p data-i18n="services.sellBody">從定價、屋況、上市時程到談判策略，讓賣房不是猜，而是一步步管理風險與成果。</p></div>
+          <button class="text-link" type="button" data-open-lead="seller" data-i18n="services.sellCta">討論賣房時間線</button>
+        </article>
+        <article class="service-card" data-reveal>
+          <div><span class="service-number">03</span><h3 data-i18n="services.valueTitle">房屋估價</h3><p data-i18n="services.valueBody">用附近成交、土地與建物價值、屋況差異一起判斷，給你比自動估價更有解釋力的方向。</p></div>
+          <button class="text-link" type="button" data-open-lead="valuation" data-i18n="services.valueCta">取得估價方向</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="proof" class="section dark" aria-labelledby="proof-title">
+      <div class="proof-layout">
+        <aside class="proof-aside" data-reveal>
+          <div>
+            <p class="eyebrow" data-i18n="proof.eyebrow">Proof through process</p>
+            <h2 id="proof-title" data-i18n="proof.title">專業感來自你真的知道下一步。</h2>
+            <p data-i18n="proof.lead">Wynn Housing 的差異不是把房子說得漂亮，而是把複雜交易拆成可以理解、可以確認、可以行動的流程。</p>
+          </div>
+          <div class="proof-group-title" data-i18n="proof.groupContact">直接聯絡</div>
+          <div class="proof-compact-grid">
+            <article class="proof-link-card"><span class="proof-index">01</span><div><h3 data-i18n="proof.phoneTitle">Phone</h3><p data-i18n="proof.phoneBody">直接電話聯絡 Wynn。</p><a href="tel:+16266588265" data-i18n="proof.callPrimary">撥打 626-658-8265</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">02</span><div><h3 data-i18n="proof.phoneAltTitle">Phone · Alternate</h3><p data-i18n="proof.phoneAltBody">Linktree 上列出的第二支聯絡電話。</p><a href="tel:+16463543546" data-i18n="proof.callAlternate">撥打 646-354-3546</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">03</span><div><h3 class="platform-title"><svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a9.6 9.6 0 0 0-8.2 14.6L2.7 21.5l5-1.3A9.6 9.6 0 1 0 12 2Zm0 1.8a7.8 7.8 0 0 1 6.6 11.9l-.3.5.6 2.7-2.8-.7-.5.3A7.8 7.8 0 0 1 5.3 7.1 7.8 7.8 0 0 1 12 3.8Zm-3.3 4.1c-.2 0-.5.1-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1.1 2.6c.1.2 1.8 2.9 4.5 4 .6.3 1.1.4 1.5.5.6.2 1.2.1 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.5-.3-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.8-.7-1.3-1.5-1.4-1.8-.2-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5.1-.2.1-.3 0-.5l-.8-1.9c-.2-.4-.4-.5-.6-.5h-.8Z"/></svg><span data-i18n="proof.whatsappTitle">WhatsApp</span></h3><p data-i18n="proof.whatsappBody">適合快速傳送房屋、文件或時間安排。</p><a href="https://wa.me/16266588265" target="_blank" rel="noopener" data-i18n="proof.openWhatsApp">打開 WhatsApp</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">04</span><div><h3 class="platform-title"><svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11.1c0 4 3.5 7.3 8.2 8l.2 2.2c0 .4.5.6.8.4l3.4-2.4c4.3-.8 7.4-4 7.4-8.2C22 6.6 17.5 3 12 3Zm-5 6h1.7v4.3h2.4v1.4H7V9Zm5 0h1.7v5.7H12V9Zm3 0h1.4l2.2 3.1V9H20v5.7h-1.4l-2.2-3.1v3.1H15V9Z"/></svg><span data-i18n="proof.lineTitle">Line</span></h3><p data-i18n="proof.lineBody">使用 Line 與 Wynn 聯絡。</p><a href="https://line.me/ti/p/xgOQMf0_kC" target="_blank" rel="noopener" data-i18n="proof.openLine">打開 Line</a></div></article>
+          <article class="proof-link-card"><span class="proof-index">05</span><div><h3 class="platform-title"><svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.2 4C5.2 4 2 6.6 2 9.8c0 1.8 1 3.4 2.6 4.5L4 16.5c-.1.4.3.7.6.5l2.5-1.3c.7.1 1.4.2 2.1.2 4 0 7.2-2.6 7.2-5.9S13.2 4 9.2 4Zm-2.4 4.9a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Zm4.7 0a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8Zm3.8 3.2c3.7.2 6.7 2.6 6.7 5.5 0 1.6-.9 3-2.3 4l.5 1.9c.1.4-.3.7-.6.5l-2.2-1.1c-.6.1-1.2.2-1.9.2-3.6 0-6.6-2.2-7.1-5 5-.3 8.9-3.2 8.9-6.9v-.1Z"/></svg><span data-i18n="proof.wechatTitle">Wechat ID · wynnhung1107</span></h3><p data-i18n="proof.wechatBody">華語客戶常用的微信聯絡入口。</p><a href="https://www.wechat.com/" target="_blank" rel="noopener" data-i18n="proof.openWechat">搜尋 Wechat ID</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">06</span><div><h3 class="platform-title"><svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.7 4.3 18.5 20c-.2.9-.8 1.1-1.6.7l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.4 13.6 1.6 12c-.9-.3-.9-.9.2-1.3L20.4 3.5c.8-.3 1.5.2 1.3.8Z"/></svg><span data-i18n="proof.telegramTitle">Telegram</span></h3><p data-i18n="proof.telegramBody">透過 Telegram 直接傳訊息。</p><a href="https://t.me/yuyihung1996" target="_blank" rel="noopener" data-i18n="proof.openTelegram">打開 Telegram</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">07</span><div><h3 data-i18n="proof.emailTitle">Email</h3><p data-i18n="proof.emailBody">適合寄送文件、問題與較完整的需求。</p><a href="mailto:yuyi.hung@exprealty.com" data-i18n="proof.openEmail">寄信給 Wynn</a></div></article>
+          </div>
+          <div class="proof-group-title" data-i18n="proof.groupSocial">社群與影片</div>
+          <div class="proof-compact-grid">
+            <article class="proof-link-card"><span class="proof-index">08</span><div><h3 class="platform-title"><svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.2-2.6a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4Z"/></svg><span data-i18n="proof.instagramTitle">Instagram</span></h3><p data-i18n="proof.instagramBody">查看 Wynn 的最新房產內容與市場更新。</p><a href="https://www.instagram.com/wynn.hung" target="_blank" rel="noopener" data-i18n="proof.openInstagram">打開 Instagram</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">09</span><div><h3 class="platform-title"><svg class="platform-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2s-.2-1.5-.8-2.1c-.8-.8-1.7-.8-2.1-.9C15.8 4 12 4 12 4s-3.8 0-6.7.2c-.4.1-1.3.1-2.1.9-.6.6-.8 2.1-.8 2.1S2 8.9 2 10.7v1.6c0 1.8.3 3.5.3 3.5s.2 1.5.8 2.1c.8.8 1.9.8 2.4.9 1.7.2 6.5.2 6.5.2s3.8 0 6.7-.2c.4-.1 1.3-.1 2.1-.9.6-.6.8-2.1.8-2.1s.4-1.7.4-3.5v-1.6c0-1.8-.4-3.5-.4-3.5ZM10 15.4V8.6l6 3.4-6 3.4Z"/></svg><span data-i18n="proof.youtubeTitle">YouTube</span></h3><p data-i18n="proof.youtubeBody">觀看 Wynn Housing 的房產影片與市場說明。</p><a href="https://www.youtube.com/@wynnhousing" target="_blank" rel="noopener" data-i18n="proof.openYouTube">打開 YouTube</a></div></article>
+          </div>
+        </aside>
+
+        <div class="proof-list" data-reveal>
+          <div class="proof-group-title" data-i18n="proof.groupResources">房產資訊</div>
+          <div class="resource-grid">
+            <article class="proof-link-card"><span class="proof-index">01</span><div><h3 data-i18n="proof.escrowTitle">Escrow Client Guide</h3><p data-i18n="proof.escrowBody">買賣進 escrow 後，每個角色、文件與時間點都要清楚。</p><a href="https://yhung96.github.io/wynn-housing-escrow-client-guide" target="_blank" rel="noopener" data-i18n="proof.openGuide">打開指南</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">02</span><div><h3 data-i18n="proof.homeownerTitle">Homeowner Manual</h3><p data-i18n="proof.homeownerBody">交屋不是結束。入住後的文件、稅務、維護與防詐提醒也需要有人幫你整理。</p><a href="https://yhung96.github.io/wynn-housing-homeowner-manual" target="_blank" rel="noopener" data-i18n="proof.openManual">查看屋主手冊</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">03</span><div><h3 data-i18n="proof.utilityTitle">水電瓦斯開通指南</h3><p data-i18n="proof.utilityBody">買方交屋前，如何新增或移轉 SoCalGas 與 SCE 帳戶。</p><a href="deliverables/utility-service-guide.html" data-i18n="proof.openGuide">打開指南</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">04</span><div><h3 data-i18n="proof.disclosureTitle">Regulatory Disclosure Pamphlets</h3><p data-i18n="proof.disclosureBody">加州房產交易常見揭露文件與手冊下載入口。</p><a href="https://orderform.fanhd.com/resources/electronic_bookshelf/regulatory_pamphlets" target="_blank" rel="noopener" data-i18n="proof.openResource">開啟資源</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">05</span><div><h3 data-i18n="proof.defensibleTitle">Defensible Space Inspection</h3><p data-i18n="proof.defensibleBody">AB-38 相關 defensible space inspection 申請與資訊。</p><a href="https://survey123.arcgis.com/share/a15c7706b4114e20b39d2a26294338ed" target="_blank" rel="noopener" data-i18n="proof.openResource">開啟資源</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">06</span><div><h3 data-i18n="proof.fireTitle">Fire Hazard Severity Zones</h3><p data-i18n="proof.fireBody">查看加州 OSFM 火災危險等級區域資訊。</p><a href="https://osfm.fire.ca.gov/what-we-do/community-wildfire-preparedness-and-mitigation/fire-hazard-severity-zones" target="_blank" rel="noopener" data-i18n="proof.openResource">開啟資源</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">07</span><div><h3 data-i18n="proof.nhdEnTitle">NHD Report Guide · English</h3><p data-i18n="proof.nhdEnBody">自然災害揭露報告英文版名詞與閱讀指南。</p><a href="https://res.cloudinary.com/linq/image/upload/v1738177839/user_document_uploads/FANHD_Glossary_of_Terms_Sheet_Disclosure_Guide_SinglePage_lf3y89.pdf" target="_blank" rel="noopener" data-i18n="proof.openPdf">打開 PDF</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">08</span><div><h3 data-i18n="proof.nhdZhTitle">NHD Report Guide · 中文</h3><p data-i18n="proof.nhdZhBody">自然災害報告中文閱讀指南，方便華語客戶理解重點。</p><a href="https://res.cloudinary.com/linq/image/upload/v1738177894/user_document_uploads/FANHD_Glossary_of_Terms_Sheet_ZH-CN_Single_Page_wpa3af.pdf" target="_blank" rel="noopener" data-i18n="proof.openPdf">打開 PDF</a></div></article>
+            <article class="proof-link-card"><span class="proof-index">09</span><div><h3 data-i18n="proof.nhdEsTitle">NHD Report Guide · Español</h3><p data-i18n="proof.nhdEsBody">自然災害揭露報告西文版閱讀指南。</p><a href="https://res.cloudinary.com/linq/image/upload/v1738177866/user_document_uploads/FANHD_Glossary_of_Terms_Sheet-es-US_Single_page_DisclosureGuide_x8xots.pdf" target="_blank" rel="noopener" data-i18n="proof.openPdf">打開 PDF</a></div></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="contact">
+        <div class="contact-copy" data-reveal>
+          <p class="eyebrow" data-i18n="contact.eyebrow">Start with the right next step</p>
+          <h2 id="contact-title" data-i18n="contact.title">告訴我你在哪一步，我們從那裡開始。</h2>
+          <p data-i18n="contact.lead">表單會安全送到後端，再建立或更新 CRM 聯絡人。你不需要一次準備所有答案，先把方向留下就好。</p>
+          <div class="contact-lines">
+            <span>Wynn Hung · eXp Realty</span>
+            <span data-i18n="license.agent">CA DRE# Yu Yi Hung 02249826</span>
+            <span data-i18n="license.broker">eXp Realty of Greater Los Angeles CA DRE# 02188471</span>
+            <a href="tel:+16266588265">626-658-8265</a>
+            <a href="mailto:wynnhung.realestate@gmail.com">wynnhung.realestate@gmail.com</a>
+          </div>
+        </div>
+        <div class="inline-form" data-reveal>
+          <form class="lead-form" data-context="inline">
+            <div class="form-grid"></div>
+            <div class="form-footer">
+              <button class="button" type="submit" data-i18n="form.submit">送出需求</button>
+              <span class="form-status" aria-live="polite"></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <img src="assets/wynn-housing-exp-logo.png?v=20260617-transparent" alt="">
+      <strong>Wynn Housing</strong>
+    </div>
+    <span data-i18n="footer.copy">Southern California bilingual real estate advisory · Wynn Hung, eXp Realty · CA DRE# Yu Yi Hung 02249826 · eXp Realty of Greater Los Angeles CA DRE# 02188471</span>
+  </footer>
+
+  <div class="modal" id="lead-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <div><h2 id="modal-title">Wynn Housing</h2><p id="modal-subtitle"></p></div>
+        <button class="close-button" type="button" data-close-modal aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <form class="lead-form" data-context="modal">
+          <div class="form-grid"></div>
+          <div class="form-footer">
+            <button class="button" type="submit" data-i18n="form.submit">送出需求</button>
+            <span class="form-status" aria-live="polite"></span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  <div class="foot"><div class="title">Documents · City and Title Company</div><div>Paperwork</div></div>
-</section>
-<section class="slide hero light" data-theme="light" data-screen-label="05 Scam Alert">
-  <div class="chrome"><div>Chapter 2 · Scam Alert</div><div>05 / 11</div></div>
-  <div class="frame" style="display:grid;gap:3.5vh;align-content:center;min-height:80vh">
-    <div class="kicker">Do Not Pay for a Copy of Your Grant Deed</div>
-    <h1 class="h-hero h-hero-en" style="font-size:6.4vw;line-height:1.05;max-width:78vw">Official-looking does not always mean official.</h1>
-    <div class="grid-2-6-6" style="gap:4vw;align-items:start">
-      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>How it works:</strong> scammers use public transaction records to mail letters requesting around $100 for a “Recorded Deed” or “Grant Deed.” The fine print often says they are not a government agency.</p></div>
-      <div class="notice"><p class="manual-list" style="display:block;font-size:1.05vw"><strong>The truth:</strong> your grant deed is available at no cost from your title or escrow company as a digital copy, and the County Recorder can provide copies directly.</p></div>
-    </div>
-    <p class="lead" style="font-family:var(--font-body);font-size:1.18vw;max-width:72vw">Your ownership is established by the recorded public record, not by physically holding the deed. If any document requests money, send us a photo before taking action.</p>
-  </div>
-  <div class="foot"><div class="title">Scam Prevention · Verify Before Paying</div><div>Ownership Is Secure</div></div>
-</section>
-<section class="slide dark" data-theme="dark" data-screen-label="06 California Property Taxes">
-  <div class="chrome"><div>Chapter 3 · Managing Finances</div><div>06 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">Understanding Your California Property Taxes</div>
-    <h2 class="h-xl h-xl-en" style="font-size:4.9vw;margin-bottom:5vh">Know the calendar before the bill arrives.</h2>
-    <div class="grid-3">
-      <div class="stat-card"><div class="stat-label">Tax Year</div><div class="stat-nb" style="font-size:4.8vw">Jul 1</div><div class="stat-note">California’s property tax year runs July 1 to June 30.</div></div>
-      <div class="stat-card"><div class="stat-label">Installment 1</div><div class="stat-nb" style="font-size:4.8vw">Nov 1</div><div class="stat-note">Covers July 1 to Dec 31. Late after Dec 10, with a 10% penalty.</div></div>
-      <div class="stat-card"><div class="stat-label">Installment 2</div><div class="stat-nb" style="font-size:4.8vw">Feb 1</div><div class="stat-note">Covers Jan 1 to Jun 30. Late after Apr 10, with a 10% penalty.</div></div>
-    </div>
-    <div class="callout" style="margin-top:6vh;max-width:78vw">Annual secured property tax bills are typically mailed in late September or early October. After purchase, expect a separate supplemental tax bill based on the new assessed value; it is in addition to your regular annual bill.</div>
-  </div>
-  <div class="foot"><div class="title">California Tax Calendar</div><div>Finance</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="07 Paying Property Taxes">
-  <div class="chrome"><div>Chapter 3 · Payment Methods</div><div>07 / 11</div></div>
-  <div class="frame grid-2-7-5" style="padding-top:6vh">
-    <div>
-      <div class="kicker">How to Pay Your Property Taxes</div>
-      <h2 class="h-xl h-xl-en" style="font-size:4.8vw">Use the county’s official payment channel.</h2>
-      <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;margin-top:3vh">Primary methods are online payment through the county tax collector’s official website or mailing a check. Credit cards may earn points, but counties typically charge processing or service fees.</p>
-    </div>
-    <div class="county-grid" style="grid-template-columns:1fr;margin-top:0">
-      <div class="county"><b>Los Angeles County</b><span>ttc.lacounty.gov/pay-your-property-taxes/</span></div>
-      <div class="county"><b>Orange County</b><span>ttc.ocgov.com/proptax/</span></div>
-      <div class="county"><b>Riverside County</b><span>countytreasurer.org</span></div>
-      <div class="county"><b>San Bernardino County</b><span>mytaxcollector.com</span></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">Official County Websites</div><div>Payment</div></div>
-</section>
-<section class="slide hero dark" data-theme="dark" data-screen-label="08 Maintenance Checklist">
-  <div class="chrome"><div>Chapter 4 · Home Maintenance</div><div>08 / 11</div></div>
-  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
-    <div class="kicker">A Proactive Home Care Checklist</div>
-    <h1 class="h-hero h-hero-en" style="font-size:6.6vw;max-width:78vw">Protect the home before it asks for attention.</h1>
-    <div class="grid-3" style="margin-top:2vh">
-      <div class="manual-card"><h3>Leak Inspection & Prevention</h3><p>Check under sinks, toilets, roof areas, irrigation, sprinklers, HVAC, appliances, and smoke detectors.</p></div>
-      <div class="manual-card"><h3>Exterior & Grounds</h3><p>Maintain landscaping, support proper drainage, and keep pest prevention on a regular rhythm.</p></div>
-      <div class="manual-card"><h3>Sewer & Plumbing</h3><p>Practice drain care and address slow drains or recurring clogs before they become backups.</p></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">Maintenance · Prevention Over Repair</div><div>Checklist</div></div>
-</section>
-<section class="slide light" data-theme="light" data-screen-label="09 Water Damage Prevention">
-  <div class="chrome"><div>Chapter 4 · Water Damage</div><div>09 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">The Homeowner’s Guide to Preventing Water Damage</div>
-    <h2 class="h-xl h-xl-en" style="font-size:4.8vw;margin-bottom:4vh">Small leaks become expensive quietly.</h2>
-    <div class="grid-3">
-      <div class="manual-card"><h3>Under the Sink</h3><p><strong>Problem:</strong> hidden leaks can create mold. Check for dampness regularly.<br><br><strong>Solution:</strong> use a water leak alarm and a waterproof sink cabinet mat.</p></div>
-      <div class="manual-card"><h3>Toilets</h3><p><strong>Problem:</strong> a running toilet can waste hundreds of gallons of water, often from a worn flapper or fill valve.<br><br><strong>Solution:</strong> replace the inexpensive parts early.</p></div>
-      <div class="manual-card"><h3>Countertops & Showers</h3><p><strong>Problem:</strong> worn caulking or silicone lets water seep into walls and counters.<br><br><strong>Solution:</strong> inspect and reapply sealant in kitchens and bathrooms.</p></div>
-    </div>
-  </div>
-  <div class="foot"><div class="title">Water Damage · Early Detection</div><div>Prevention</div></div>
-</section>
-<section class="slide dark" data-theme="dark" data-screen-label="10 Systems and Appliances">
-  <div class="chrome"><div>Chapter 4 · Systems & Appliances</div><div>10 / 11</div></div>
-  <div class="frame" style="padding-top:5vh">
-    <div class="kicker">Essential System & Appliance Maintenance</div>
-    <h2 class="h-xl h-xl-en" style="font-size:4.9vw;margin-bottom:4vh">Four habits that prevent common emergencies.</h2>
-    <div class="pipeline-section">
-      <div class="pipeline" data-cols="4">
-        <div class="step"><div class="step-nb">01</div><div class="step-title">HVAC System</div><div class="step-desc">Replace air filters every 1-3 months to improve air quality and system efficiency.</div></div>
-        <div class="step"><div class="step-nb">02</div><div class="step-title">Washer & Dryer</div><div class="step-desc">Clean the lint trap after every use, clean the exhaust duct, and leave the washer door open after laundry.</div></div>
-        <div class="step"><div class="step-nb">03</div><div class="step-title">Smoke Detectors</div><div class="step-desc">Test monthly, keep spare batteries, and consider 10-year sealed battery models.</div></div>
-        <div class="step"><div class="step-nb">04</div><div class="step-title">Outdoor Drainage</div><div class="step-desc">Clear leaves and debris from storm drains, especially in lower-elevation areas before heavy rain.</div></div>
-      </div>
-    </div>
-    <div class="callout" style="margin-top:8vh;max-width:60vw">A few calendar reminders can save thousands in emergency repairs.</div>
-  </div>
-  <div class="foot"><div class="title">HVAC · Laundry · Safety · Drainage</div><div>Maintenance</div></div>
-</section>
-<section class="slide hero light" data-theme="light" data-screen-label="11 Closing Contact">
-  <div class="chrome"><div>Wynn Housing · Ongoing Support</div><div>11 / 11</div></div>
-  <div class="frame" style="display:grid;gap:4vh;align-content:center;min-height:80vh">
-    <div class="kicker">Our Partnership Continues</div>
-    <h1 class="h-hero h-hero-en" style="font-size:6.2vw;line-height:1.08;max-width:82vw">Our commitment does not end with the keys.</h1>
-    <p class="lead" style="font-family:var(--font-body);font-size:1.2vw;line-height:1.65;max-width:66vw">We are your lifelong resource for questions or needs that arise during your homeownership journey. Please never hesitate to reach out.</p>
-    <div class="grid-2-6-6" style="gap:4vw;max-width:78vw">
-      <div class="manual-card"><h3>Share Your Experience</h3><p>If you enjoyed working with us, a 5-star Zillow review helps other families find their dream home.</p></div>
-      <div class="manual-card"><h3>Help Friends & Family</h3><p>If someone you know is looking to buy or sell, we would be privileged to offer the same dedicated service.</p></div>
-    </div>
-    <div class="meta-row" style="font-size:1vw"><span>Wynn Housing</span><span>626-658-8265</span><span>WWW.WynnHousing.COM</span></div>
-  </div>
-  <div class="foot"><div class="title">Thank You · Wynn Housing</div><div>Contact</div></div>
-</section>
-</template>
-<script>
-const VS=`attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}`;
-const FS_DARK=`precision highp float;uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;vec3 palette(float t,vec3 a,vec3 b,vec3 c,vec3 d){return a+b*cos(6.28318*(c*t+d));}void main(){vec2 uv=gl_FragCoord.xy/u_resolution.xy;vec2 p=uv*2.0-1.0;p.x*=u_resolution.x/u_resolution.y;vec2 m=u_mouse*2.0-1.0;m.x*=u_resolution.x/u_resolution.y;float md=length(p-m);float mr=sin(md*15.0-u_time*4.0)*exp(-md*3.0);p+=mr*0.08;vec2 p0=p;for(float i=1.0;i<4.0;i++){p.x+=0.1/i*sin(i*3.0*p.y+u_time*0.4)+0.05;p.y+=0.1/i*cos(i*2.0*p.x+u_time*0.3)-0.05;}float r=length(p);float ang=atan(p.y,p.x);vec3 a=vec3(0.12,0.12,0.13);vec3 b=vec3(0.03,0.04,0.05);vec3 c=vec3(1.0,1.0,1.0);vec3 d=vec3(0.1,0.2,0.4);vec3 col=palette(r*1.5+p0.x*0.5+u_time*0.1,a,b,c,d);float disp=sin(r*25.0-u_time*1.5+ang*2.0)*0.5+0.5;col+=vec3(disp*0.015,disp*0.01,disp*0.02);float hi=pow(sin(p.x*4.0+p.y*3.0+u_time)*0.5+0.5,8.0);col+=hi*0.08;vec3 base=vec3(0.05,0.05,0.06);col=mix(base,col,0.85);gl_FragColor=vec4(col,1.0);}`;
-const FS_LIGHT=`precision highp float;uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}float noise(vec2 p){vec2 i=floor(p),f=fract(p);float a=hash(i),b=hash(i+vec2(1,0));float c=hash(i+vec2(0,1)),d=hash(i+vec2(1,1));vec2 u=f*f*(3.0-2.0*f);return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;}float fbm(vec2 p){float v=0.0,a=0.5;mat2 m=mat2(0.80,0.60,-0.60,0.80);for(int i=0;i<5;i++){v+=a*noise(p);p=m*p*2.02;a*=0.5;}return v;}void main(){vec2 uv=gl_FragCoord.xy/u_resolution.xy;vec2 p=uv;p.x*=u_resolution.x/u_resolution.y;vec2 m=u_mouse;m.x*=u_resolution.x/u_resolution.y;vec2 md=p-m;float dl=length(md);p+=normalize(md+vec2(0.0001))*exp(-dl*5.0)*0.03;vec2 q=vec2(fbm(p*1.8+u_time*0.07),fbm(p*1.8+vec2(5.2,1.3)+u_time*0.06));vec2 r=vec2(fbm(p*2.0+q*1.3+vec2(1.7,9.2)+u_time*0.05),fbm(p*2.0+q*1.3+vec2(8.3,2.8)+u_time*0.04));float f=fbm(p*2.2+r*1.5);vec3 silverDark=vec3(0.86,0.85,0.84);vec3 paper=vec3(0.955,0.945,0.925);vec3 col=mix(silverDark,paper,f);float ph=r.x*2.2+u_time*0.35;col+=vec3(0.78,0.62,0.92)*sin(ph)*0.055;col+=vec3(0.55,0.72,0.95)*sin(ph*0.8+2.0)*0.05;float hl=smoothstep(0.48,0.92,f);col+=hl*0.06;gl_FragColor=vec4(col,1.0);}`;
-const mouse={x:.5,y:.5};addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth;mouse.y=e.clientY/innerHeight});
-function bootGL(canvasId,fsSrc){const canvas=document.getElementById(canvasId);const gl=canvas.getContext('webgl',{alpha:false,antialias:true});if(!gl)return()=>false;const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh};const prog=gl.createProgram();gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,fsSrc));gl.linkProgram(prog);gl.useProgram(prog);const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);const pos=gl.getAttribLocation(prog,'position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);const lRes=gl.getUniformLocation(prog,'u_resolution');const lT=gl.getUniformLocation(prog,'u_time');const lM=gl.getUniformLocation(prog,'u_mouse');const resize=()=>{const d=Math.min(window.devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;gl.viewport(0,0,canvas.width,canvas.height)};addEventListener('resize',resize);resize();return tSec=>{gl.uniform2f(lRes,canvas.width,canvas.height);gl.uniform1f(lT,tSec);gl.uniform2f(lM,mouse.x,1-mouse.y);gl.drawArrays(gl.TRIANGLES,0,6);return true}}
-const drawDark=bootGL('bg-dark',FS_DARK),drawLight=bootGL('bg-light',FS_LIGHT),t0=Date.now();(function loop(){const t=(Date.now()-t0)/1000;drawDark(t);drawLight(t);requestAnimationFrame(loop)})();
-const deck=document.getElementById('deck'),nav=document.getElementById('nav'),hint=document.getElementById('hint'),langButtons=document.querySelectorAll('.language-switcher button');
-const STORAGE_KEY='wynn-homeowner-manual-state';
-let state={lang:'zh',slideByLang:{zh:0,en:0}};
-try{state={...state,...JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}')}}catch{}
-let slides=[],idx=0,total=0,lock=false,overviewOn=false,ov=null;
-function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
-function setLanguage(lang){
-  if(!['zh','en'].includes(lang)) lang='zh';
-  state.lang=lang;
-  document.documentElement.lang=lang==='zh'?'zh-Hant':'en';
-  document.title=lang==='zh'?'屋主手冊 · Wynn Housing':'Homeowner Manual · Wynn Housing';
-  hint.textContent=lang==='zh'?'← → 投影片 · ESC 總覽':'← → Slides · ESC Index';
-  const tpl=document.getElementById('slides-'+lang);
-  deck.innerHTML=tpl.innerHTML;
-  slides=Array.from(deck.querySelectorAll('.slide'));
-  total=slides.length;
-  deck.style.width=total*100+'vw';
-  nav.innerHTML='';
-  slides.forEach((s,i)=>{const b=document.createElement('button');b.className='dot';b.dataset.i=i;b.setAttribute('aria-label',lang==='zh'?'第 '+(i+1)+' 頁':'Page '+(i+1));b.onclick=()=>go(i);nav.appendChild(b)});
-  langButtons.forEach(btn=>{const active=btn.dataset.lang===lang;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active))});
-  if(overviewOn) toggleOverview();
-  go(Math.max(0,Math.min(total-1,Number(state.slideByLang[lang])||0)),true);
-  saveState();
-}
-function go(n,immediate=false){
-  if(lock&&!immediate)return;
-  idx=Math.max(0,Math.min(total-1,n));
-  deck.style.transform='translateX('+(-idx*100)+'vw)';
-  slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
-  nav.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-  const el=slides[idx];
-  const th=el?.dataset.theme||(el?.classList.contains('light')?'light':'dark');
-  document.body.classList.toggle('light-bg',th==='light');
-  state.slideByLang[state.lang]=idx;
-  saveState();
-  lock=true;
-  setTimeout(()=>lock=false,immediate?0:700);
-}
-function ensureOverview(){
-  if(ov)return ov;
-  ov=document.createElement('div');
-  ov.id='overview';
-  ov.style.cssText='position:fixed;inset:0;z-index:100;background:rgba(var(--ink-rgb),.92);backdrop-filter:blur(12px);display:none;overflow-y:auto;padding:4vh 4vw';
-  document.body.appendChild(ov);
-  return ov;
-}
-function buildOverview(){
-  const panel=ensureOverview();panel.innerHTML='';
-  const grid=document.createElement('div');
-  grid.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:2vh 1.6vw;max-width:90vw;margin:0 auto';
-  slides.forEach((s,i)=>{const card=document.createElement('div');card.style.cssText='cursor:pointer;border-radius:6px;overflow:hidden;border:2px solid '+(i===idx?'rgba(var(--paper-rgb),.8)':'rgba(var(--paper-rgb),.15)')+';transition:border-color .2s';const wrap=document.createElement('div');wrap.style.cssText='width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;pointer-events:none;background:'+(s.classList.contains('light')?'var(--paper)':'var(--ink)');const clone=s.cloneNode(true);clone.style.cssText='width:100vw;height:100vh;transform:scale('+(1/4.5)+');transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none';wrap.appendChild(clone);const label=document.createElement('div');label.style.cssText='padding:6px 10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);opacity:.7';label.textContent=(i+1)+' / '+total;card.appendChild(wrap);card.appendChild(label);card.onclick=()=>{toggleOverview();go(i)};grid.appendChild(card)});
-  panel.appendChild(grid);
-}
-function toggleOverview(){overviewOn=!overviewOn;const panel=ensureOverview();if(overviewOn){buildOverview();panel.style.display='block'}else panel.style.display='none'}
-langButtons.forEach(btn=>btn.addEventListener('click',()=>setLanguage(btn.dataset.lang)));
-addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();toggleOverview();return}if(overviewOn)return;if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown')go(idx+1);if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp')go(idx-1);if(e.key==='Home')go(0);if(e.key==='End')go(total-1)});
-let wheelTO=null,wheelAcc=0;addEventListener('wheel',e=>{wheelAcc+=e.deltaY+e.deltaX;if(Math.abs(wheelAcc)>50){go(idx+(wheelAcc>0?1:-1));wheelAcc=0}clearTimeout(wheelTO);wheelTO=setTimeout(()=>wheelAcc=0,150)},{passive:true});
-let tx=0,ty=0;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(idx+(dx<0?1:-1))},{passive:true});
-setLanguage(state.lang||'zh');
-</script>
+
+  <script>
+    const translations = {
+      zh: {
+        "skip": "跳到主要內容", "nav.services": "服務", "nav.proof": "流程", "nav.resources": "資源", "nav.contact": "聯絡", "nav.cta": "估價",
+        "license.short": "CA DRE# Yu Yi Hung 02249826", "license.agent": "CA DRE# Yu Yi Hung 02249826", "license.broker": "eXp Realty of Greater Los Angeles CA DRE# 02188471",
+        "hero.eyebrow": "南加州雙語房地產顧問", "hero.title": "買房、賣房，都先把下一步看清楚", "hero.lead": "我協助南加州華語家庭買房、賣房，也一起看懂房子的價值。流程、文件、時間點，我會用中英文陪你整理到能做決定。", "hero.buy": "我要買房", "hero.sell": "我要賣房", "hero.value": "房屋估價", "hero.badgeDre": "Yu Yi Hung 02249826", "hero.badgeBroker": "Greater Los Angeles CA DRE# 02188471", "hero.badgeTop": "2025 年全美 Top 3% Realtor", "hero.badgeFamilies": "陪伴 50+ 家庭走過買賣與安家", "hero.stat1": "買方、賣方、估價，先選一條路", "hero.stat2": "中文、英文都能講清楚", "hero.stat3": "成交前後，有問題都能回來問", "hero.panelLabel": "Featured advisory", "hero.panelTitle": "從 escrow 到入住，把該注意的事先整理好", "hero.panelBody": "買賣房不只是簽約。真正容易卡住的，常常是文件、時程，和下一步該不該做。", "hero.panelProof1": "雙語文件理解", "hero.panelProof2": "交易節奏管理", "hero.panelProof3": "入住後提醒",
+        "about.eyebrow": "Wynn Hung · eXp Realty", "about.title": "關於我", "about.p1": "我是 Wynn，現在在南加州做地產經紀。我的房地產路，是 2021 年在台灣開始的。", "about.p2": "那時候我第一次真正進到這個行業，也慢慢發現，買賣房子其實很少只是價格和合約。對很多家庭來說，那是一個生活階段的轉換。是安定、選擇，也是一份對未來的安排。", "about.p3": "2024 年，我把這段路帶到洛杉磯。新的市場、新的城市，也讓我遇見更多不同背景的客戶。到現在，我很幸運陪過 50 多個家庭走過買房、賣房，或安家的重要時刻。", "about.p4": "2025 年，我成為全美 Top 3% Realtor。這件事對我來說不是拿來炫耀的標籤，而是一個提醒：客戶願意把人生裡很大的決定交給我，我就要把每一步照顧好。", "about.p5": "如果你也正在準備往下一個階段走，我很樂意陪你一起把方向看清楚。", "about.quote": "房產不是一次交易，而是一段人生轉場；我在意的是你每一步都知道自己為什麼這樣決定。", "about.m1": "從台灣開始走進房地產", "about.m2": "陪 50+ 家庭完成重要階段", "about.m3": "2025 年全美 Top 3% Realtor",
+        "services.title": "三個入口，對應你現在的位置", "services.lead": "不用一開始就準備所有答案。先選最接近你狀態的路徑，我會把需求整理好，再接著追蹤。", "services.buyTitle": "買房諮詢", "services.buyBody": "先釐清預算、區域、貸款節奏和看房方式。方向清楚了，再開始看房會輕鬆很多。", "services.buyPoint1": "區域與預算校準", "services.buyPoint2": "看房與出價節奏", "services.buyPoint3": "Escrow 文件提醒", "services.buyCta": "開始買房規劃", "services.sellTitle": "賣房策略", "services.sellBody": "從定價、屋況、上市時間到談判條件，一步一步把賣房的風險和選擇攤開來看。", "services.sellPoint1": "上市前準備清單", "services.sellPoint2": "定價與談判策略", "services.sellPoint3": "買方條件風險判斷", "services.sellCta": "討論賣房時間", "services.valueTitle": "房屋估價", "services.valueBody": "不只看自動估價。我會一起看附近成交、土地與建物價值、屋況差異，幫你理解數字背後的理由。", "services.valuePoint1": "可比成交篩選", "services.valuePoint2": "土地與建物拆解", "services.valuePoint3": "上市或持有建議", "services.valueCta": "取得估價方向",
+        "proof.eyebrow": "Proof through process", "proof.title": "專業感，是你真的知道下一步", "proof.lead": "我不想只把房子說得漂亮。更重要的是，把複雜交易拆成你看得懂、問得出問題、也做得了決定的步驟。", "proof.authority1": "Yu Yi Hung 02249826", "proof.authority2": "Greater Los Angeles brokerage credential", "proof.authority3": "家庭買賣與安家經驗", "proof.authority4": "2025 全美 Top 3% Realtor", "proof.groupContact": "直接聯絡", "proof.groupSocial": "社群與影片", "proof.groupResources": "房產資訊",
+        "proof.phoneTitle": "Phone", "proof.phoneBody": "直接電話聯絡 Wynn。", "proof.callPrimary": "撥打 626-658-8265", "proof.phoneAltTitle": "Phone · Alternate", "proof.phoneAltBody": "Linktree 上列出的第二支聯絡電話。", "proof.callAlternate": "撥打 646-354-3546", "proof.whatsappTitle": "WhatsApp", "proof.whatsappBody": "適合快速傳房子、文件或約時間。", "proof.openWhatsApp": "打開 WhatsApp", "proof.lineTitle": "Line", "proof.lineBody": "使用 Line 與 Wynn 聯絡。", "proof.openLine": "打開 Line", "proof.wechatTitle": "Wechat ID · wynnhung1107", "proof.wechatBody": "華語客戶常用的微信聯絡入口。", "proof.openWechat": "搜尋 Wechat ID", "proof.telegramTitle": "Telegram", "proof.telegramBody": "透過 Telegram 直接傳訊息。", "proof.openTelegram": "打開 Telegram", "proof.emailTitle": "Email", "proof.emailBody": "適合寄送文件、問題和比較完整的需求。", "proof.openEmail": "寄信給 Wynn", "proof.instagramTitle": "Instagram", "proof.instagramBody": "看 Wynn 的房產內容與市場更新。", "proof.openInstagram": "打開 Instagram", "proof.youtubeTitle": "YouTube", "proof.youtubeBody": "觀看 Wynn Housing 的房產影片與市場說明。", "proof.openYouTube": "打開 YouTube",
+        "proof.escrowTitle": "Escrow Client Guide", "proof.escrowBody": "進 escrow 後，角色、文件和時間點都要看清楚。", "proof.openGuide": "打開指南", "proof.homeownerTitle": "Homeowner Manual", "proof.homeownerBody": "交屋不是結束。入住後的文件、稅務、維護與防詐提醒，也需要整理好。", "proof.openManual": "查看屋主手冊", "proof.utilityTitle": "水電瓦斯開通指南", "proof.utilityBody": "交屋前如何新增或移轉 SoCalGas 與 SCE 帳戶。", "proof.disclosureTitle": "Regulatory Disclosure Pamphlets", "proof.disclosureBody": "加州房產交易常見揭露文件與手冊下載入口。", "proof.defensibleTitle": "Defensible Space Inspection", "proof.defensibleBody": "AB-38 defensible space inspection 申請與資訊。", "proof.fireTitle": "Fire Hazard Severity Zones", "proof.fireBody": "查看加州 OSFM 火災危險等級區域資訊。", "proof.nhdEnTitle": "NHD Report Guide · English", "proof.nhdEnBody": "自然災害揭露報告英文版名詞與閱讀指南。", "proof.nhdZhTitle": "NHD Report Guide · 中文", "proof.nhdZhBody": "自然災害報告中文閱讀指南，方便華語客戶理解重點。", "proof.nhdEsTitle": "NHD Report Guide · Español", "proof.nhdEsBody": "自然災害揭露報告西文版閱讀指南。", "proof.openResource": "開啟資源", "proof.openPdf": "打開 PDF",
+        "contact.eyebrow": "Start with the right next step", "contact.title": "告訴我你走到哪一步，我們就從那裡開始", "contact.lead": "先留下大方向就好，不需要一次準備完整答案。我會依照你的情況回覆，再把資料整理進後續追蹤。", "footer.copy": "Southern California bilingual real estate advisory · Wynn Hung, eXp Realty · CA DRE# Yu Yi Hung 02249826 · eXp Realty of Greater Los Angeles CA DRE# 02188471",
+        "form.submit": "送出需求", "form.intent": "需求類型", "form.name": "姓名", "form.email": "Email", "form.phone": "電話", "form.location": "區域或房屋地址", "form.budget": "預算或估價目標", "form.timeline": "時間線", "form.message": "備註", "form.language": "偏好語言", "form.success": "已收到，我會盡快跟你聯絡。", "form.error": "送出時發生問題，請稍後再試，或直接打電話給我。", "form.contactRequired": "請至少留下 Email 或電話，方便我回覆你。", "form.loading": "送出中...", "modal.buyerTitle": "買房諮詢", "modal.buyerSub": "留下區域、預算和時間線，我們先把買房路線看清楚。", "modal.sellerTitle": "賣房策略", "modal.sellerSub": "留下地址或區域、期望時間和目標，我會先幫你判斷下一步。", "modal.valuationTitle": "房屋估價", "modal.valuationSub": "留下地址與估價目標，我會用可比較資料幫你看方向。"
+      },
+      en: {
+        "skip": "Skip to content", "nav.services": "Services", "nav.proof": "Process", "nav.resources": "Resources", "nav.contact": "Contact", "nav.cta": "Valuation",
+        "license.short": "CA DRE# Yu Yi Hung 02249826", "license.agent": "CA DRE# Yu Yi Hung 02249826", "license.broker": "eXp Realty of Greater Los Angeles CA DRE# 02188471",
+        "hero.eyebrow": "Bilingual real estate advisory in Southern California", "hero.title": "Know the next step before you move", "hero.lead": "I help Southern California families buy, sell, and understand home value in Chinese and English. We will sort through the timing, paperwork, and choices until the next step is clear.", "hero.buy": "Buy a home", "hero.sell": "Sell a home", "hero.value": "Home valuation", "hero.badgeDre": "Yu Yi Hung 02249826", "hero.badgeBroker": "Greater Los Angeles CA DRE# 02188471", "hero.badgeTop": "Top 3% Realtor nationwide in 2025", "hero.badgeFamilies": "50+ families guided through buying, selling, and settling in", "hero.stat1": "Buyer, seller, or valuation: choose the path first", "hero.stat2": "Chinese and English, explained clearly", "hero.stat3": "Questions are welcome before and after closing", "hero.panelLabel": "Featured advisory", "hero.panelTitle": "From escrow to ownership, the details are sorted first", "hero.panelBody": "A sale is not just a contract. The harder parts are often the documents, timing, and knowing whether the next step makes sense.", "hero.panelProof1": "Bilingual document clarity", "hero.panelProof2": "Transaction rhythm", "hero.panelProof3": "Post-closing reminders",
+        "about.eyebrow": "Wynn Hung · eXp Realty", "about.title": "About Wynn", "about.p1": "I am Wynn, a real estate agent working in Southern California. My real estate path started in Taiwan in 2021.", "about.p2": "That was when I first stepped into the industry and began to see that buying or selling a home is rarely just about price and contracts. For many families, it marks a change in life stage. It is about stability, choice, and planning for what comes next.", "about.p3": "In 2024, I brought that journey to Los Angeles. A new market and a new city introduced me to clients from many backgrounds. So far, I have been fortunate to guide more than 50 families through buying, selling, or finding a place to call home.", "about.p4": "In 2025, I became a Top 3% Realtor nationwide. I do not see that as a badge to show off. I see it as a reminder that when clients trust me with a major life decision, every step deserves care.", "about.p5": "If you are getting ready for your next chapter, I would be glad to help you see the path more clearly.", "about.quote": "Real estate is not one transaction. It is a life transition, and I care that each step makes sense to you.", "about.m1": "Started in real estate in Taiwan", "about.m2": "50+ families guided through major moves", "about.m3": "Top 3% Realtor nationwide in 2025",
+        "services.title": "Three ways to start from where you are", "services.lead": "You do not need every answer ready. Choose the path closest to your current situation, and I will organize the details for follow-up.", "services.buyTitle": "Buyer consult", "services.buyBody": "We start with budget, location, financing rhythm, and how you want to tour. Once the direction is clear, the search feels a lot less noisy.", "services.buyPoint1": "Area and budget calibration", "services.buyPoint2": "Showing and offer rhythm", "services.buyPoint3": "Escrow document reminders", "services.buyCta": "Plan my purchase", "services.sellTitle": "Seller strategy", "services.sellBody": "Pricing, condition, timing, and negotiation all affect the outcome. We will lay out the options before you make a move.", "services.sellPoint1": "Pre-listing preparation", "services.sellPoint2": "Pricing and negotiation strategy", "services.sellPoint3": "Buyer-term risk review", "services.sellCta": "Discuss selling timeline", "services.valueTitle": "Home valuation", "services.valueBody": "I look beyond automated estimates, using comparable sales, land and structure value, condition, and location to explain the number.", "services.valuePoint1": "Comparable sale selection", "services.valuePoint2": "Land and structure breakdown", "services.valuePoint3": "List or hold direction", "services.valueCta": "Request valuation",
+        "proof.eyebrow": "Proof through process", "proof.title": "Expertise means you know the next step", "proof.lead": "I am not here to make a property sound pretty. The real work is turning a complex transaction into steps you can understand, question, and act on.", "proof.authority1": "Yu Yi Hung 02249826", "proof.authority2": "Greater Los Angeles brokerage credential", "proof.authority3": "Family buying, selling, and ownership guidance", "proof.authority4": "Top 3% Realtor nationwide in 2025", "proof.groupContact": "Direct contact", "proof.groupSocial": "Social and video", "proof.groupResources": "Real estate resources",
+        "proof.phoneTitle": "Phone", "proof.phoneBody": "Call Wynn directly.", "proof.callPrimary": "Call 626-658-8265", "proof.phoneAltTitle": "Phone · Alternate", "proof.phoneAltBody": "The second contact number listed on Linktree.", "proof.callAlternate": "Call 646-354-3546", "proof.whatsappTitle": "WhatsApp", "proof.whatsappBody": "Useful for quick property, document, or scheduling messages.", "proof.openWhatsApp": "Open WhatsApp", "proof.lineTitle": "Line", "proof.lineBody": "Contact Wynn through Line.", "proof.openLine": "Open Line", "proof.wechatTitle": "Wechat ID · wynnhung1107", "proof.wechatBody": "A familiar contact channel for Chinese-speaking clients.", "proof.openWechat": "Search Wechat ID", "proof.telegramTitle": "Telegram", "proof.telegramBody": "Send a direct message through Telegram.", "proof.openTelegram": "Open Telegram", "proof.emailTitle": "Email", "proof.emailBody": "Best for documents, questions, and more complete requests.", "proof.openEmail": "Email Wynn", "proof.instagramTitle": "Instagram", "proof.instagramBody": "See Wynn's latest real estate content and market updates.", "proof.openInstagram": "Open Instagram", "proof.youtubeTitle": "YouTube", "proof.youtubeBody": "Watch Wynn Housing real estate videos and market explainers.", "proof.openYouTube": "Open YouTube",
+        "proof.escrowTitle": "Escrow Client Guide", "proof.escrowBody": "Once escrow starts, roles, documents, and timing need to be clear.", "proof.openGuide": "Open guide", "proof.homeownerTitle": "Homeowner Manual", "proof.homeownerBody": "Closing is not the end. Ownership documents, taxes, maintenance, and scam prevention still matter.", "proof.openManual": "View manual", "proof.utilityTitle": "Utility Setup Guide", "proof.utilityBody": "How buyers can start or transfer SoCalGas and SCE accounts before closing.", "proof.disclosureTitle": "Regulatory Disclosure Pamphlets", "proof.disclosureBody": "Free download shelf for common California real estate disclosure pamphlets.", "proof.defensibleTitle": "Defensible Space Inspection", "proof.defensibleBody": "AB-38 defensible space inspection information and request application.", "proof.fireTitle": "Fire Hazard Severity Zones", "proof.fireBody": "California OSFM fire hazard severity zone information.", "proof.nhdEnTitle": "NHD Report Guide · English", "proof.nhdEnBody": "English guide for reading natural hazard disclosure terms.", "proof.nhdZhTitle": "NHD Report Guide · Chinese", "proof.nhdZhBody": "Chinese guide to help clients understand natural hazard disclosure reports.", "proof.nhdEsTitle": "NHD Report Guide · Español", "proof.nhdEsBody": "Spanish guide for reading natural hazard disclosure reports.", "proof.openResource": "Open resource", "proof.openPdf": "Open PDF",
+        "contact.eyebrow": "Start with the right next step", "contact.title": "Tell me where you are. We will start there", "contact.lead": "Start with the broad direction. You do not need every answer ready. I will follow up based on your situation and keep the details organized for the next step.", "footer.copy": "Southern California bilingual real estate advisory · Wynn Hung, eXp Realty · CA DRE# Yu Yi Hung 02249826 · eXp Realty of Greater Los Angeles CA DRE# 02188471",
+        "form.submit": "Send request", "form.intent": "Intent", "form.name": "Name", "form.email": "Email", "form.phone": "Phone", "form.location": "City, area, or property address", "form.budget": "Budget or valuation goal", "form.timeline": "Timeline", "form.message": "Message", "form.language": "Preferred language", "form.success": "Received. I will follow up soon.", "form.error": "Something went wrong. Please try again or call me directly.", "form.contactRequired": "Please leave either an email or phone number so I can reply.", "form.loading": "Sending...", "modal.buyerTitle": "Buyer consult", "modal.buyerSub": "Share your area, budget, and timeline so we can map the buying path.", "modal.sellerTitle": "Seller strategy", "modal.sellerSub": "Share the address or area, target timing, and goal so we can decide the next move.", "modal.valuationTitle": "Home valuation", "modal.valuationSub": "Share the address and valuation goal. I will review comparable data and direction."
+      },
+      es: {
+        "skip": "Saltar al contenido", "nav.services": "Servicios", "nav.proof": "Proceso", "nav.resources": "Recursos", "nav.contact": "Contacto", "nav.cta": "Valuación",
+        "license.short": "CA DRE# Yu Yi Hung 02249826", "license.agent": "CA DRE# Yu Yi Hung 02249826", "license.broker": "eXp Realty of Greater Los Angeles CA DRE# 02188471",
+        "hero.eyebrow": "Asesoría inmobiliaria bilingüe en el sur de California", "hero.title": "Antes de moverte, entiende el siguiente paso", "hero.lead": "Ayudo a familias del sur de California a comprar, vender y entender el valor de una propiedad en chino e inglés. Revisamos tiempos, documentos y opciones hasta que el próximo paso quede claro.", "hero.buy": "Comprar", "hero.sell": "Vender", "hero.value": "Valuación", "hero.badgeDre": "Yu Yi Hung 02249826", "hero.badgeBroker": "Greater Los Angeles CA DRE# 02188471", "hero.badgeTop": "Top 3% Realtor nacional en 2025", "hero.badgeFamilies": "50+ familias guiadas al comprar, vender o establecerse", "hero.stat1": "Compra, venta o valuación: primero elige el camino", "hero.stat2": "Chino e inglés, explicado con claridad", "hero.stat3": "Preguntas bienvenidas antes y después del cierre", "hero.panelLabel": "Featured advisory", "hero.panelTitle": "De escrow a la mudanza, ordenamos primero los detalles", "hero.panelBody": "Comprar o vender no es solo firmar un contrato. Lo que suele trabarse son documentos, tiempos y decidir si el siguiente paso tiene sentido.", "hero.panelProof1": "Documentos bilingües", "hero.panelProof2": "Ritmo de transacción", "hero.panelProof3": "Recordatorios después del cierre",
+        "about.eyebrow": "Wynn Hung · eXp Realty", "about.title": "Sobre mí", "about.p1": "Soy Wynn, agente de bienes raíces en el sur de California. Mi camino en real estate empezó en Taiwán en 2021.", "about.p2": "Ahí entré de verdad a esta industria y entendí que comprar o vender una casa casi nunca se trata solo del precio o del contrato. Para muchas familias, es un cambio de etapa: estabilidad, elección y una forma de planear lo que viene.", "about.p3": "En 2024 llevé ese camino a Los Ángeles. Un mercado nuevo y una ciudad nueva me acercaron a clientes con historias muy distintas. Hasta ahora he tenido la suerte de acompañar a más de 50 familias en la compra, venta o búsqueda de un hogar.", "about.p4": "En 2025 fui reconocido como Top 3% Realtor a nivel nacional. No lo veo como una etiqueta para presumir. Para mí es un recordatorio: cuando un cliente confía una decisión grande de su vida, cada paso merece cuidado.", "about.p5": "Si estás preparándote para tu próxima etapa, me dará gusto ayudarte a ver el camino con más claridad.", "about.quote": "Real estate no es una sola transacción. Es una transición de vida, y me importa que cada paso tenga sentido para ti.", "about.m1": "Inicio en real estate en Taiwán", "about.m2": "50+ familias acompañadas", "about.m3": "Top 3% Realtor nacional en 2025",
+        "services.title": "Tres maneras de empezar desde donde estás", "services.lead": "No necesitas tener todas las respuestas. Elige el camino que más se parece a tu situación actual y organizo los detalles para dar seguimiento.", "services.buyTitle": "Consulta para comprar", "services.buyBody": "Empezamos con presupuesto, zonas, financiamiento y cómo quieres ver propiedades. Con dirección clara, la búsqueda se vuelve menos pesada.", "services.buyPoint1": "Ajuste de zona y presupuesto", "services.buyPoint2": "Ritmo de visitas y ofertas", "services.buyPoint3": "Recordatorios de escrow", "services.buyCta": "Planear mi compra", "services.sellTitle": "Estrategia para vender", "services.sellBody": "Precio, condición, momento de salida y negociación afectan el resultado. Revisamos las opciones antes de movernos.", "services.sellPoint1": "Preparación antes de listar", "services.sellPoint2": "Estrategia de precio y negociación", "services.sellPoint3": "Revisión de riesgos del comprador", "services.sellCta": "Hablar de venta", "services.valueTitle": "Valuación de casa", "services.valueBody": "Voy más allá de una estimación automática: comparables, terreno, construcción, condición y ubicación para explicar el número.", "services.valuePoint1": "Selección de comparables", "services.valuePoint2": "Terreno y construcción", "services.valuePoint3": "Listar o esperar", "services.valueCta": "Solicitar valuación",
+        "proof.eyebrow": "Proof through process", "proof.title": "La experiencia se nota cuando sabes el siguiente paso", "proof.lead": "No se trata de hacer que una propiedad suene bonita. El trabajo real es convertir una transacción compleja en pasos que puedas entender, preguntar y decidir.", "proof.authority1": "Yu Yi Hung 02249826", "proof.authority2": "Credencial de corretaje en Greater Los Angeles", "proof.authority3": "Guía para comprar, vender y ser propietario", "proof.authority4": "Top 3% Realtor nacional en 2025", "proof.groupContact": "Contacto directo", "proof.groupSocial": "Redes y video", "proof.groupResources": "Recursos inmobiliarios",
+        "proof.phoneTitle": "Teléfono", "proof.phoneBody": "Llama a Wynn directamente.", "proof.callPrimary": "Llamar 626-658-8265", "proof.phoneAltTitle": "Teléfono · Alternativo", "proof.phoneAltBody": "Segundo número de contacto listado en Linktree.", "proof.callAlternate": "Llamar 646-354-3546", "proof.whatsappTitle": "WhatsApp", "proof.whatsappBody": "Útil para mensajes rápidos sobre propiedades, documentos o horarios.", "proof.openWhatsApp": "Abrir WhatsApp", "proof.lineTitle": "Line", "proof.lineBody": "Contacta a Wynn por Line.", "proof.openLine": "Abrir Line", "proof.wechatTitle": "Wechat ID · wynnhung1107", "proof.wechatBody": "Canal familiar para clientes que hablan chino.", "proof.openWechat": "Buscar Wechat ID", "proof.telegramTitle": "Telegram", "proof.telegramBody": "Envía un mensaje directo por Telegram.", "proof.openTelegram": "Abrir Telegram", "proof.emailTitle": "Email", "proof.emailBody": "Ideal para documentos, preguntas y solicitudes más completas.", "proof.openEmail": "Enviar email a Wynn", "proof.instagramTitle": "Instagram", "proof.instagramBody": "Contenido inmobiliario y actualizaciones de mercado de Wynn.", "proof.openInstagram": "Abrir Instagram", "proof.youtubeTitle": "YouTube", "proof.youtubeBody": "Videos de Wynn Housing y explicaciones de mercado.", "proof.openYouTube": "Abrir YouTube",
+        "proof.escrowTitle": "Escrow Client Guide", "proof.escrowBody": "Cuando empieza escrow, roles, documentos y tiempos deben quedar claros.", "proof.openGuide": "Abrir guía", "proof.homeownerTitle": "Homeowner Manual", "proof.homeownerBody": "El cierre no es el final. Documentos, impuestos, mantenimiento y prevención de fraudes siguen importando.", "proof.openManual": "Ver manual", "proof.utilityTitle": "Utility Setup Guide", "proof.utilityBody": "Cómo iniciar o transferir cuentas de SoCalGas y SCE antes del cierre.", "proof.disclosureTitle": "Regulatory Disclosure Pamphlets", "proof.disclosureBody": "Biblioteca gratuita de folletos comunes de divulgación inmobiliaria en California.", "proof.defensibleTitle": "Defensible Space Inspection", "proof.defensibleBody": "Información y solicitud para inspección AB-38 defensible space.", "proof.fireTitle": "Fire Hazard Severity Zones", "proof.fireBody": "Información de zonas de riesgo de incendio de California OSFM.", "proof.nhdEnTitle": "NHD Report Guide · English", "proof.nhdEnBody": "Guía en inglés para leer términos de natural hazard disclosure.", "proof.nhdZhTitle": "NHD Report Guide · Chinese", "proof.nhdZhBody": "Guía en chino para entender reportes de natural hazard disclosure.", "proof.nhdEsTitle": "NHD Report Guide · Español", "proof.nhdEsBody": "Guía en español para leer reportes de natural hazard disclosure.", "proof.openResource": "Abrir recurso", "proof.openPdf": "Abrir PDF",
+        "contact.eyebrow": "Empieza con el siguiente paso correcto", "contact.title": "Cuéntame dónde estás. Empezamos ahí", "contact.lead": "Empieza con la dirección general. No necesitas tener todas las respuestas. Te responderé según tu situación y mantendré los detalles organizados para el siguiente paso.", "footer.copy": "Asesoría inmobiliaria bilingüe en el sur de California · Wynn Hung, eXp Realty · CA DRE# Yu Yi Hung 02249826 · eXp Realty of Greater Los Angeles CA DRE# 02188471",
+        "form.submit": "Enviar solicitud", "form.intent": "Objetivo", "form.name": "Nombre", "form.email": "Email", "form.phone": "Teléfono", "form.location": "Ciudad, zona o dirección", "form.budget": "Presupuesto u objetivo de valuación", "form.timeline": "Tiempo", "form.message": "Mensaje", "form.language": "Idioma preferido", "form.success": "Recibido. Te responderé pronto.", "form.error": "Algo salió mal. Intenta de nuevo o llámame directamente.", "form.contactRequired": "Deja un email o teléfono para poder responderte.", "form.loading": "Enviando...", "modal.buyerTitle": "Consulta para comprar", "modal.buyerSub": "Comparte zona, presupuesto y tiempo para ordenar el camino de compra.", "modal.sellerTitle": "Estrategia para vender", "modal.sellerSub": "Comparte dirección o zona, tiempo objetivo y meta para decidir el siguiente paso.", "modal.valuationTitle": "Valuación de casa", "modal.valuationSub": "Comparte dirección y objetivo de valuación. Revisaré comparables y dirección."
+      }
+    };
+
+    const intentLabels = {
+      zh: { buyer: "買房諮詢", seller: "賣房策略", valuation: "房屋估價" },
+      en: { buyer: "Buyer consult", seller: "Seller strategy", valuation: "Home valuation" },
+      es: { buyer: "Consulta para comprar", seller: "Estrategia para vender", valuation: "Valuación de casa" }
+    };
+    const timelineOptions = {
+      zh: ["還在研究", "0-3 個月", "3-6 個月", "6 個月以上"],
+      en: ["Still researching", "0-3 months", "3-6 months", "6+ months"],
+      es: ["Todavía investigando", "0-3 meses", "3-6 meses", "6+ meses"]
+    };
+    const languageOptions = {
+      zh: [["zh", "中文"], ["en", "English"], ["es", "Español"], ["both", "都可以"]],
+      en: [["zh", "Chinese"], ["en", "English"], ["es", "Spanish"], ["both", "Any"]],
+      es: [["zh", "Chino"], ["en", "Inglés"], ["es", "Español"], ["both", "Cualquiera"]]
+    };
+
+    const languageStorageKey = "wynn-lang-v2";
+    let currentLang = localStorage.getItem(languageStorageKey) || "en";
+    let currentIntent = "valuation";
+    const modal = document.getElementById("lead-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalSubtitle = document.getElementById("modal-subtitle");
+    const t = key => translations[currentLang]?.[key] || translations.en[key] || translations.zh[key] || key;
+
+    function fieldTemplate() {
+      const suffix = Math.random().toString(36).slice(2);
+      const intents = Object.entries(intentLabels[currentLang]).map(([value, label]) => `<option value="${value}">${label}</option>`).join("");
+      const timelines = timelineOptions[currentLang].map(value => `<option value="${value}">${value}</option>`).join("");
+      const languages = languageOptions[currentLang].map(([value, label]) => `<option value="${value}">${label}</option>`).join("");
+      return `
+        <div class="field"><label for="intent-${suffix}">${t("form.intent")}</label><select id="intent-${suffix}" name="intent" required>${intents}</select></div>
+        <div class="field"><label for="language-${suffix}">${t("form.language")}</label><select id="language-${suffix}" name="language_preference">${languages}</select></div>
+        <div class="field"><label for="name-${suffix}">${t("form.name")}</label><input id="name-${suffix}" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="email-${suffix}">${t("form.email")}</label><input id="email-${suffix}" name="email" type="email" autocomplete="email"></div>
+        <div class="field"><label for="phone-${suffix}">${t("form.phone")}</label><input id="phone-${suffix}" name="phone" inputmode="tel" autocomplete="tel"></div>
+        <div class="field"><label for="timeline-${suffix}">${t("form.timeline")}</label><select id="timeline-${suffix}" name="timeline">${timelines}</select></div>
+        <div class="field full"><label for="location-${suffix}">${t("form.location")}</label><input id="location-${suffix}" name="location" autocomplete="street-address" required></div>
+        <div class="field full"><label for="budget-${suffix}">${t("form.budget")}</label><input id="budget-${suffix}" name="budget_or_goal"></div>
+        <div class="field full"><label for="message-${suffix}">${t("form.message")}</label><textarea id="message-${suffix}" name="message"></textarea></div>
+      `;
+    }
+    function renderForms() {
+      document.querySelectorAll(".lead-form").forEach(form => {
+        form.querySelector(".form-grid").innerHTML = fieldTemplate();
+        form.querySelector('[name="intent"]').value = form.dataset.context === "modal" ? currentIntent : "valuation";
+        form.querySelector('[name="language_preference"]').value = currentLang === "zh" ? "zh" : currentLang === "es" ? "es" : "en";
+      });
+    }
+    function updateModalCopy() {
+      modalTitle.textContent = t(`modal.${currentIntent}Title`);
+      modalSubtitle.textContent = t(`modal.${currentIntent}Sub`);
+      modal.querySelectorAll('[name="intent"]').forEach(select => { select.value = currentIntent; });
+    }
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem(languageStorageKey, lang);
+      document.documentElement.lang = ({ zh: "zh-Hant", en: "en", es: "es" })[lang] || "en";
+      document.querySelectorAll("[data-i18n]").forEach(node => { node.textContent = t(node.dataset.i18n); });
+      document.querySelectorAll("[data-lang]").forEach(button => button.classList.toggle("active", button.dataset.lang === lang));
+      renderForms();
+      updateModalCopy();
+    }
+    function openModal(intent) {
+      currentIntent = intent || "valuation";
+      updateModalCopy();
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+    }
+    function closeModal() {
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("modal-open");
+    }
+    async function submitLead(form) {
+      const status = form.querySelector(".form-status");
+      const submit = form.querySelector('button[type="submit"]');
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.page_language = currentLang;
+      data.source_page = window.location.pathname || "/";
+      status.className = "form-status";
+      if (!String(data.email || "").trim() && !String(data.phone || "").trim()) {
+        status.className = "form-status error";
+        status.textContent = t("form.contactRequired");
+        form.querySelector('[name="email"]').focus();
+        return;
+      }
+      status.textContent = t("form.loading");
+      submit.disabled = true;
+      submit.setAttribute("aria-busy", "true");
+      try {
+        const response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+        if (!response.ok) throw new Error("Request failed");
+        form.reset();
+        renderForms();
+        status.className = "form-status success";
+        status.textContent = t("form.success");
+      } catch {
+        status.className = "form-status error";
+        status.textContent = t("form.error");
+      } finally {
+        submit.disabled = false;
+        submit.removeAttribute("aria-busy");
+      }
+    }
+
+    document.querySelectorAll("[data-lang]").forEach(button => button.addEventListener("click", () => applyLanguage(button.dataset.lang)));
+    document.querySelectorAll("[data-open-lead]").forEach(button => button.addEventListener("click", () => openModal(button.dataset.openLead)));
+    document.querySelector("[data-close-modal]").addEventListener("click", closeModal);
+    modal.addEventListener("click", event => { if (event.target === modal) closeModal(); });
+    document.addEventListener("keydown", event => { if (event.key === "Escape") closeModal(); });
+    document.querySelectorAll(".lead-form").forEach(form => form.addEventListener("submit", event => { event.preventDefault(); submitLead(form); }));
+
+    const trustHandsImage = new Image();
+    trustHandsImage.onload = () => document.documentElement.style.setProperty("--hero-image", 'url("assets/wynn-featured-advisory-event.jpg?v=20260617-event")');
+    trustHandsImage.src = "assets/wynn-featured-advisory-event.jpg?v=20260617-event";
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .16 });
+    document.querySelectorAll("[data-reveal]").forEach(node => observer.observe(node));
+    applyLanguage(currentLang);
+  </script>
 </body>
 </html>

@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Wynn Housing bilingual buyer guide for setting up or transferring SoCalGas and Southern California Edison service after buying a Southern California home.">
+  <meta name="theme-color" content="#ebe7df">
+  <meta property="og:title" content="Wynn Housing Utility Setup Guide">
+  <meta property="og:description" content="A bilingual guide for buyer clients setting up SoCalGas and Southern California Edison service.">
+  <meta property="og:type" content="article">
+  <title>Utility Setup Guide | Wynn Housing</title>
+  <style>
+    @font-face {
+      font-family: "Geist";
+      src: url("../assets/fonts/Geist-Variable.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: "Geist Mono";
+      src: url("../assets/fonts/GeistMono-Variable.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --ink: #111111;
+      --muted: #68625d;
+      --paper: #ebe7df;
+      --surface: #fffdf8;
+      --surface-2: #f7f2e9;
+      --line: rgba(17, 17, 17, .14);
+      --line-strong: rgba(17, 17, 17, .24);
+      --gas: #1b5ca8;
+      --electric: #f4bd32;
+      --accent: #0f766e;
+      --danger: #b42318;
+      --shadow: 0 20px 60px rgba(17, 17, 17, .08);
+      --display: "Geist", "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --body: "Geist", "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    button { font: inherit; cursor: pointer; }
+    img { max-width: 100%; display: block; }
+    .shell { width: min(1180px, calc(100% - 36px)); margin: 0 auto; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+      background: rgba(235, 231, 223, .86);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line-strong);
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .brand strong { display: block; font-size: 17px; font-weight: 650; letter-spacing: 0; }
+    .brand span { display: block; color: var(--muted); font-size: 12px; }
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .lang-toggle {
+      display: flex;
+      gap: 4px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 253, 248, .72);
+    }
+    .lang-toggle button, .print-btn, .source-link {
+      border: 1px solid transparent;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--ink);
+      padding: 9px 12px;
+      font-size: 14px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    .lang-toggle button.active, .print-btn {
+      background: var(--surface);
+      border-color: var(--line);
+      box-shadow: 0 8px 24px rgba(17, 17, 17, .06);
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+      gap: 34px;
+      align-items: stretch;
+      padding: clamp(42px, 6vw, 78px) 0 34px;
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 34px;
+      padding: clamp(26px, 4vw, 44px);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(255, 253, 248, .98), rgba(247, 242, 233, .92)),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 760px;
+      margin-bottom: 18px;
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: .94;
+      font-weight: 680;
+      letter-spacing: 0;
+    }
+    .lede {
+      max-width: 690px;
+      margin: 0;
+      color: #36312d;
+      font-size: clamp(18px, 2vw, 24px);
+      line-height: 1.45;
+    }
+    .hero-panel {
+      display: grid;
+      align-content: space-between;
+      gap: 24px;
+      padding: clamp(24px, 3vw, 34px);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 18px;
+      background: #101010;
+      color: #fff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .hero-panel h2 {
+      margin: 0;
+      font-size: clamp(25px, 3vw, 38px);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+    .hero-panel p { color: rgba(255, 255, 255, .72); }
+    .utility-meter {
+      display: grid;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .meter-row {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 12px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    .meter-track {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .16);
+      overflow: hidden;
+    }
+    .meter-fill { height: 100%; border-radius: inherit; }
+    .meter-fill.gas { width: 72%; background: var(--gas); }
+    .meter-fill.electric { width: 88%; background: var(--electric); }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .quick-card {
+      min-height: 118px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+    .quick-card b { display: block; margin-bottom: 8px; font-size: 15px; }
+    .quick-card span { color: var(--muted); font-size: 14px; }
+    .section {
+      padding: 34px 0;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 18px;
+      border-top: 1px solid var(--line-strong);
+      padding-top: 24px;
+    }
+    .section-head h2 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(30px, 4.5vw, 58px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+    .section-head p {
+      max-width: 390px;
+      margin: 0;
+      color: var(--muted);
+    }
+    .provider-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .provider {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .provider-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+    .provider-header h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.05;
+    }
+    .provider-header p { margin: 0; color: var(--muted); }
+    .badge {
+      flex: 0 0 auto;
+      align-self: start;
+      border-radius: 999px;
+      padding: 8px 10px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .provider-body { padding: 24px; }
+    .step-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .step-list li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+    .step-index {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .step-list b { display: block; margin-bottom: 3px; }
+    .step-list span { color: var(--muted); }
+    .source-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .source-link {
+      border-color: var(--line);
+      background: var(--surface-2);
+      color: var(--ink);
+      font-size: 13px;
+    }
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .evidence {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .evidence img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: top center;
+      border-bottom: 1px solid var(--line);
+    }
+    .evidence figcaption {
+      margin: 0;
+      padding: 16px 18px 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .comparison {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .choice-card {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+    .choice-card h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+    .choice-card p { margin-bottom: 14px; color: var(--muted); }
+    .choice-card ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 18px;
+      color: #312d29;
+    }
+    .timeline {
+      display: grid;
+      gap: 12px;
+      counter-reset: item;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+    }
+    .timeline-item strong {
+      font-size: 18px;
+      line-height: 1.15;
+    }
+    .timeline-item ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+    .warning {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 22px;
+      border: 1px solid rgba(180, 35, 24, .24);
+      border-radius: 16px;
+      background: #fff7f5;
+      color: #42120e;
+    }
+    .warning-icon {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--danger);
+      color: #fff;
+      font-family: var(--mono);
+      font-weight: 800;
+    }
+    .warning h2 { margin-bottom: 8px; font-size: 24px; }
+    .warning p { margin: 0; }
+    .closing {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+      margin: 34px 0 44px;
+      padding: clamp(22px, 4vw, 34px);
+      border-radius: 18px;
+      background: #111;
+      color: #fff;
+    }
+    .closing h2 { margin-bottom: 8px; font-size: clamp(28px, 4vw, 44px); line-height: 1; }
+    .closing p { margin: 0; color: rgba(255, 255, 255, .72); }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 10px;
+      background: #fff;
+      color: #111;
+      padding: 11px 16px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .footer {
+      padding: 24px 0 48px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    [data-lang-panel] { display: none; }
+    [data-lang-panel].active { display: block; }
+    [data-lang-panel].active.quick-grid,
+    [data-lang-panel].active.step-list,
+    [data-lang-panel].active.timeline {
+      display: grid;
+    }
+    @media (max-width: 860px) {
+      .shell { width: min(100% - 28px, 1180px); }
+      .topbar { align-items: flex-start; }
+      .actions { flex-wrap: wrap; justify-content: flex-end; }
+      .hero, .provider-grid, .evidence-grid, .comparison, .closing { grid-template-columns: 1fr; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head h2 { margin-bottom: 12px; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .brand > span:not(.brand-mark) { display: none; }
+    }
+    @media print {
+      body { background: #fff; }
+      .topbar, .source-row, .print-btn, .lang-toggle { display: none; }
+      .shell { width: 100%; }
+      .hero, .provider-grid, .evidence-grid, .comparison, .closing { grid-template-columns: 1fr; }
+      .hero-copy, .hero-panel, .provider, .choice-card, .timeline-item, .warning, .evidence { box-shadow: none; break-inside: avoid; }
+      a { text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar" aria-label="Guide controls">
+      <a class="brand" href="../index.html#proof">
+        <span class="brand-mark">WH</span>
+        <span><strong>Wynn Housing</strong><span>Southern California buyer resource</span></span>
+      </a>
+      <div class="actions">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" class="active" data-lang="zh">中文</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button class="print-btn" type="button" id="printBtn">Print / PDF</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div data-lang-panel="zh" class="active">
+            <p class="eyebrow">南加州買方入住指南</p>
+            <h1>水電瓦斯開通指南</h1>
+            <p class="lede">給 escrow 後段與準備交屋的買方：如何判斷新增帳戶或移轉帳戶，如何準備 SoCalGas 與 Southern California Edison 的線上申請資料。</p>
+          </div>
+          <div data-lang-panel="en">
+            <p class="eyebrow">Southern California Buyer Guide</p>
+            <h1>Utility Setup Guide</h1>
+            <p class="lede">For buyers near closing: how to decide between starting or transferring service, and what to prepare for SoCalGas and Southern California Edison.</p>
+          </div>
+          <div class="quick-grid" data-lang-panel="zh" class="active">
+            <div class="quick-card"><b>1. 先確認服務區</b><span>不是每個城市都由同一家公司服務。先用官方服務區或帳戶入口確認地址。</span></div>
+            <div class="quick-card"><b>2. 用交屋日排日期</b><span>買方通常以 county recording / closing 附近作為開通或移轉時間點。</span></div>
+            <div class="quick-card"><b>3. 個資只在官網填</b><span>SSN、ID、帳號資料只透過官方網址輸入，不透過 email 或陌生連結傳送。</span></div>
+          </div>
+          <div class="quick-grid" data-lang-panel="en">
+            <div class="quick-card"><b>1. Confirm service area</b><span>Not every city uses the same utility. Verify the property address through official utility pages.</span></div>
+            <div class="quick-card"><b>2. Schedule around closing</b><span>Buyers usually use county recording or closing as the target service date.</span></div>
+            <div class="quick-card"><b>3. Use official sites only</b><span>Enter SSN, ID, and account details only through official utility websites, not email links.</span></div>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Utility overview">
+          <div>
+            <p class="eyebrow">SoCalGas + SCE</p>
+            <h2 data-lang-panel="zh" class="active">關單前，把能源帳戶準備好。</h2>
+            <h2 data-lang-panel="en">Before closing, prepare the energy accounts.</h2>
+          </div>
+          <div class="utility-meter" aria-hidden="true">
+            <div class="meter-row"><span>Gas</span><span class="meter-track"><span class="meter-fill gas"></span></span></div>
+            <div class="meter-row"><span>Electric</span><span class="meter-track"><span class="meter-fill electric"></span></span></div>
+          </div>
+          <p data-lang-panel="zh" class="active">這份指南根據官方 SoCalGas 與 SCE 頁面整理，最後核對日期：2026-06-24。</p>
+          <p data-lang-panel="en">This guide is based on official SoCalGas and SCE pages, last reviewed on 2026-06-24.</p>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="warning">
+          <div class="warning-icon">!</div>
+          <div data-lang-panel="zh" class="active">
+            <h2>安全提醒</h2>
+            <p>公用事業申請會要求敏感資料。請只從 <strong>socalgas.com</strong>、<strong>myaccount.socalgas.com</strong>、<strong>sce.com</strong> 這類官方網址進入。不要把 SSN、駕照、帳號或付款資料寄到 email、簡訊或第三方表單。</p>
+          </div>
+          <div data-lang-panel="en">
+            <h2>Safety note</h2>
+            <p>Utility applications may ask for sensitive information. Use only official domains such as <strong>socalgas.com</strong>, <strong>myaccount.socalgas.com</strong>, and <strong>sce.com</strong>. Do not send SSN, driver's license, account, or payment information by email, text, or third-party forms.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">先判斷：新增、移轉，還是停止服務</h2>
+          <h2 data-lang-panel="en">First decide: start, transfer, or stop service</h2>
+          <p data-lang-panel="zh" class="active">買房客戶最常用的是 Start Service 或 Transfer Service。Stop Service 通常是你搬出舊住址時使用。</p>
+          <p data-lang-panel="en">Most buyers use Start Service or Transfer Service. Stop Service is usually for the address you are leaving.</p>
+        </div>
+        <div class="comparison">
+          <article class="choice-card" data-lang-panel="zh" class="active">
+            <h3>Start Service</h3>
+            <p>你是新客戶，或要在新地址建立新的服務帳戶。</p>
+            <ul><li>剛買房、第一次用該公司服務</li><li>已有舊帳戶，但新地址要用新的 billing/account</li><li>需要輸入新服務地址與開始日期</li></ul>
+          </article>
+          <article class="choice-card" data-lang-panel="en">
+            <h3>Start Service</h3>
+            <p>You are a new customer, or you need a new service account at the property.</p>
+            <ul><li>First time using that utility</li><li>Existing customer but new address needs a separate bill/account</li><li>Requires the new service address and start date</li></ul>
+          </article>
+          <article class="choice-card" data-lang-panel="zh" class="active">
+            <h3>Transfer Service</h3>
+            <p>你已經是該公司的客戶，要把服務從舊地址移到新地址。</p>
+            <ul><li>舊住址與新住址都在同一家公司的服務區</li><li>同時安排舊地址停止與新地址開始</li><li>適合搬家銜接帳戶</li></ul>
+          </article>
+          <article class="choice-card" data-lang-panel="en">
+            <h3>Transfer Service</h3>
+            <p>You already have service with the utility and are moving to another address in its territory.</p>
+            <ul><li>Both addresses are in the same utility territory</li><li>Coordinates stop at old address and start at new address</li><li>Best for move continuity</li></ul>
+          </article>
+          <article class="choice-card" data-lang-panel="zh" class="active">
+            <h3>Stop Service</h3>
+            <p>你要停止舊地址服務，或搬離不再使用的地址。</p>
+            <ul><li>賣掉舊房或搬出租屋</li><li>確認最後帳單寄送地址</li><li>不要太早停，避免搬家前沒電或沒瓦斯</li></ul>
+          </article>
+          <article class="choice-card" data-lang-panel="en">
+            <h3>Stop Service</h3>
+            <p>You need to disconnect service at the address you are leaving.</p>
+            <ul><li>Selling a prior home or leaving a rental</li><li>Confirm where the final bill should go</li><li>Do not stop too early before move-out</li></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">官方入口畫面</h2>
+          <h2 data-lang-panel="en">Official entry screens</h2>
+          <p data-lang-panel="zh" class="active">以下截圖只用來協助辨識入口。正式申請請以官方頁面當下顯示為準。</p>
+          <p data-lang-panel="en">These screenshots help identify the official entry points. Follow the live official pages when applying.</p>
+        </div>
+        <div class="evidence-grid">
+          <figure class="evidence">
+            <img src="assets/utility-guide/socalgas-services-entry.png" alt="SoCalGas official Services page showing Start Service, Transfer Service, and Stop Service options.">
+            <figcaption data-lang-panel="zh" class="active">SoCalGas Services 頁面會看到 Start Service、Moving / Transfer Service、Stop Service 三個入口。</figcaption>
+            <figcaption data-lang-panel="en">The SoCalGas Services page shows Start Service, Moving / Transfer Service, and Stop Service.</figcaption>
+          </figure>
+          <figure class="evidence">
+            <img src="assets/utility-guide/sce-move-center-entry.png" alt="SCE official Start, Stop or Move Service page showing required ID and SSN plus service options.">
+            <figcaption data-lang-panel="zh" class="active">SCE Move Center 頁面會列出 Driver's License / ID、Social Security Number，以及 Start、Stop、Transfer 的選項。</figcaption>
+            <figcaption data-lang-panel="en">The SCE Move Center page lists Driver's License / ID, Social Security Number, and Start, Stop, Transfer options.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">SoCalGas 天然瓦斯</h2>
+          <h2 data-lang-panel="en">SoCalGas natural gas</h2>
+          <p data-lang-panel="zh" class="active">適用於 SoCalGas 服務區內、已有瓦斯 meter 的住宅。沒有 meter 時要先走 residential gas service 申請。</p>
+          <p data-lang-panel="en">For homes in the SoCalGas service area with a gas meter installed. If there is no meter, request residential gas service first.</p>
+        </div>
+        <div class="provider-grid">
+          <article class="provider">
+            <div class="provider-header">
+              <div>
+                <h3 data-lang-panel="zh" class="active">新增帳戶</h3>
+                <h3 data-lang-panel="en">Start service</h3>
+                <p data-lang-panel="zh" class="active">適合新客戶，或需要在新地址建立瓦斯服務。</p>
+                <p data-lang-panel="en">For new customers or a new gas account at the property.</p>
+              </div>
+              <span class="badge">SoCalGas</span>
+            </div>
+            <div class="provider-body">
+              <ol class="step-list" data-lang-panel="zh" class="active">
+                <li><span class="step-index">1</span><span><b>進入 Start Service</b>從 SoCalGas Services 或 Moving 頁面進入官方 My Account start-service 流程。</span></li>
+                <li><span class="step-index">2</span><span><b>準備資料</b>服務地址、開始日期、聯絡方式、SSN。SoCalGas 表示會透過 Experian 驗證身分。</span></li>
+                <li><span class="step-index">3</span><span><b>確認 meter</b>新地址必須在服務區且已安裝 meter。若沒有 meter，需要另送 residential gas service request。</span></li>
+                <li><span class="step-index">4</span><span><b>留意費用</b>官方 FAQ 說明一次性 $25 service fee 會加到第一張帳單。</span></li>
+              </ol>
+              <ol class="step-list" data-lang-panel="en">
+                <li><span class="step-index">1</span><span><b>Open Start Service</b>Use the official SoCalGas Services or Moving page to enter the My Account start-service flow.</span></li>
+                <li><span class="step-index">2</span><span><b>Prepare information</b>Service address, start date, contact information, and SSN. SoCalGas says it validates identity through Experian.</span></li>
+                <li><span class="step-index">3</span><span><b>Confirm meter</b>The address must be in the service area and have a meter installed. If not, submit a residential gas service request.</span></li>
+                <li><span class="step-index">4</span><span><b>Watch the fee</b>The official FAQ says a one-time $25 service fee is added to the first bill.</span></li>
+              </ol>
+            </div>
+          </article>
+          <article class="provider">
+            <div class="provider-header">
+              <div>
+                <h3 data-lang-panel="zh" class="active">移轉帳戶</h3>
+                <h3 data-lang-panel="en">Transfer service</h3>
+                <p data-lang-panel="zh" class="active">適合已是 SoCalGas 客戶，並搬到 SoCalGas 服務區內的新地址。</p>
+                <p data-lang-panel="en">For existing SoCalGas customers moving to another address in the SoCalGas service area.</p>
+              </div>
+              <span class="badge">Transfer</span>
+            </div>
+            <div class="provider-body">
+              <ol class="step-list" data-lang-panel="zh" class="active">
+                <li><span class="step-index">1</span><span><b>選 Transfer Service</b>用舊帳戶登入或查找帳戶，依指示輸入新地址與日期。</span></li>
+                <li><span class="step-index">2</span><span><b>確認新地址條件</b>新地址仍須在服務區，且必須有 meter。</span></li>
+                <li><span class="step-index">3</span><span><b>安排進入權限</b>SoCalGas 說明新地址開通時，技師可能需要進入住宅。</span></li>
+                <li><span class="step-index">4</span><span><b>費用一致</b>官方 FAQ 同樣列出一次性 $25 service fee。</span></li>
+              </ol>
+              <ol class="step-list" data-lang-panel="en">
+                <li><span class="step-index">1</span><span><b>Select Transfer Service</b>Use your current account or account lookup and enter the new address and service date.</span></li>
+                <li><span class="step-index">2</span><span><b>Confirm address conditions</b>The new address must still be in the service area and have a meter installed.</span></li>
+                <li><span class="step-index">3</span><span><b>Plan access</b>SoCalGas notes a technician may need to enter the residence to turn on gas at the new address.</span></li>
+                <li><span class="step-index">4</span><span><b>Fee is similar</b>The official FAQ also lists a one-time $25 service fee.</span></li>
+              </ol>
+            </div>
+          </article>
+        </div>
+        <div class="source-row">
+          <a class="source-link" href="https://www.socalgas.com/services" target="_blank" rel="noopener">SoCalGas Services</a>
+          <a class="source-link" href="https://www.socalgas.com/moving" target="_blank" rel="noopener">SoCalGas Moving</a>
+          <a class="source-link" href="https://myaccount.socalgas.com/ui/start-service" target="_blank" rel="noopener">Start Service</a>
+          <a class="source-link" href="https://myaccount.socalgas.com/ui/transfer-service" target="_blank" rel="noopener">Transfer Service</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">Southern California Edison 電力</h2>
+          <h2 data-lang-panel="en">Southern California Edison electricity</h2>
+          <p data-lang-panel="zh" class="active">SCE 的 Move Center 同一頁提供 Turn On、Turn Off、Transfer 與服務區查詢。</p>
+          <p data-lang-panel="en">SCE's Move Center provides Turn On, Turn Off, Transfer, and service-area lookup from one entry page.</p>
+        </div>
+        <div class="provider-grid">
+          <article class="provider">
+            <div class="provider-header">
+              <div>
+                <h3 data-lang-panel="zh" class="active">新增電力服務</h3>
+                <h3 data-lang-panel="en">Start electric service</h3>
+                <p data-lang-panel="zh" class="active">適合第一次在新地址申請 SCE 電力服務。</p>
+                <p data-lang-panel="en">For starting SCE electric service at a new address.</p>
+              </div>
+              <span class="badge">SCE</span>
+            </div>
+            <div class="provider-body">
+              <ol class="step-list" data-lang-panel="zh" class="active">
+                <li><span class="step-index">1</span><span><b>準備 ID 與 SSN</b>SCE Move Center 列出 Driver's License / ID 與 Social Security Number。</span></li>
+                <li><span class="step-index">2</span><span><b>選 Residential</b>在 Move Service 頁面選 Residential，再選 Start Service。</span></li>
+                <li><span class="step-index">3</span><span><b>選日期</b>SCE FAQ 說明 start、stop、move request 可最多提前 30 天選日期，不能選過去日期。</span></li>
+                <li><span class="step-index">4</span><span><b>留意驗證</b>若被要求補驗證文件，SCE 要求 5 個工作天內透過官方上傳入口提交兩項文件，審核約 1-2 個工作天。</span></li>
+              </ol>
+              <ol class="step-list" data-lang-panel="en">
+                <li><span class="step-index">1</span><span><b>Prepare ID and SSN</b>SCE's Move Center lists Driver's License / ID and Social Security Number.</span></li>
+                <li><span class="step-index">2</span><span><b>Select Residential</b>On the Move Service page, select Residential, then Start Service.</span></li>
+                <li><span class="step-index">3</span><span><b>Pick the date</b>SCE says start, stop, or move requests can be scheduled up to 30 days in advance, and prior dates cannot be selected.</span></li>
+                <li><span class="step-index">4</span><span><b>Watch verification</b>If verification documents are requested, SCE asks for two documents through its official upload portal within 5 business days. Review may take 1-2 business days.</span></li>
+              </ol>
+            </div>
+          </article>
+          <article class="provider">
+            <div class="provider-header">
+              <div>
+                <h3 data-lang-panel="zh" class="active">移轉電力服務</h3>
+                <h3 data-lang-panel="en">Transfer electric service</h3>
+                <p data-lang-panel="zh" class="active">適合現有 SCE 客戶搬到 SCE 服務區內的新住址。</p>
+                <p data-lang-panel="en">For current SCE customers moving to another home inside SCE territory.</p>
+              </div>
+              <span class="badge">Transfer</span>
+            </div>
+            <div class="provider-body">
+              <ol class="step-list" data-lang-panel="zh" class="active">
+                <li><span class="step-index">1</span><span><b>選 Transfer Service</b>SCE Help Center 說明現有客戶搬到 SCE 服務區內新住址時，選 Residential 後選 Transfer Service。</span></li>
+                <li><span class="step-index">2</span><span><b>已有 move-out 時</b>SCE FAQ 提到，如果已經安排 move out，可以使用 Start Service。</span></li>
+                <li><span class="step-index">3</span><span><b>通常不用在場</b>SCE 會嘗試在下午 5 點前遠端開啟 meter；若遠端不行，需提供 gate code、開鎖或電話等進入指示。</span></li>
+                <li><span class="step-index">4</span><span><b>保持安全進入</b>若技師需要到場，SCE 提醒把寵物帶進室內，確保技師可安全接近 meter。</span></li>
+              </ol>
+              <ol class="step-list" data-lang-panel="en">
+                <li><span class="step-index">1</span><span><b>Select Transfer Service</b>SCE Help Center says current customers moving within SCE territory should select Residential, then Transfer Service.</span></li>
+                <li><span class="step-index">2</span><span><b>If move-out is already scheduled</b>SCE notes that if you already have a move out scheduled, you can use Start Service.</span></li>
+                <li><span class="step-index">3</span><span><b>You usually do not need to be present</b>SCE will attempt remote meter activation by 5PM. If remote activation is not possible, provide access instructions such as gate codes, unlocked gates, or a phone number.</span></li>
+                <li><span class="step-index">4</span><span><b>Keep access safe</b>If a technician must visit, SCE asks customers to bring pets indoors so the meter can be reached safely.</span></li>
+              </ol>
+            </div>
+          </article>
+        </div>
+        <div class="source-row">
+          <a class="source-link" href="https://www.sce.com/customer-service-center/start-stop-move-service" target="_blank" rel="noopener">SCE Move Center</a>
+          <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/residential/start-service-new-address" target="_blank" rel="noopener">Start service FAQ</a>
+          <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/residential/move-service-to-new-address" target="_blank" rel="noopener">Transfer service FAQ</a>
+          <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/faq/request-specific-date-to-start-stop-service" target="_blank" rel="noopener">Service date FAQ</a>
+          <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/residential/need-to-be-present-for-service" target="_blank" rel="noopener">Technician access FAQ</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">買方時間表</h2>
+          <h2 data-lang-panel="en">Buyer timeline</h2>
+          <p data-lang-panel="zh" class="active">實際日期以 escrow、貸款、賣方交屋安排和你搬家日期為準。</p>
+          <p data-lang-panel="en">Actual timing depends on escrow, loan, seller possession, and your move-in date.</p>
+        </div>
+        <div class="timeline" data-lang-panel="zh" class="active">
+          <div class="timeline-item"><strong>關單前 7-14 天</strong><ul><li>確認新家地址屬於 SoCalGas 和 SCE 服務區。</li><li>準備姓名、聯絡方式、ID/SSN、服務開始日期。</li><li>若還不確定 recording 日期，先不要選太早。</li></ul></div>
+          <div class="timeline-item"><strong>預計 recording 前</strong><ul><li>線上送出 Start 或 Transfer request。</li><li>確認 email confirmation、service date、account 或 confirmation number。</li><li>若需要技師進入，安排 gate code、開鎖、寵物與聯絡電話。</li></ul></div>
+          <div class="timeline-item"><strong>交屋當天</strong><ul><li>確認電力、瓦斯是否已可用。</li><li>瓦斯設備、熱水器、爐具若無法使用，先依官方安全流程聯絡 utility。</li><li>若聞到瓦斯味，立刻離開現場並從安全位置聯絡 SoCalGas。</li></ul></div>
+          <div class="timeline-item"><strong>入住後第一週</strong><ul><li>建立線上帳戶、設定 autopay 或紙本帳單偏好。</li><li>保存 account number、confirmation email、first bill。</li><li>若舊地址也在你名下，確認 Stop Service 是否完成。</li></ul></div>
+        </div>
+        <div class="timeline" data-lang-panel="en">
+          <div class="timeline-item"><strong>7-14 days before closing</strong><ul><li>Confirm the new address is in SoCalGas and SCE service territory.</li><li>Prepare name, contact information, ID/SSN, and service start date.</li><li>If recording timing is uncertain, do not select a date too early.</li></ul></div>
+          <div class="timeline-item"><strong>Before expected recording</strong><ul><li>Submit the online Start or Transfer request.</li><li>Save the confirmation email, service date, and account or confirmation number.</li><li>If technician access may be needed, prepare gate code, unlocked access, pets, and contact phone number.</li></ul></div>
+          <div class="timeline-item"><strong>Closing day</strong><ul><li>Confirm electricity and gas are available.</li><li>If gas appliances, water heater, or stove are not working, contact the utility through official safety channels.</li><li>If you smell natural gas, leave immediately and call SoCalGas from a safe location.</li></ul></div>
+          <div class="timeline-item"><strong>First week after move-in</strong><ul><li>Create online utility accounts and set autopay or paperless preferences.</li><li>Save account number, confirmation email, and first bill.</li><li>If you controlled a prior address, confirm Stop Service is complete.</li></ul></div>
+        </div>
+      </section>
+
+      <section class="closing">
+        <div data-lang-panel="zh" class="active">
+          <h2>不確定要選哪個入口？</h2>
+          <p>把你的新地址、舊地址是否仍需服務、預計 recording / 搬家日期傳給 Wynn，我可以幫你判斷應該看 Start、Transfer 還是 Stop。</p>
+        </div>
+        <div data-lang-panel="en">
+          <h2>Not sure which option to use?</h2>
+          <p>Send Wynn the new address, whether the old address still needs service, and your expected recording or move-in date. I can help you decide Start, Transfer, or Stop.</p>
+        </div>
+        <a class="button" href="mailto:wynnhung.realestate@gmail.com">Email Wynn</a>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div data-lang-panel="zh" class="active">
+        本指南僅供一般資訊參考，不構成法律、稅務、保險、utility 帳戶或安全工程建議。SoCalGas 與 SCE 的網站、資格、費用、驗證要求與處理時間可能更新，正式申請請以各公司官方網站當下內容為準。
+      </div>
+      <div data-lang-panel="en">
+        This guide is for general informational purposes only and is not legal, tax, insurance, utility-account, or safety-engineering advice. SoCalGas and SCE websites, eligibility, fees, verification requirements, and processing times may change. Follow the live official utility pages when applying.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const languageStorageKey = "wynn-utility-guide-lang";
+    const langButtons = document.querySelectorAll("[data-lang]");
+    const panels = document.querySelectorAll("[data-lang-panel]");
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+      langButtons.forEach((button) => button.classList.toggle("active", button.dataset.lang === lang));
+      panels.forEach((panel) => panel.classList.toggle("active", panel.dataset.langPanel === lang));
+      localStorage.setItem(languageStorageKey, lang);
+    }
+
+    langButtons.forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.lang));
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+    setLanguage(localStorage.getItem(languageStorageKey) || "zh");
+  </script>
+</body>
+</html>
