@@ -200,6 +200,7 @@
     .meter-fill { height: 100%; border-radius: inherit; }
     .meter-fill.gas { width: 72%; background: var(--gas); }
     .meter-fill.electric { width: 88%; background: var(--electric); }
+    .meter-fill.water { width: 64%; background: var(--accent); }
     .quick-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -242,6 +243,9 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
+    }
+    .provider-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .provider {
       border: 1px solid var(--line);
@@ -320,6 +324,9 @@
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
     }
+    .evidence-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
     .evidence {
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -339,6 +346,58 @@
       padding: 16px 18px 18px;
       color: var(--muted);
       font-size: 14px;
+    }
+    .walkthrough-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .walk-card {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .walk-card h3 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.05;
+    }
+    .walk-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: top center;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .walk-card ol {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-left: 22px;
+      color: #312d29;
+    }
+    .walk-card li::marker {
+      font-weight: 800;
+    }
+    .url-note {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      padding: 7px 10px;
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.2;
+      word-break: break-all;
     }
     .comparison {
       display: grid;
@@ -454,7 +513,7 @@
       .shell { width: min(100% - 28px, 1180px); }
       .topbar { align-items: flex-start; }
       .actions { flex-wrap: wrap; justify-content: flex-end; }
-      .hero, .provider-grid, .evidence-grid, .comparison, .closing { grid-template-columns: 1fr; }
+      .hero, .provider-grid, .provider-grid.three, .evidence-grid, .evidence-grid.three, .walkthrough-grid, .comparison, .closing { grid-template-columns: 1fr; }
       .quick-grid { grid-template-columns: 1fr; }
       .section-head { display: block; }
       .section-head h2 { margin-bottom: 12px; }
@@ -465,7 +524,7 @@
       body { background: #fff; }
       .topbar, .source-row, .print-btn, .lang-toggle { display: none; }
       .shell { width: 100%; }
-      .hero, .provider-grid, .evidence-grid, .comparison, .closing { grid-template-columns: 1fr; }
+      .hero, .provider-grid, .provider-grid.three, .evidence-grid, .evidence-grid.three, .walkthrough-grid, .comparison, .closing { grid-template-columns: 1fr; }
       .hero-copy, .hero-panel, .provider, .choice-card, .timeline-item, .warning, .evidence { box-shadow: none; break-inside: avoid; }
       a { text-decoration: none; }
     }
@@ -493,12 +552,12 @@
           <div data-lang-panel="zh" class="active">
             <p class="eyebrow">南加州買方入住指南</p>
             <h1>水電瓦斯開通指南</h1>
-            <p class="lede">給 escrow 後段與準備交屋的買方：如何判斷新增帳戶或移轉帳戶，如何準備 SoCalGas 與 Southern California Edison 的線上申請資料。</p>
+            <p class="lede">給 escrow 後段與準備交屋的買方：如何判斷新增帳戶或移轉帳戶，如何準備 SoCalGas、Southern California Edison 與 MeterNet 的申請資料。</p>
           </div>
           <div data-lang-panel="en">
             <p class="eyebrow">Southern California Buyer Guide</p>
             <h1>Utility Setup Guide</h1>
-            <p class="lede">For buyers near closing: how to decide between starting or transferring service, and what to prepare for SoCalGas and Southern California Edison.</p>
+            <p class="lede">For buyers near closing: how to decide between starting or transferring service, and what to prepare for SoCalGas, Southern California Edison, and MeterNet.</p>
           </div>
           <div class="quick-grid" data-lang-panel="zh" class="active">
             <div class="quick-card"><b>1. 先確認服務區</b><span>不是每個城市都由同一家公司服務。先用官方服務區或帳戶入口確認地址。</span></div>
@@ -513,16 +572,17 @@
         </div>
         <aside class="hero-panel" aria-label="Utility overview">
           <div>
-            <p class="eyebrow">SoCalGas + SCE</p>
-            <h2 data-lang-panel="zh" class="active">關單前，把能源帳戶準備好。</h2>
-            <h2 data-lang-panel="en">Before closing, prepare the energy accounts.</h2>
+            <p class="eyebrow">SoCalGas + SCE + MeterNet</p>
+            <h2 data-lang-panel="zh" class="active">關單前，把 utility 帳戶準備好。</h2>
+            <h2 data-lang-panel="en">Before closing, prepare the utility accounts.</h2>
           </div>
           <div class="utility-meter" aria-hidden="true">
             <div class="meter-row"><span>Gas</span><span class="meter-track"><span class="meter-fill gas"></span></span></div>
             <div class="meter-row"><span>Electric</span><span class="meter-track"><span class="meter-fill electric"></span></span></div>
+            <div class="meter-row"><span>Water</span><span class="meter-track"><span class="meter-fill water"></span></span></div>
           </div>
-          <p data-lang-panel="zh" class="active">這份指南根據官方 SoCalGas 與 SCE 頁面整理，最後核對日期：2026-06-24。</p>
-          <p data-lang-panel="en">This guide is based on official SoCalGas and SCE pages, last reviewed on 2026-06-24.</p>
+          <p data-lang-panel="zh" class="active">這份指南根據官方 SoCalGas、SCE 與 MeterNet 頁面整理，最後核對日期：2026-06-24。</p>
+          <p data-lang-panel="en">This guide is based on official SoCalGas, SCE, and MeterNet pages, last reviewed on 2026-06-24.</p>
         </aside>
       </section>
 
@@ -537,6 +597,97 @@
             <h2>Safety note</h2>
             <p>Utility applications may ask for sensitive information. Use only official domains such as <strong>socalgas.com</strong>, <strong>myaccount.socalgas.com</strong>, and <strong>sce.com</strong>. Do not send SSN, driver's license, account, or payment information by email, text, or third-party forms.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">一步一步：從哪裡開始</h2>
+          <h2 data-lang-panel="en">Step by step: where to start</h2>
+          <p data-lang-panel="zh" class="active">以下每張截圖上方都有官方網址。正式申請時，請自己在瀏覽器輸入網址或從官方首頁進入，不要點陌生 email 或簡訊連結。</p>
+          <p data-lang-panel="en">Each screenshot includes the official URL. When applying, type the URL yourself or start from the official homepage. Do not use unknown email or text links.</p>
+        </div>
+        <div class="walkthrough-grid">
+          <article class="walk-card">
+            <img src="assets/utility-guide/socalgas-services.png" alt="SoCalGas Services page with Start Service, Transfer Service, and Stop Service options plus URL bar.">
+            <span class="url-note">http://www.socalgas.com</span>
+            <div data-lang-panel="zh" class="active">
+              <h3>SoCalGas</h3>
+              <ol>
+                <li>到 <strong>http://www.socalgas.com</strong>，從首頁或上方選單進入 <strong>Services</strong>。</li>
+                <li>在 Services 頁找到 <strong>Need to start, transfer, or stop service?</strong>。</li>
+                <li>新買方第一次建立瓦斯帳戶，點 <strong>Start Service</strong>。</li>
+                <li>你已是 SoCalGas 客戶、要把舊地址移到新家，點 <strong>Transfer Service</strong>。</li>
+                <li>準備新家地址、服務開始日期、聯絡資訊、SSN；若沒有 SSN 或需要協助，官方頁面提供電話協助。</li>
+                <li>送出後保存 confirmation number / email。若需要技師進入家中開通，請安排 gate code、鑰匙與安全進入方式。</li>
+              </ol>
+            </div>
+            <div data-lang-panel="en">
+              <h3>SoCalGas</h3>
+              <ol>
+                <li>Go to <strong>http://www.socalgas.com</strong>, then open <strong>Services</strong>.</li>
+                <li>Find <strong>Need to start, transfer, or stop service?</strong>.</li>
+                <li>For a new gas account at the purchased home, choose <strong>Start Service</strong>.</li>
+                <li>If you already have SoCalGas and are moving service from another address, choose <strong>Transfer Service</strong>.</li>
+                <li>Prepare the new address, start date, contact details, and SSN. Use the official help phone if you cannot provide SSN or need assistance.</li>
+                <li>Save the confirmation number or email. If a technician must enter the home, prepare gate code, key access, and safe entry instructions.</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="walk-card">
+            <img src="assets/utility-guide/sce-move-center.png" alt="SCE Start Stop or Move Service page with Turn On, Turn Off, Transfer Service, and URL bar.">
+            <span class="url-note">http://www.sce.com</span>
+            <div data-lang-panel="zh" class="active">
+              <h3>SCE</h3>
+              <ol>
+                <li>到 <strong>http://www.sce.com</strong>，進入 <strong>Start, Stop or Move Service</strong>。</li>
+                <li>頁面會列出需要準備 <strong>Driver's License / ID</strong> 與 <strong>Social Security Number</strong>。</li>
+                <li>第一次在新家開電，點 <strong>Start Service</strong> 或 <strong>Turn On Service</strong>。</li>
+                <li>現有 SCE 客戶搬到新地址，點 <strong>Transfer Service</strong>。</li>
+                <li>選服務日期。SCE FAQ 說明 start / stop / move 日期最多可提前 30 天安排，不能選過去日期。</li>
+                <li>通常不需要在場。若 meter 無法遠端開通，提供 gate code、未上鎖的 gate、電話等進入指示，並把寵物帶進室內。</li>
+              </ol>
+            </div>
+            <div data-lang-panel="en">
+              <h3>SCE</h3>
+              <ol>
+                <li>Go to <strong>http://www.sce.com</strong>, then open <strong>Start, Stop or Move Service</strong>.</li>
+                <li>The page lists <strong>Driver's License / ID</strong> and <strong>Social Security Number</strong> as items to prepare.</li>
+                <li>For first-time electric service at the purchased home, choose <strong>Start Service</strong> or <strong>Turn On Service</strong>.</li>
+                <li>If you are an existing SCE customer moving to a new address, choose <strong>Transfer Service</strong>.</li>
+                <li>Choose the service date. SCE says start, stop, or move dates can be scheduled up to 30 days in advance, and past dates cannot be selected.</li>
+                <li>You usually do not need to be present. If remote activation is not possible, provide gate code, unlocked gate, phone access, and keep pets indoors.</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="walk-card">
+            <img src="assets/utility-guide/meternet-establish-account.png" alt="MeterNet FAQ page explaining how new homeowners and tenants establish an account, with URL bar.">
+            <span class="url-note">https://meternetusa.com</span>
+            <div data-lang-panel="zh" class="active">
+              <h3>MeterNet</h3>
+              <ol>
+                <li>先確認 HOA / 社區是否使用 MeterNet。MeterNet 多半是社區水費或 submeter billing，不一定每棟房子都有。</li>
+                <li>到 <strong>meternetusa.com</strong>，點 <strong>Residents</strong> 或右上角 <strong>Login</strong>。</li>
+                <li>如果你是 <strong>new homeowner</strong>，官方 FAQ 說明要完成並提交 <strong>Account Setup Form</strong>。</li>
+                <li>如果你是 tenant，官方 FAQ 說明要請 homeowner 或 property manager 提交 <strong>Duplicate Statement Form</strong>。</li>
+                <li>要建立 online portal，官方 FAQ 說明需要 account number，加上 meter number、電話或 email 其中之一。</li>
+                <li>如果 escrow/HOA 還沒給 account number，先聯絡 HOA management 或 MeterNet customer service，不要猜帳號。</li>
+              </ol>
+            </div>
+            <div data-lang-panel="en">
+              <h3>MeterNet</h3>
+              <ol>
+                <li>First confirm whether the HOA or community uses MeterNet. It is often community water or submeter billing, not universal service for every home.</li>
+                <li>Go to <strong>meternetusa.com</strong>, then choose <strong>Residents</strong> or <strong>Login</strong>.</li>
+                <li>If you are a <strong>new homeowner</strong>, MeterNet's FAQ says to complete and submit the <strong>Account Setup Form</strong>.</li>
+                <li>If you are a tenant, MeterNet's FAQ says the homeowner or property manager should submit the <strong>Duplicate Statement Form</strong>.</li>
+                <li>To create the online portal account, MeterNet's FAQ says you need the account number plus one of meter number, phone, or email on file.</li>
+                <li>If escrow or HOA has not provided the account number yet, contact HOA management or MeterNet customer service. Do not guess account details.</li>
+              </ol>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -588,16 +739,36 @@
           <p data-lang-panel="zh" class="active">以下截圖只用來協助辨識入口。正式申請請以官方頁面當下顯示為準。</p>
           <p data-lang-panel="en">These screenshots help identify the official entry points. Follow the live official pages when applying.</p>
         </div>
-        <div class="evidence-grid">
+        <div class="evidence-grid three">
           <figure class="evidence">
-            <img src="assets/utility-guide/socalgas-services-entry.png" alt="SoCalGas official Services page showing Start Service, Transfer Service, and Stop Service options.">
+            <img src="assets/utility-guide/socalgas-home.png" alt="SoCalGas homepage with URL bar.">
+            <figcaption data-lang-panel="zh" class="active">SoCalGas 官方首頁。建議從這裡進入 Services，避免錯進廣告或仿冒頁。</figcaption>
+            <figcaption data-lang-panel="en">SoCalGas official homepage. Start here, then open Services to avoid ads or imitation pages.</figcaption>
+          </figure>
+          <figure class="evidence">
+            <img src="assets/utility-guide/socalgas-services.png" alt="SoCalGas Services page with URL bar and Start, Transfer, Stop options.">
             <figcaption data-lang-panel="zh" class="active">SoCalGas Services 頁面會看到 Start Service、Moving / Transfer Service、Stop Service 三個入口。</figcaption>
             <figcaption data-lang-panel="en">The SoCalGas Services page shows Start Service, Moving / Transfer Service, and Stop Service.</figcaption>
           </figure>
           <figure class="evidence">
-            <img src="assets/utility-guide/sce-move-center-entry.png" alt="SCE official Start, Stop or Move Service page showing required ID and SSN plus service options.">
-            <figcaption data-lang-panel="zh" class="active">SCE Move Center 頁面會列出 Driver's License / ID、Social Security Number，以及 Start、Stop、Transfer 的選項。</figcaption>
-            <figcaption data-lang-panel="en">The SCE Move Center page lists Driver's License / ID, Social Security Number, and Start, Stop, Transfer options.</figcaption>
+            <img src="assets/utility-guide/sce-move-center.png" alt="SCE Start Stop or Move Service page with URL bar and service options.">
+            <figcaption data-lang-panel="zh" class="active">SCE Move Center 頁面列出 ID/SSN 準備資料，以及 Start、Stop、Transfer 的入口。</figcaption>
+            <figcaption data-lang-panel="en">SCE Move Center lists ID/SSN preparation plus Start, Stop, and Transfer options.</figcaption>
+          </figure>
+          <figure class="evidence">
+            <img src="assets/utility-guide/sce-start-faq.png" alt="SCE help center page for starting service at a new address, with URL bar.">
+            <figcaption data-lang-panel="zh" class="active">SCE Help Center 補充說明新地址開通流程、日期選擇與身分驗證注意事項。</figcaption>
+            <figcaption data-lang-panel="en">SCE Help Center adds details for new-address start service, date selection, and verification.</figcaption>
+          </figure>
+          <figure class="evidence">
+            <img src="assets/utility-guide/meternet-residents.png" alt="MeterNet Residents page with URL bar and resident resources.">
+            <figcaption data-lang-panel="zh" class="active">MeterNet Residents 頁面提供 Login、FAQ、Contact、Payment Options 等住戶資源。</figcaption>
+            <figcaption data-lang-panel="en">MeterNet Residents provides Login, FAQs, Contact, Payment Options, and resident resources.</figcaption>
+          </figure>
+          <figure class="evidence">
+            <img src="assets/utility-guide/meternet-create-portal.png" alt="MeterNet FAQ page for creating an online portal account with URL bar.">
+            <figcaption data-lang-panel="zh" class="active">MeterNet portal 建立帳戶時，需要 account number，並搭配 meter number、電話或 email 其中之一。</figcaption>
+            <figcaption data-lang-panel="en">MeterNet portal registration requires the account number plus one of meter number, phone, or email on file.</figcaption>
           </figure>
         </div>
       </section>
@@ -734,6 +905,76 @@
           <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/residential/move-service-to-new-address" target="_blank" rel="noopener">Transfer service FAQ</a>
           <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/faq/request-specific-date-to-start-stop-service" target="_blank" rel="noopener">Service date FAQ</a>
           <a class="source-link" href="https://www.sce.com/customer-service-center/help-center/stop-start-move-service/residential/need-to-be-present-for-service" target="_blank" rel="noopener">Technician access FAQ</a>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-lang-panel="zh" class="active">MeterNet 社區水費 / submeter 帳戶</h2>
+          <h2 data-lang-panel="en">MeterNet community water / submeter account</h2>
+          <p data-lang-panel="zh" class="active">MeterNet 不一定是每戶都會用到。通常是 HOA、condo、townhome 或公寓社區使用的 submeter billing。請先看 escrow、HOA welcome packet 或物業管理公司資料。</p>
+          <p data-lang-panel="en">MeterNet is not universal for every home. It is commonly used by HOA, condo, townhome, or apartment communities for submeter billing. Check escrow, HOA welcome packet, or property management instructions first.</p>
+        </div>
+        <div class="provider-grid">
+          <article class="provider">
+            <div class="provider-header">
+              <div>
+                <h3 data-lang-panel="zh" class="active">新屋主設定帳戶</h3>
+                <h3 data-lang-panel="en">New homeowner setup</h3>
+                <p data-lang-panel="zh" class="active">官方 FAQ 說明 new homeowner 需要完成並提交 Account Setup Form。</p>
+                <p data-lang-panel="en">MeterNet's FAQ says a new homeowner should complete and submit the Account Setup Form.</p>
+              </div>
+              <span class="badge">MeterNet</span>
+            </div>
+            <div class="provider-body">
+              <ol class="step-list" data-lang-panel="zh" class="active">
+                <li><span class="step-index">1</span><span><b>確認社區是否使用 MeterNet</b>從 HOA 文件、seller disclosure、escrow welcome packet 或管理公司確認。</span></li>
+                <li><span class="step-index">2</span><span><b>進入 Residents / FAQ</b>到 meternetusa.com，查看 Residents 或 FAQ/Support。</span></li>
+                <li><span class="step-index">3</span><span><b>提交 Account Setup Form</b>新屋主依官方 FAQ 完成 Account Setup Form。若表格需要 HOA/manager 資料，先向管理公司確認。</span></li>
+                <li><span class="step-index">4</span><span><b>建立 portal</b>拿到 account number 後，可用 account number 加 meter number、電話或 email 其中之一建立線上帳戶。</span></li>
+                <li><span class="step-index">5</span><span><b>設定付款</b>MeterNet Residents 頁列出 ACH autopay、郵寄支票、線上 credit card/eCheck 等付款方式。</span></li>
+              </ol>
+              <ol class="step-list" data-lang-panel="en">
+                <li><span class="step-index">1</span><span><b>Confirm the community uses MeterNet</b>Check HOA documents, seller disclosures, escrow welcome packet, or property management.</span></li>
+                <li><span class="step-index">2</span><span><b>Open Residents / FAQ</b>Go to meternetusa.com and review Residents or FAQ/Support.</span></li>
+                <li><span class="step-index">3</span><span><b>Submit Account Setup Form</b>New homeowners should complete the Account Setup Form. If it asks for HOA or manager details, confirm with management first.</span></li>
+                <li><span class="step-index">4</span><span><b>Create the portal account</b>After receiving the account number, register using account number plus meter number, phone, or email on file.</span></li>
+                <li><span class="step-index">5</span><span><b>Set payment method</b>MeterNet Residents lists ACH autopay, mailed check, online credit card/eCheck, and other payment options.</span></li>
+              </ol>
+            </div>
+          </article>
+          <article class="provider">
+            <div class="provider-header">
+              <div>
+                <h3 data-lang-panel="zh" class="active">租客或住戶名稱變更</h3>
+                <h3 data-lang-panel="en">Tenant or resident name changes</h3>
+                <p data-lang-panel="zh" class="active">若是 tenant，官方 FAQ 指向 homeowner/property manager 提交 Duplicate Statement Form。</p>
+                <p data-lang-panel="en">For tenants, MeterNet's FAQ points to the homeowner or property manager submitting the Duplicate Statement Form.</p>
+              </div>
+              <span class="badge">HOA</span>
+            </div>
+            <div class="provider-body">
+              <ol class="step-list" data-lang-panel="zh" class="active">
+                <li><span class="step-index">1</span><span><b>不要自己亂開新帳戶</b>若房屋在 HOA 或出租管理下，先問管理公司帳戶應由誰建立。</span></li>
+                <li><span class="step-index">2</span><span><b>Duplicate Statement Form</b>官方 FAQ 說明 tenant 要加入帳戶時，由 homeowner 或 property manager 提交表格。</span></li>
+                <li><span class="step-index">3</span><span><b>Move in / move out</b>若涉及前住戶 final bill 或搬入日期，使用 move-in / move-out 資料讓管理端更新。</span></li>
+                <li><span class="step-index">4</span><span><b>保存第一張帳單</b>第一張帳單通常會有 account number 或 payment portal 需要的資訊。</span></li>
+              </ol>
+              <ol class="step-list" data-lang-panel="en">
+                <li><span class="step-index">1</span><span><b>Do not open a random new account</b>If the home is under HOA or rental management, ask management who should initiate the account.</span></li>
+                <li><span class="step-index">2</span><span><b>Duplicate Statement Form</b>MeterNet's FAQ says the homeowner or property manager submits this form to add a tenant.</span></li>
+                <li><span class="step-index">3</span><span><b>Move in / move out</b>If there is a prior resident final bill or move-in date, have management update the move-in / move-out information.</span></li>
+                <li><span class="step-index">4</span><span><b>Save the first bill</b>The first bill usually includes the account number or portal information needed for online setup.</span></li>
+              </ol>
+            </div>
+          </article>
+        </div>
+        <div class="source-row">
+          <a class="source-link" href="https://meternetusa.com/" target="_blank" rel="noopener">MeterNet Home</a>
+          <a class="source-link" href="https://meternetusa.com/residents/" target="_blank" rel="noopener">MeterNet Residents</a>
+          <a class="source-link" href="https://meternetusa.com/faq/how-do-i-establish-an-account-with-meternet/" target="_blank" rel="noopener">Establish account FAQ</a>
+          <a class="source-link" href="https://meternetusa.com/faq/how-do-i-create-an-account-for-the-online-portal/" target="_blank" rel="noopener">Online portal FAQ</a>
+          <a class="source-link" href="https://meternetusa.com/faq/payment-options/" target="_blank" rel="noopener">Payment options</a>
         </div>
       </section>
 
