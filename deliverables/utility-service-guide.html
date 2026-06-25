@@ -177,30 +177,43 @@
       letter-spacing: 0;
     }
     .hero-panel p { color: rgba(255, 255, 255, .72); }
-    .utility-meter {
+    .utility-links {
       display: grid;
       gap: 12px;
       margin-top: 28px;
     }
-    .meter-row {
+    .utility-link {
       display: grid;
-      grid-template-columns: 86px 1fr;
+      grid-template-columns: 86px minmax(0, 1fr);
       gap: 12px;
       align-items: center;
+      min-height: 38px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .06);
+      color: rgba(255, 255, 255, .88);
       font-family: var(--mono);
       font-size: 12px;
       text-transform: uppercase;
+      text-decoration: none;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
     }
-    .meter-track {
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .16);
-      overflow: hidden;
+    .utility-link:hover {
+      background: rgba(255, 255, 255, .1);
+      border-color: rgba(255, 255, 255, .28);
+      transform: translateY(-1px);
     }
-    .meter-fill { height: 100%; border-radius: inherit; }
-    .meter-fill.gas { width: 72%; background: var(--gas); }
-    .meter-fill.electric { width: 88%; background: var(--electric); }
-    .meter-fill.water { width: 64%; background: var(--accent); }
+    .utility-link span:first-child {
+      color: rgba(255, 255, 255, .72);
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+    .utility-link span:last-child {
+      overflow-wrap: anywhere;
+      color: #fff;
+      text-transform: none;
+    }
     .quick-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -576,10 +589,19 @@
             <h2 data-lang-panel="zh" class="active">關單前，把 utility 帳戶準備好。</h2>
             <h2 data-lang-panel="en">Before closing, prepare the utility accounts.</h2>
           </div>
-          <div class="utility-meter" aria-hidden="true">
-            <div class="meter-row"><span>Gas</span><span class="meter-track"><span class="meter-fill gas"></span></span></div>
-            <div class="meter-row"><span>Electric</span><span class="meter-track"><span class="meter-fill electric"></span></span></div>
-            <div class="meter-row"><span>Water</span><span class="meter-track"><span class="meter-fill water"></span></span></div>
+          <div class="utility-links" aria-label="Official utility websites">
+            <a class="utility-link" href="http://www.socalgas.com" target="_blank" rel="noopener">
+              <span>Gas</span>
+              <span>socalgas.com</span>
+            </a>
+            <a class="utility-link" href="http://www.sce.com" target="_blank" rel="noopener">
+              <span>Electric</span>
+              <span>sce.com</span>
+            </a>
+            <a class="utility-link" href="https://meternetusa.com/residents/" target="_blank" rel="noopener">
+              <span>Water</span>
+              <span>meternetusa.com</span>
+            </a>
           </div>
           <p data-lang-panel="zh" class="active">這份指南根據官方 SoCalGas、SCE 與 MeterNet 頁面整理，最後核對日期：2026-06-24。</p>
           <p data-lang-panel="en">This guide is based on official SoCalGas, SCE, and MeterNet pages, last reviewed on 2026-06-24.</p>
