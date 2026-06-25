@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Wynn Housing by Wynn Hung, eXp Realty. Bilingual real estate advisory for Southern California buyers, sellers, and valuation clients.">
-  <meta name="theme-color" content="#e4dfd9">
+  <meta name="theme-color" content="#303144">
   <meta property="og:title" content="Wynn Housing · Southern California Real Estate Advisory">
   <meta property="og:description" content="Bilingual real estate guidance for Southern California buyers, sellers, and valuation clients.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.wynnhousing.com/">
   <meta property="og:image" content="https://www.wynnhousing.com/assets/wynn-featured-advisory-event.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23707070'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23303144'/%3E%3C/svg%3E">
   <title>Wynn Housing · Southern California Real Estate Advisory</title>
   <style>
     @font-face {
@@ -29,24 +29,26 @@
       font-display: swap;
     }
     :root {
-      --ink: #000000;
-      --near-black: #050505;
-      --muted: #737373;
-      --subtle: #999694;
-      --paper: #e4dfd9;
-      --cream: #e4dfd9;
+      --brand-navy: #303144;
+      --navy-2: #1f2236;
+      --ink: #303144;
+      --near-black: #303144;
+      --muted: #5f6472;
+      --subtle: #8d8a85;
+      --paper: #eee9e1;
+      --cream: #f7f3ec;
       --surface: #ffffff;
-      --surface-2: rgba(228, 223, 217, .58);
-      --line: #c7c7c7;
+      --surface-2: rgba(247, 243, 236, .72);
+      --line: rgba(8, 13, 38, .16);
       --line-dark: rgba(255, 255, 255, .18);
-      --green: #171717;
-      --clay: #ff6a1f;
-      --gold: #000000;
-      --focus: #171717;
+      --green: #303144;
+      --clay: #b58c5b;
+      --gold: #303144;
+      --focus: #303144;
       --error: #ea001d;
-      --shadow: rgba(0, 0, 0, .07) 0 6px 27px;
-      --soft-shadow: rgba(0, 0, 0, .07) 0 6px 27px;
-      --modal-shadow: rgba(0, 0, 0, .07) 0 6px 27px;
+      --shadow: rgba(8, 13, 38, .08) 0 8px 30px;
+      --soft-shadow: rgba(8, 13, 38, .08) 0 8px 30px;
+      --modal-shadow: rgba(8, 13, 38, .18) 0 22px 70px;
       --display: "Geist", "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       --body: "Geist", "PingFang TC", "Noto Sans TC", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -105,8 +107,8 @@
       gap: 24px;
       min-height: 64px;
       padding: 12px clamp(18px, 4vw, 44px);
-      background: rgba(228, 223, 217, .86);
-      border-bottom: 1px solid rgba(199, 199, 199, .72);
+      background: rgba(247, 243, 236, .88);
+      border-bottom: 1px solid rgba(8, 13, 38, .12);
       backdrop-filter: blur(18px);
       box-shadow: none;
     }
@@ -151,7 +153,7 @@
       padding: 4px;
       border: 1px solid var(--line);
       border-radius: 12px;
-      background: rgba(228, 223, 217, .74);
+      background: rgba(247, 243, 236, .78);
       backdrop-filter: blur(18px);
     }
     .lang-toggle button {
@@ -182,7 +184,7 @@
       padding: 9px 16px;
       font-size: 14px;
     }
-    .button:hover, .nav-cta:hover { background: #000000; border-color: #000000; }
+    .button:hover, .nav-cta:hover { background: var(--navy-2); border-color: var(--navy-2); }
     .button:active, .nav-cta:active, .text-link:active { transform: translateY(1px); }
     .button.secondary {
       background: transparent;
@@ -204,7 +206,7 @@
       text-align: center;
       padding: clamp(92px, 12vw, 144px) clamp(18px, 4vw, 56px) clamp(48px, 6vw, 74px);
       background:
-        linear-gradient(180deg, rgba(23, 23, 23, .42), rgba(23, 23, 23, .56)),
+        linear-gradient(180deg, rgba(8, 13, 38, .36), rgba(8, 13, 38, .58)),
         var(--hero-image) center 38% / cover;
       color: #ffffff;
     }
@@ -352,7 +354,7 @@
       aspect-ratio: 4 / 5;
       border-radius: var(--radius-card);
       background:
-        linear-gradient(180deg, transparent 45%, rgba(30, 38, 34, .28)),
+        linear-gradient(180deg, transparent 45%, rgba(8, 13, 38, .32)),
         url("assets/wynn-hung-headshot.jpg") center 14% / cover;
       box-shadow: var(--soft-shadow);
     }
@@ -419,7 +421,7 @@
       isolation: isolate;
       overflow: hidden;
       background:
-        linear-gradient(180deg, #171717, #171717);
+        linear-gradient(180deg, var(--brand-navy), var(--navy-2));
       color: var(--cream);
     }
     .dark::before {
@@ -609,7 +611,7 @@
       justify-content: space-between;
       gap: 20px;
       padding: 26px clamp(18px, 4vw, 56px);
-      background: #171717;
+      background: var(--brand-navy);
       color: rgba(255, 255, 255, .72);
       font-size: 13px;
     }
@@ -624,7 +626,7 @@
       display: none;
       place-items: center;
       padding: 20px;
-      background: rgba(0, 0, 0, .52);
+      background: rgba(8, 13, 38, .62);
       backdrop-filter: blur(16px);
     }
     .modal.active { display: grid; }
